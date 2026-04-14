@@ -876,24 +876,43 @@
     .logo-client-item {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       white-space: nowrap;
-      padding: 0 8px;
+      padding: 0 16px;
+      flex-direction: column;
     }
 
     .logo-client-sep {
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: rgba(10,10,10,.15);
+      width: 1px;
+      height: 40px;
+      background: rgba(10,10,10,.1);
       flex-shrink: 0;
+      flex-direction: row;
+    }
+
+    .logo-client-img {
+      height: 52px;
+      width: auto;
+      max-width: 160px;
+      object-fit: contain;
+      filter: grayscale(1) opacity(0.5);
+      transition: filter .3s ease;
+    }
+    .logo-client-img.logo-dark {
+      filter: invert(1) grayscale(1) opacity(0.5);
+    }
+    .logo-client-item:hover .logo-client-img,
+    .logo-client-item:hover .logo-client-img.logo-dark {
+      filter: none;
+      opacity: 1;
     }
 
     .logo-client-name {
-      font-size: 15px;
+      font-size: 10px;
       font-weight: 600;
       color: rgba(10,10,10,.28);
-      letter-spacing: -0.02em;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
       transition: color .25s ease;
       cursor: default;
     }
@@ -1515,38 +1534,46 @@
   <div class="logos-marquee-wrap">
     <div class="logos-track" id="logos-track">
       <!-- set 1 -->
-      <div class="logo-client-item"><span class="logo-client-name">Grupo Altamira</span></div>
+      <div class="logo-client-item">
+        <img class="logo-client-img" src="brand_assets/CIENTES/logo-vega.png" alt="Vega Arquitectos" />
+        <span class="logo-client-name">Vega Arquitectos</span>
+      </div>
       <div class="logo-client-item"><span class="logo-client-sep"></span></div>
-      <div class="logo-client-item"><span class="logo-client-name">Constructora Vega</span></div>
+      <div class="logo-client-item">
+        <img class="logo-client-img" src="brand_assets/CIENTES/darg-consorcio.png" alt="DARG Consorcio Inmobiliario" />
+        <span class="logo-client-name">DARG Consorcio Inmobiliario</span>
+      </div>
       <div class="logo-client-item"><span class="logo-client-sep"></span></div>
-      <div class="logo-client-item"><span class="logo-client-name">Importadora León</span></div>
+      <div class="logo-client-item">
+        <img class="logo-client-img logo-dark" src="brand_assets/CIENTES/rise.png" alt="Rise Desarrollos" />
+        <span class="logo-client-name">Rise Desarrollos</span>
+      </div>
       <div class="logo-client-item"><span class="logo-client-sep"></span></div>
-      <div class="logo-client-item"><span class="logo-client-name">Distribuidora Norte</span></div>
-      <div class="logo-client-item"><span class="logo-client-sep"></span></div>
-      <div class="logo-client-item"><span class="logo-client-name">Clínica Medivida</span></div>
-      <div class="logo-client-item"><span class="logo-client-sep"></span></div>
-      <div class="logo-client-item"><span class="logo-client-name">Agroexport MX</span></div>
-      <div class="logo-client-item"><span class="logo-client-sep"></span></div>
-      <div class="logo-client-item"><span class="logo-client-name">Ferretera del Centro</span></div>
-      <div class="logo-client-item"><span class="logo-client-sep"></span></div>
-      <div class="logo-client-item"><span class="logo-client-name">Logística Pacífico</span></div>
+      <div class="logo-client-item">
+        <img class="logo-client-img logo-dark" src="brand_assets/CIENTES/sanz-global.avif" alt="Sanz Global LLC" />
+        <span class="logo-client-name">Sanz Global LLC</span>
+      </div>
       <div class="logo-client-item"><span class="logo-client-sep"></span></div>
       <!-- set 2 — duplicado para seamless loop -->
-      <div class="logo-client-item"><span class="logo-client-name">Grupo Altamira</span></div>
+      <div class="logo-client-item">
+        <img class="logo-client-img" src="brand_assets/CIENTES/logo-vega.png" alt="Vega Arquitectos" />
+        <span class="logo-client-name">Vega Arquitectos</span>
+      </div>
       <div class="logo-client-item"><span class="logo-client-sep"></span></div>
-      <div class="logo-client-item"><span class="logo-client-name">Constructora Vega</span></div>
+      <div class="logo-client-item">
+        <img class="logo-client-img" src="brand_assets/CIENTES/darg-consorcio.png" alt="DARG Consorcio Inmobiliario" />
+        <span class="logo-client-name">DARG Consorcio Inmobiliario</span>
+      </div>
       <div class="logo-client-item"><span class="logo-client-sep"></span></div>
-      <div class="logo-client-item"><span class="logo-client-name">Importadora León</span></div>
+      <div class="logo-client-item">
+        <img class="logo-client-img logo-dark" src="brand_assets/CIENTES/rise.png" alt="Rise Desarrollos" />
+        <span class="logo-client-name">Rise Desarrollos</span>
+      </div>
       <div class="logo-client-item"><span class="logo-client-sep"></span></div>
-      <div class="logo-client-item"><span class="logo-client-name">Distribuidora Norte</span></div>
-      <div class="logo-client-item"><span class="logo-client-sep"></span></div>
-      <div class="logo-client-item"><span class="logo-client-name">Clínica Medivida</span></div>
-      <div class="logo-client-item"><span class="logo-client-sep"></span></div>
-      <div class="logo-client-item"><span class="logo-client-name">Agroexport MX</span></div>
-      <div class="logo-client-item"><span class="logo-client-sep"></span></div>
-      <div class="logo-client-item"><span class="logo-client-name">Ferretera del Centro</span></div>
-      <div class="logo-client-item"><span class="logo-client-sep"></span></div>
-      <div class="logo-client-item"><span class="logo-client-name">Logística Pacífico</span></div>
+      <div class="logo-client-item">
+        <img class="logo-client-img logo-dark" src="brand_assets/CIENTES/sanz-global.avif" alt="Sanz Global LLC" />
+        <span class="logo-client-name">Sanz Global LLC</span>
+      </div>
       <div class="logo-client-item"><span class="logo-client-sep"></span></div>
     </div>
   </div>
