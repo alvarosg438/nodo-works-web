@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aviso Legal — NODO Works</title>
+  <link rel="icon" type="image/png" href="/brand_assets/NODO-favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:wght@300&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blue:   #2563EB;
+      --orange: #F97316;
+      --black:  #0A0A0A;
+      --carbon: #1F1F1F;
+      --cream:  #F0EEE8;
+      --gray:   #6B7280;
+      --gray-lt:#9CA3AF;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--cream);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 0 2rem;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: baseline;
+      text-decoration: none;
+    }
+    .logo-isotipo {
+      width: 28px;
+      height: 28px;
+      margin-right: 28px;
+      flex-shrink: 0;
+      align-self: center;
+    }
+    .logo-nodo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 22px;
+      letter-spacing: -0.04em;
+      color: #fff;
+      line-height: 1;
+    }
+    .logo-works {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.10em;
+      color: var(--gray);
+      margin-left: 6px;
+      line-height: 1;
+    }
+    .nav-badge {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gray-lt);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      padding: 72px 2rem 56px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 10% 50%, rgba(37,99,235,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 90% 20%, rgba(37,99,235,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-inner { max-width: 760px; position: relative; }
+    .hero-label {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 20px;
+      border: 1px solid rgba(37,99,235,0.35);
+      padding: 4px 10px;
+      border-radius: 2px;
+    }
+    .hero h1 {
+      font-size: 40px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+    .hero-meta {
+      font-size: 13px;
+      color: var(--gray);
+      margin-bottom: 32px;
+    }
+    .hero-meta span { color: var(--gray-lt); margin: 0 8px; }
+
+    /* ── TAB NAV ── */
+    .tab-nav {
+      display: flex;
+      gap: 4px;
+      margin-top: 8px;
+    }
+    .tab-btn {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      padding: 8px 20px;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: transparent;
+      color: var(--gray-lt);
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+    .tab-btn:hover {
+      background: rgba(255,255,255,0.05);
+      color: var(--cream);
+    }
+    .tab-btn.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+    }
+    .tab-btn:focus-visible {
+      outline: 2px solid var(--blue);
+      outline-offset: 2px;
+    }
+
+    /* ── CONTENT ── */
+    .content-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 60px 2rem 100px;
+    }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .policy-section {
+      margin-bottom: 56px;
+      padding-bottom: 56px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .policy-section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .section-number {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 10px;
+    }
+    .tab-panel#terminos .section-number { color: var(--orange); }
+
+    h2 {
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+    h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--cream);
+      margin-top: 24px;
+      margin-bottom: 8px;
+    }
+    p {
+      font-size: 15px;
+      color: rgba(240,238,232,0.75);
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+    ul, ol { padding-left: 20px; margin-bottom: 12px; }
+    li {
+      font-size: 15px;
+      color: rgba(240,238,232,0.75);
+      line-height: 1.7;
+      margin-bottom: 6px;
+    }
+    .tab-panel#privacidad li::marker { color: var(--blue); }
+    .tab-panel#terminos li::marker { color: var(--orange); }
+
+    a { color: var(--blue); text-decoration: none; transition: color 0.2s ease; }
+    a:hover { color: #3B82F6; }
+    a:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 2px; }
+
+    .callout {
+      background: var(--carbon);
+      border-left: 3px solid var(--blue);
+      padding: 16px 20px;
+      border-radius: 0 4px 4px 0;
+      margin: 20px 0;
+    }
+    .tab-panel#terminos .callout { border-left-color: var(--orange); }
+    .callout p { margin: 0; font-size: 14px; color: var(--cream); }
+
+    strong { font-weight: 600; color: var(--cream); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 32px 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-text { font-size: 13px; color: var(--gray); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 13px; color: var(--gray); text-decoration: none; transition: color 0.2s ease; }
+    .footer-links a:hover { color: var(--cream); }
+
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 28px; }
+      nav { padding: 0 1.25rem; }
+      .content-wrap { padding: 48px 1.25rem 80px; }
+      .hero { padding: 56px 1.25rem 40px; }
+      footer { padding: 28px 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="logo" aria-label="NODO Works — Inicio">
+      <img src="/brand_assets/NODO-removebg-preview.svg" alt="" class="logo-isotipo" />
+      <span class="logo-nodo">NODO</span>
+      <span class="logo-works">Works</span>
+    </a>
+    <span class="nav-badge">Aviso Legal</span>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-label">Legal</div>
+      <h1>Aviso Legal</h1>
+      <div class="hero-meta">
+        NODO Works <span>·</span> Última actualización: 14 de abril de 2025
+      </div>
+      <div class="tab-nav" role="tablist">
+        <button class="tab-btn active" role="tab" aria-selected="true"  aria-controls="privacidad" onclick="switchTab('privacidad')">Política de Privacidad</button>
+        <button class="tab-btn"        role="tab" aria-selected="false" aria-controls="terminos"   onclick="switchTab('terminos')">Términos de Servicio</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="content-wrap">
+
+    <!-- ══════════ PRIVACIDAD ══════════ -->
+    <div id="privacidad" class="tab-panel active" role="tabpanel">
+
+      <div class="policy-section">
+        <div class="section-number">§ 01</div>
+        <h2>Responsable del tratamiento</h2>
+        <p><strong>NODO Works</strong> es el responsable del tratamiento de sus datos personales.</p>
+        <ul>
+          <li><strong>Empresa:</strong> NODO Works</li>
+          <li><strong>Domicilio:</strong> Morelia, Michoacán, México</li>
+          <li><strong>Correo de contacto:</strong> <a href="mailto:privacidad@nodo.works">privacidad@nodo.works</a></li>
+          <li><strong>Sitio web:</strong> <a href="https://nodo-works-web.vercel.app">nodo-works-web.vercel.app</a></li>
+        </ul>
+      </div>
+
+      <div class="policy-section">
+        <div class="section-number">§ 02</div>
+        <h2>Información que recopilamos</h2>
+        <p>Recopilamos información que usted nos proporciona directamente y de forma automática al usar nuestros servicios:</p>
+        <h3>Información que usted proporciona</h3>
+        <ul>
+          <li>Nombre y apellidos</li>
+          <li>Número de teléfono móvil (para el servicio de WhatsApp)</li>
+          <li>Dirección de correo electrónico</li>
+          <li>Nombre y datos de la empresa</li>
+          <li>Mensajes, consultas e instrucciones enviadas al asistente <strong>Sofía</strong> vía WhatsApp</li>
+          <li>Cualquier información adicional que comparta voluntariamente</li>
+        </ul>
+        <h3>Información recopilada automáticamente</h3>
+        <ul>
+          <li>Metadatos de mensajes de WhatsApp (fecha, hora, estado de entrega)</li>
+          <li>Datos de uso e interacción con el asistente</li>
+          <li>Información técnica del dispositivo proporcionada por la plataforma de WhatsApp</li>
+        </ul>
+      </div>
+
+      <div class="policy-section">
+        <div class="section-number">§ 03</div>
+        <h2>Finalidades del tratamiento</h2>
+        <h3>Finalidades principales</h3>
+        <ul>
+          <li>Proporcionar y operar el asistente ejecutivo <strong>Sofía</strong> a través de WhatsApp</li>
+          <li>Responder a sus consultas, solicitudes e instrucciones</li>
+          <li>Gestionar su cuenta y la relación contractual</li>
+          <li>Procesar pagos y emitir facturas</li>
+          <li>Brindar soporte técnico y atención al cliente</li>
+        </ul>
+        <h3>Finalidades secundarias</h3>
+        <ul>
+          <li>Mejorar la calidad y precisión del servicio</li>
+          <li>Enviar comunicaciones sobre actualizaciones relevantes</li>
+          <li>Cumplir con obligaciones legales y fiscales aplicables</li>
+        </ul>
+        <div class="callout">
+          <p>No utilizamos sus datos con fines publicitarios de terceros, ni los vendemos o alquilamos a otras empresas.</p>
+        </div>
+      </div>
+
+      <div class="policy-section">
+        <div class="section-number">§ 04</div>
+        <h2>Base legal del tratamiento</h2>
+        <ul>
+          <li><strong>Ejecución contractual:</strong> para prestar el servicio solicitado</li>
+          <li><strong>Consentimiento:</strong> para el envío de comunicaciones de servicio</li>
+          <li><strong>Obligación legal:</strong> para cumplir con la normativa fiscal y regulatoria aplicable</li>
+          <li><strong>Interés legítimo:</strong> para mejorar la calidad del servicio y garantizar su seguridad</li>
+        </ul>
+      </div>
+
+      <div class="policy-section">
+        <div class="section-number">§ 05</div>
+        <h2>Uso de WhatsApp Business API</h2>
+        <p>El servicio <strong>Sofía</strong> opera a través de la API de WhatsApp Business, desarrollada por Meta Platforms, Inc.</p>
+        <ul>
+          <li>Los mensajes se transmiten a través de la infraestructura de WhatsApp / Meta</li>
+          <li>Meta puede procesar metadatos de mensajería conforme a sus propias políticas</li>
+          <li>El contenido de los mensajes es procesado por NODO Works para prestar el servicio</li>
+          <li>Los mensajes pueden ser procesados por modelos de inteligencia artificial para generar respuestas</li>
+        </ul>
+        <p>Política de privacidad de WhatsApp: <a href="https://www.whatsapp.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">whatsapp.com/legal/privacy-policy</a></p>
+      </div>
+
+      <div class="policy-section">
+        <div class="section-number">§ 06</div>
+        <h2>Compartición de datos con terceros</h2>
+        <p>Compartimos datos únicamente en estos casos:</p>
+        <ul>
+          <li><strong>Proveedores de servicio:</strong> tecnología de alojamiento, IA y comunicaciones, bajo acuerdos de confidencialidad</li>
+          <li><strong>Meta / WhatsApp:</strong> para operar el canal de mensajería</li>
+          <li><strong>Autoridades:</strong> cuando sea requerido por ley o mandato judicial</li>
+          <li><strong>Cesión empresarial:</strong> en caso de fusión o adquisición, con notificación previa</li>
+        </ul>
+        <p>No vendemos, alquilamos ni comercializamos sus datos personales.</p>
+      </div>
+
+      <div class="policy-section">
+        <div class="section-number">§ 07</div>
+        <h2>Retención de datos</h2>
+        <ul>
+          <li>Durante la vigencia de la relación de servicio</li>
+          <li>Para cumplir obligaciones legales y fiscales (mínimo 5 años para registros contables)</li>
+          <li>Para resolver disputas o reclamaciones pendientes</li>
+        </ul>
+        <p>Tras estos plazos, sus datos serán eliminados de forma segura o anonimizados.</p>
+      </div>
+
+      <div class="policy-section">
+        <div class="section-number">§ 08</div>
+        <h2>Sus derechos</h2>
+        <p>Conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP), usted tiene derecho a:</p>
+        <ul>
+          <li><strong>Acceso:</strong> conocer qué datos tenemos sobre usted</li>
+          <li><strong>Rectificación:</strong> corregir datos inexactos o incompletos</li>
+          <li><strong>Cancelación:</strong> solicitar la eliminación de sus datos</li>
+          <li><strong>Oposición:</strong> oponerse al tratamiento para finalidades específicas</li>
+          <li><strong>Portabilidad:</strong> recibir sus datos en formato estructurado</li>
+          <li><strong>Revocación:</strong> retirar su consentimiento en cualquier momento</li>
+        </ul>
+        <p>Escríbanos a <a href="mailto:privacidad@nodo.works">privacidad@nodo.works</a>. Respondemos en máximo 20 días hábiles.</p>
+      </div>
+
+      <div class="policy-section">
+        <div class="section-number">§ 09</div>
+        <h2>Seguridad</h2>
+        <ul>
+          <li>Transmisión cifrada de datos (TLS/HTTPS)</li>
+          <li>Acceso restringido solo a personal autorizado</li>
+          <li>Revisiones periódicas de prácticas de seguridad</li>
+          <li>Acuerdos de confidencialidad con proveedores y colaboradores</li>
+        </ul>
+      </div>
+
+      <div class="policy-section">
+        <div class="section-number">§ 10</div>
+        <h2>Menores de edad</h2>
+        <p>Los servicios de NODO Works están dirigidos exclusivamente a empresas y profesionales adultos. No recopilamos datos de menores de 18 años. Si tiene conocimiento de que un menor nos proporcionó información, contáctenos para eliminarla.</p>
+      </div>
+
+      <div class="policy-section">
+        <div class="section-number">§ 11</div>
+        <h2>Cambios a esta política</h2>
+        <p>Ante cambios materiales, notificaremos con al menos 15 días de anticipación por WhatsApp o correo. La versión vigente estará siempre disponible en esta URL.</p>
+      </div>
+
+      <div class="policy-section">
+        <div class="section-number">§ 12</div>
+        <h2>Contacto</h2>
+        <ul>
+          <li><strong>Correo privacidad:</strong> <a href="mailto:privacidad@nodo.works">privacidad@nodo.works</a></li>
+          <li><strong>Correo general:</strong> <a href="mailto:hola@nodo.works">hola@nodo.works</a></li>
+          <li><strong>Domicilio:</strong> Morelia, Michoacán, México</li>
+        </ul>
+      </div>
+
+    </div><!-- /privacidad -->
+
+    <!-- ══════════ TÉRMINOS ══════════ -->
+    <div id="terminos" class="tab-panel" role="tabpanel">
+
+      <div class="policy-section">
+        <div class="section-number">§ 01</div>
+        <h2>Aceptación de los términos</h2>
+        <p>Al acceder y utilizar los servicios de <strong>NODO Works</strong>, incluyendo el asistente ejecutivo <strong>Sofía</strong> a través de WhatsApp, usted acepta quedar vinculado por estos Términos de Servicio.</p>
+        <p>Estos términos constituyen el acuerdo completo entre usted y NODO Works y reemplazan cualquier acuerdo previo sobre el mismo objeto.</p>
+      </div>
+
+      <div class="policy-section">
+        <div class="section-number">§ 02</div>
+        <h2>Descripción del servicio</h2>
+        <p>NODO Works ofrece servicios de consultoría e implementación de sistemas inteligentes, incluyendo:</p>
+        <ul>
+          <li><strong>Sofía — Asistente Ejecutivo:</strong> asistente conversacional vía WhatsApp para gestión de tareas, información empresarial, agendas y procesos operativos</li>
+          <li><strong>Consultoría de sistemas:</strong> diseño e implementación de flujos y sistemas inteligentes a medida</li>
+          <li><strong>Soporte y mantenimiento:</strong> asistencia técnica y optimización continua</li>
+        </ul>
+      </div>
+
+      <div class="policy-section">
+        <div class="section-number">§ 03</div>
+        <h2>Elegibilidad</h2>
+        <ul>
+          <li>Tener al menos 18 años o la mayoría de edad en su jurisdicción</li>
+          <li>Tener capacidad legal para celebrar contratos vinculantes</li>
+          <li>Proporcionar información veraz y actualizada</li>
+          <li>Contar con un número de teléfono activo con acceso a WhatsApp</li>
+        </ul>
+      </div>
+
+      <div class="policy-section">
+        <div class="section-number">§ 04</div>
+        <h2>Uso aceptable</h2>
+        <h3>Usos permitidos</h3>
+        <ul>
+          <li>Utilizar el servicio para fines empresariales legítimos y lícitos</li>
+          <li>Proporcionar información veraz al asistente</li>
+          <li>Respetar la propiedad intelectual de NODO Works y terceros</li>
+        </ul>
+        <h3>Usos prohibidos</h3>
+        <ul>
+          <li>Actividades ilegales, fraudulentas o dañinas</li>
+          <li>Transmitir contenido que infrinja derechos de terceros</li>
+          <li>Intentar acceder sin autorización a sistemas o datos ajenos</li>
+          <li>Distribuir malware, spam o contenido malicioso</li>
+          <li>Revender o sublicenciar el acceso sin autorización escrita</li>
+          <li>Ingeniería inversa o copia no autorizada del sistema</li>
+        </ul>
+        <div class="callout">
+          <p>El incumplimiento puede resultar en suspensión inmediata del servicio sin derecho a reembolso.</p>
+        </div>
+      </div>
+
+      <div class="policy-section">
+        <div class="section-number">§ 05</div>
+        <h2>Pago y facturación</h2>
+        <ul>
+          <li>Los pagos son mensuales, anticipados y no reembolsables una vez prestado el servicio</li>
+          <li>El retraso mayor a 10 días hábiles puede resultar en suspensión del servicio</li>
+          <li>NODO Works puede ajustar tarifas con 30 días de notificación previa</li>
+          <li>Los impuestos aplicables se añadirán conforme a la legislación vigente</li>
+        </ul>
+      </div>
+
+      <div class="policy-section">
+        <div class="section-number">§ 06</div>
+        <h2>Propiedad intelectual</h2>
+        <p>Todos los derechos sobre el servicio Sofía — arquitectura, metodología, interfaces y documentación — son propiedad exclusiva de NODO Works. Usted conserva todos los derechos sobre los datos e información de su empresa.</p>
+      </div>
+
+      <div class="policy-section">
+        <div class="section-number">§ 07</div>
+        <h2>Confidencialidad</h2>
+        <p>Ambas partes se comprometen a mantener la confidencialidad de la información recibida y a utilizarla únicamente para los fines del servicio. Esta obligación permanece vigente durante 3 años tras la finalización del servicio.</p>
+      </div>
+
+      <div class="policy-section">
+        <div class="section-number">§ 08</div>
+        <h2>Disponibilidad del servicio</h2>
+        <ul>
+          <li>No garantizamos disponibilidad del 100% — pueden ocurrir interrupciones por mantenimiento o causas de fuerza mayor</li>
+          <li>Las interrupciones programadas se notifican con al menos 24 horas de anticipación</li>
+          <li>El servicio depende parcialmente de la infraestructura de Meta / WhatsApp, sobre la cual no tenemos control directo</li>
+        </ul>
+      </div>
+
+      <div class="policy-section">
+        <div class="section-number">§ 09</div>
+        <h2>Limitación de responsabilidad</h2>
+        <p>En la máxima medida permitida por la ley, NODO Works no será responsable por daños indirectos, pérdida de beneficios ni decisiones empresariales tomadas basándose exclusivamente en respuestas del asistente.</p>
+        <p>La responsabilidad total estará limitada al importe pagado en los 3 meses anteriores al evento que originó la reclamación.</p>
+        <div class="callout">
+          <p>Sofía proporciona apoyo operativo. Las decisiones estratégicas, legales, médicas o financieras son responsabilidad exclusiva del usuario y sus asesores.</p>
+        </div>
+      </div>
+
+      <div class="policy-section">
+        <div class="section-number">§ 10</div>
+        <h2>Vigencia y terminación</h2>
+        <ul>
+          <li><strong>Por el cliente:</strong> con 15 días de aviso previo por escrito</li>
+          <li><strong>Por NODO Works:</strong> con 30 días de aviso, o de forma inmediata ante incumplimiento material</li>
+        </ul>
+        <p>Tras la terminación, NODO Works entregará los datos del cliente en un plazo de 30 días a petición.</p>
+      </div>
+
+      <div class="policy-section">
+        <div class="section-number">§ 11</div>
+        <h2>Ley aplicable y jurisdicción</h2>
+        <p>Estos términos se rigen por las leyes de los <strong>Estados Unidos Mexicanos</strong>. Las controversias se someten a los tribunales competentes de <strong>Morelia, Michoacán, México</strong>.</p>
+      </div>
+
+      <div class="policy-section">
+        <div class="section-number">§ 12</div>
+        <h2>Contacto</h2>
+        <ul>
+          <li><strong>Correo legal:</strong> <a href="mailto:legal@nodo.works">legal@nodo.works</a></li>
+          <li><strong>Correo general:</strong> <a href="mailto:hola@nodo.works">hola@nodo.works</a></li>
+          <li><strong>Domicilio:</strong> Morelia, Michoacán, México</li>
+        </ul>
+      </div>
+
+    </div><!-- /terminos -->
+
+  </main>
+
+  <footer>
+    <a href="/" class="logo" aria-label="NODO Works">
+      <img src="/brand_assets/NODO-removebg-preview.svg" alt="" class="logo-isotipo" style="width:20px;height:20px;margin-right:20px;" />
+      <span class="logo-nodo" style="font-size:16px;">NODO</span>
+      <span class="logo-works" style="font-size:8px;">Works</span>
+    </a>
+    <span class="footer-text">© 2025 NODO Works. Todos los derechos reservados.</span>
+    <nav class="footer-links" aria-label="Legal">
+      <a href="/legal.html">Aviso Legal</a>
+      <a href="mailto:hola@nodo.works">Contacto</a>
+    </nav>
+  </footer>
+
+  <script>
+    function switchTab(id) {
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      document.getElementById(id).classList.add('active');
+      const btn = document.querySelector(`[aria-controls="${id}"]`);
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Soporte para anclas: legal.html#terminos abre directo esa pestaña
+    const hash = window.location.hash.replace('#', '');
+    if (hash === 'terminos' || hash === 'privacidad') switchTab(hash);
+  </script>
+
+</body>
+</html>
