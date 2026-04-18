@@ -1749,6 +1749,10 @@ body.aurora-off .cta-card { background: linear-gradient(135deg, var(--blue-deep)
   .nav-links li:not(.nav-cta-item) { display: none; }
 }
 @media (max-width: 640px) {
+  .nav-inner { padding: 0 16px; height: 56px; gap: 0; }
+  .nav-logo img { height: 26px !important; }
+  .nav-cta { font-size: 13px !important; padding: 7px 14px !important; margin-left: 0; }
+
   .section, .stats-inner, .split-dark-inner, .testimonial-inner, .cta-big { padding: 72px 20px; }
   .hero { padding: 40px 20px 24px; }
   .agents-grid { grid-template-columns: 1fr; }
