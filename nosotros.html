@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nosotros — NODO Works</title>
+<meta name="description" content="NODO Works es una firma de operaciones que instala equipos digitales en empresas medianas de México y Estados Unidos." />
+<link rel="icon" type="image/png" href="brand_assets/LOGOS/1.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css" />
+
+<style>
+/* ── Page-specific overrides ── */
+.about-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 160px 0 100px;
+  text-align: left;
+}
+.about-hero .hero-grid { pointer-events: none; }
+
+.about-hero-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+  position: relative;
+  z-index: 2;
+}
+
+.about-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent, #2C5FFF);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.about-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 24px;
+  height: 1px;
+  background: var(--accent, #2C5FFF);
+}
+
+.about-hero h1 {
+  font-size: clamp(38px, 5vw, 64px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  color: #fff;
+  max-width: 780px;
+  margin-bottom: 28px;
+}
+.about-hero h1 em {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  color: var(--accent, #2C5FFF);
+}
+
+.about-hero-lead {
+  font-size: 18px;
+  line-height: 1.7;
+  color: #9CA3AF;
+  max-width: 560px;
+}
+
+/* ── Split section ── */
+.about-split {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 100px 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+@media (max-width: 768px) {
+  .about-split { grid-template-columns: 1fr; gap: 48px; padding: 60px 24px; }
+}
+
+.about-split-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.about-split h2 {
+  font-size: clamp(26px, 3vw, 36px);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -.02em;
+  color: #fff;
+  margin-bottom: 24px;
+}
+
+.about-split p {
+  font-size: 16px;
+  line-height: 1.75;
+  color: #9CA3AF;
+  margin-bottom: 16px;
+}
+.about-split p:last-child { margin-bottom: 0; }
+
+.about-split blockquote {
+  border-left: 2px solid var(--accent, #2C5FFF);
+  padding-left: 20px;
+  margin: 32px 0 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #ccc;
+  font-style: italic;
+}
+
+/* ── Founders card ── */
+.founder-section {
+  background: #0D1117;
+  border-top: 1px solid #1a1a2e;
+  border-bottom: 1px solid #1a1a2e;
+  padding: 100px 40px;
+}
+.founder-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.founder-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 64px;
+  align-items: start;
+}
+@media (max-width: 768px) {
+  .founder-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+
+.founder-card {
+  background: #0A0B0F;
+  border: 1px solid #1F2937;
+  border-radius: 12px;
+  padding: 32px;
+}
+.founder-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2C5FFF 0%, #6D4AFF 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 20px;
+  letter-spacing: -.02em;
+}
+.founder-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 4px;
+}
+.founder-title {
+  font-size: 13px;
+  color: var(--accent, #2C5FFF);
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: .06em;
+  margin-bottom: 20px;
+}
+.founder-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.founder-tag {
+  background: #1F2937;
+  color: #9CA3AF;
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 4px 10px;
+  border-radius: 4px;
+  letter-spacing: .06em;
+}
+
+.founder-bio-section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #555;
+  margin-bottom: 20px;
+}
+.founder-bio h3 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 16px;
+  letter-spacing: -.01em;
+}
+.founder-bio p {
+  font-size: 16px;
+  line-height: 1.75;
+  color: #9CA3AF;
+  margin-bottom: 16px;
+}
+
+/* ── Principles ── */
+.principles-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 100px 40px;
+}
+.principles-header {
+  margin-bottom: 64px;
+}
+.principles-header h2 {
+  font-size: clamp(28px, 3.5vw, 42px);
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -.02em;
+  margin-bottom: 16px;
+}
+.principles-header p {
+  font-size: 16px;
+  color: #9CA3AF;
+  max-width: 480px;
+  line-height: 1.7;
+}
+
+.principles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+@media (max-width: 900px) {
+  .principles-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+  .principles-grid { grid-template-columns: 1fr; }
+}
+
+.principle-card {
+  background: #0D1117;
+  border: 1px solid #1F2937;
+  border-radius: 12px;
+  padding: 32px;
+  transition: border-color .2s;
+}
+.principle-card:hover { border-color: var(--accent, #2C5FFF); }
+
+.principle-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: #555;
+  letter-spacing: .12em;
+  margin-bottom: 20px;
+}
+.principle-card h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 12px;
+  letter-spacing: -.01em;
+}
+.principle-card p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #6B7280;
+}
+
+/* ── CTA band ── */
+.about-cta {
+  background: #0D1117;
+  border-top: 1px solid #1a1a2e;
+  padding: 100px 40px;
+  text-align: center;
+}
+.about-cta-inner {
+  max-width: 640px;
+  margin: 0 auto;
+}
+.about-cta h2 {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -.02em;
+  margin-bottom: 20px;
+}
+.about-cta p {
+  font-size: 17px;
+  color: #9CA3AF;
+  line-height: 1.7;
+  margin-bottom: 36px;
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════
+     NAV
+════════════════════════════════════ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="/">
+      <img src="brand_assets/LOGO-PAGINA-SINFONDO.png" alt="NODO Works" style="height:36px;width:auto;display:block;" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="/#agentes">Plataforma</a></li>
+      <li><a href="/#como">Cómo funciona</a></li>
+      <li><a href="/#resultados">Resultados</a></li>
+      <li><a href="/#tiers">Servicios</a></li>
+      <li class="nav-cta-item"><a href="https://wa.me/524439242456" class="nav-cta">Hablemos →</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════
+     HERO
+════════════════════════════════════ -->
+<section class="about-hero">
+  <div class="aurora">
+    <div class="aurora-blob b1"></div>
+    <div class="aurora-blob b2"></div>
+    <div class="aurora-blob b3"></div>
+  </div>
+  <div class="hero-grid"></div>
+
+  <div class="about-hero-inner">
+    <div class="about-eyebrow">Nosotros</div>
+    <h1>Una firma de<br><em>operaciones</em>,<br>no una agencia.</h1>
+    <p class="about-hero-lead">
+      Construimos el Equipo Digital de tu empresa — los sistemas que ejecutan la operación
+      para que el dueño pueda volver a hacer lo que construyó el negocio.
+    </p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     EL PROBLEMA
+════════════════════════════════════ -->
+<section>
+  <div class="about-split reveal">
+    <div>
+      <div class="about-split-label">01 / El problema que resolvemos</div>
+      <h2>La operación termina atrapando al dueño.</h2>
+    </div>
+    <div>
+      <p>
+        Después de 10, 15, 20 años operando, el negocio crece pero la carga operativa crece con él.
+        El dueño que construyó la empresa desde la visión termina dedicando la mayor parte de su tiempo
+        a resolver problemas que deberían resolverse solos.
+      </p>
+      <p>
+        El problema no es falta de esfuerzo. Es que la empresa nunca construyó los sistemas
+        que deberían ejecutar la operación sin depender de la atención constante del dueño.
+      </p>
+      <blockquote>
+        "Ayudo a empresarios a volver a enfocarse en lo que construyó su empresa.
+        La visión de crecimiento."
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     QUÉ ES NODO
+════════════════════════════════════ -->
+<section style="background:#0D1117;border-top:1px solid #1a1a2e;border-bottom:1px solid #1a1a2e;">
+  <div class="about-split reveal">
+    <div>
+      <div class="about-split-label">02 / Qué es NODO Works</div>
+      <h2>No instalamos herramientas. Instalamos posiciones de trabajo.</h2>
+    </div>
+    <div>
+      <p>
+        NODO Works es una firma de operaciones que construye Equipos Digitales para empresas medianas.
+        Cada agente del Equipo Digital ocupa un rol real dentro de la empresa — Contabilidad,
+        Ventas, Atención, Operaciones, Dirección — y trabaja de forma continua, sin errores humanos
+        y sin los costos de una nómina completa.
+      </p>
+      <p>
+        No vendemos licencias ni plataformas. Vendemos un equipo instalado y funcionando desde el mes 1,
+        con reportes de impacto mensual y dirección estratégica continua.
+      </p>
+      <p>
+        Trabajamos con empresas en México y Estados Unidos con 25 a 100 empleados,
+        modelo de negocio definido y dueños que saben que su rol debería ser otro.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     FUNDADOR
+════════════════════════════════════ -->
+<section class="founder-section">
+  <div class="founder-inner">
+    <div class="founder-bio-section-label">03 / Quién está detrás</div>
+    <div class="founder-grid reveal">
+      <div class="founder-card">
+        <div class="founder-avatar">AS</div>
+        <div class="founder-name">Álvaro Sanz</div>
+        <div class="founder-title">Fundador · Orquestador Estratégico</div>
+        <div class="founder-tags">
+          <span class="founder-tag">Morelia, MX</span>
+          <span class="founder-tag">México · EEUU</span>
+          <span class="founder-tag">PyME B2B</span>
+        </div>
+      </div>
+      <div class="founder-bio">
+        <h3>El cliente trata siempre con el mismo interlocutor.</h3>
+        <p>
+          Álvaro opera como orquestador estratégico — diagnostica el negocio, diseña el roadmap
+          del Equipo Digital y supervisa la instalación. No es un perfil técnico que vende software.
+          Es un perfil de negocio que entiende operaciones.
+        </p>
+        <p>
+          Cada empresa que trabaja con NODO tiene acceso directo a él durante todo el engagement,
+          desde la primera sesión de diagnóstico hasta las revisiones estratégicas mensuales.
+        </p>
+        <p>
+          NODO trabaja con un número limitado de clientes simultáneos para mantener la calidad
+          del diagnóstico y la velocidad de instalación.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     PRINCIPIOS
+════════════════════════════════════ -->
+<section class="principles-section">
+  <div class="principles-header reveal">
+    <div class="about-split-label">04 / Cómo trabajamos</div>
+    <h2>Lo que nos diferencia no está en la tecnología.</h2>
+    <p>Está en cómo pensamos el negocio del cliente antes de tocar cualquier sistema.</p>
+  </div>
+
+  <div class="principles-grid">
+    <div class="principle-card reveal">
+      <div class="principle-num">01</div>
+      <h4>Negocio primero, tecnología después.</h4>
+      <p>
+        El diagnóstico operativo siempre precede a cualquier instalación.
+        Los agentes se diseñan desde los cuellos de botella reales del negocio, no desde demos genéricos.
+      </p>
+    </div>
+    <div class="principle-card reveal">
+      <div class="principle-num">02</div>
+      <h4>Resultados en el mes 1.</h4>
+      <p>
+        El primer agente está activo antes de cerrar el primer mes.
+        No hay períodos de descubrimiento interminables ni entregas en 6 meses.
+      </p>
+    </div>
+    <div class="principle-card reveal">
+      <div class="principle-num">03</div>
+      <h4>Reportes de impacto, no de actividad.</h4>
+      <p>
+        Cada mes el cliente recibe métricas de impacto operativo —
+        tiempo recuperado, errores eliminados, costos reducidos — no reportes de horas trabajadas.
+      </p>
+    </div>
+    <div class="principle-card reveal">
+      <div class="principle-num">04</div>
+      <h4>Un interlocutor durante todo el engagement.</h4>
+      <p>
+        El cliente no tiene un account manager para ventas y otro para soporte.
+        Álvaro es el punto de contacto desde el diagnóstico hasta la dirección estratégica mensual.
+      </p>
+    </div>
+    <div class="principle-card reveal">
+      <div class="principle-num">05</div>
+      <h4>Solo empresas que califican.</h4>
+      <p>
+        NODO no trabaja con cualquier empresa. Trabajamos con empresas que tienen modelo definido,
+        estructura mínima y un dueño con mentalidad de director.
+      </p>
+    </div>
+    <div class="principle-card reveal">
+      <div class="principle-num">06</div>
+      <h4>Retainer mensual, no proyectos puntuales.</h4>
+      <p>
+        El Equipo Digital no es una implementación que se entrega y se olvida.
+        Es un equipo que opera, evoluciona y se expande junto con el negocio.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     CTA FINAL
+════════════════════════════════════ -->
+<section class="about-cta">
+  <div class="about-cta-inner reveal">
+    <h2>¿Tu empresa califica?</h2>
+    <p>
+      El proceso empieza con una sesión de diagnóstico sin costo.
+      En 45 minutos identificamos los cuellos de botella y diseñamos el primer agente.
+    </p>
+    <a
+      href="https://wa.me/524439242456?text=Hola%2C%20me%20interesa%20el%20diagn%C3%B3stico%20gratuito%20de%20NODO%20Works"
+      target="_blank"
+      rel="noopener"
+      class="btn btn-primary"
+    >
+      Solicitar diagnóstico gratuito →
+    </a>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     FOOTER
+════════════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="footer-logo" href="/">
+          <img src="brand_assets/LOGO-PAGINA-SINFONDO.png" alt="NODO Works" style="height:28px;width:auto;display:block;filter:brightness(0) invert(1);" />
+        </a>
+        <p>Ordenamos tu operación y construimos los sistemas que la ejecutan. México y Estados Unidos.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Plataforma</div>
+        <ul class="footer-links">
+          <li><a href="/#agentes">Agentes</a></li>
+          <li><a href="/#como">Cómo funciona</a></li>
+          <li><a href="/#resultados">Resultados</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Empresa</div>
+        <ul class="footer-links">
+          <li><a href="/nosotros">Nosotros</a></li>
+          <li><a href="/#tiers">Servicios</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Recursos</div>
+        <ul class="footer-links">
+          <li><a href="/faq">FAQ</a></li>
+          <li><a href="https://wa.me/524439242456" target="_blank" rel="noopener">Soporte</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Contacto</div>
+        <ul class="footer-links">
+          <li><a href="mailto:alvarosanchezvieyra33@gmail.com">alvarosanchezvieyra33@gmail.com</a></li>
+          <li><a href="https://wa.me/524439242456">+52 443 924 2456</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 NODO Works. Todos los derechos reservados.</div>
+      <div style="display:flex;gap:24px">
+        <a href="/legal">Privacidad</a>
+        <a href="/legal#terminos">Términos</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp FAB -->
+<a href="https://wa.me/524439242456" target="_blank" rel="noopener" class="whatsapp-fab" aria-label="WhatsApp">
+  <svg viewBox="0 0 32 32" fill="currentColor"><path d="M25.9 6.1A13.9 13.9 0 0 0 16 2C8.3 2 2 8.3 2 16c0 2.5.6 4.8 1.8 7L2 30l7.2-1.9A14 14 0 0 0 16 30c7.7 0 14-6.3 14-14 0-3.7-1.5-7.3-4.1-9.9zM16 27.5c-2.1 0-4.2-.6-6-1.7l-.4-.2-4.3 1.1 1.2-4.2-.3-.5A11.5 11.5 0 0 1 4.5 16c0-6.3 5.1-11.5 11.5-11.5 3.1 0 6 1.2 8.2 3.4a11.5 11.5 0 0 1 3.4 8.1c0 6.3-5.2 11.5-11.6 11.5zm6.3-8.6c-.3-.2-2-1-2.3-1.1-.3-.1-.5-.2-.8.2-.2.3-.9 1.1-1.1 1.3-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.7-1.6-1-.9-1.7-2-1.9-2.3-.2-.3 0-.5.1-.7l.5-.5c.2-.2.2-.3.4-.5.1-.2.1-.4 0-.5 0-.1-.8-1.8-1-2.5-.3-.7-.6-.6-.8-.6-.2 0-.4 0-.6 0-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.3 1.4 3.5c.2.2 2.4 3.7 5.9 5.2.8.3 1.4.5 1.9.7.8.2 1.5.2 2.1.1.7-.1 2-.8 2.3-1.6.3-.8.3-1.4.2-1.6-.1-.1-.3-.2-.6-.3z"/></svg>
+</a>
+
+<script>
+/* Intersection reveal */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
