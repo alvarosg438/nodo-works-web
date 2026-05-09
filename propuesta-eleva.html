@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Propuesta NODO Works × Grupo Eleva</title>
+<link rel="icon" type="image/png" href="brand_assets/LOGOS/1.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --blue:           #2C5FFF;
+  --blue-deep:      #0A1E6B;
+  --blue-dark:      #1240D4;
+  --blue-vivid:     #4A7BFF;
+  --blue-light:     #D9E3FF;
+  --blue-tint:      #EEF2FF;
+  --ink:            #0A0A0F;
+  --ink-soft:       #1B1B23;
+  --cream:          #F5F3EE;
+  --paper:          #FAF8F4;
+  --white:          #FFFFFF;
+  --gray-6:         #6B6B78;
+  --gray-5:         #8E8E9A;
+  --gray-4:         #B8B8C2;
+  --gray-2:         #E6E4DE;
+  --aurora-magenta: #E84AA8;
+  --aurora-coral:   #FF6B4A;
+  --aurora-amber:   #FFB347;
+  --aurora-cyan:    #4AD4FF;
+  --aurora-violet:  #8B5CF6;
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+  --shadow-sm: 0 1px 2px rgba(10,10,15,.04), 0 2px 8px rgba(10,10,15,.04);
+  --shadow-md: 0 4px 16px rgba(10,10,15,.06), 0 12px 32px rgba(10,10,15,.06);
+  --shadow-blue: 0 8px 32px rgba(44,95,255,.18), 0 2px 8px rgba(44,95,255,.12);
+  --shadow-glow: 0 0 0 1px rgba(44,95,255,.14), 0 24px 64px rgba(44,95,255,.22);
+}
+
+* { box-sizing: border-box; -webkit-font-smoothing: antialiased; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Space Grotesk', ui-sans-serif, sans-serif;
+  background: var(--ink);
+  color: var(--white);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: .025;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+}
+
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+
+/* ── EYEBROW ── */
+.eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--blue-vivid);
+}
+
+/* ── NAV ── */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 0 32px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(10,10,15,.72);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.nav-logo img { height: 32px; width: auto; }
+.nav-tag {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--gray-5);
+  letter-spacing: 0.05em;
+}
+.nav-tag span {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--blue-vivid);
+  margin-right: 8px;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity:1; transform:scale(1); }
+  50% { opacity:.5; transform:scale(.8); }
+}
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 32px 80px;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.18;
+}
+.blob-1 { width: 700px; height: 700px; background: var(--blue); top: -200px; left: -200px; animation: drift1 14s ease-in-out infinite; }
+.blob-2 { width: 500px; height: 500px; background: var(--aurora-violet); top: 100px; right: -100px; animation: drift2 18s ease-in-out infinite; }
+.blob-3 { width: 400px; height: 400px; background: var(--aurora-cyan); bottom: -100px; left: 30%; animation: drift3 12s ease-in-out infinite; }
+
+@keyframes drift1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(40px,30px)} }
+@keyframes drift2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-30px,40px)} }
+@keyframes drift3 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(20px,-20px)} }
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(44,95,255,.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(44,95,255,.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 18px;
+  border-radius: 100px;
+  border: 1px solid rgba(44,95,255,.3);
+  background: rgba(44,95,255,.08);
+  font-size: 13px;
+  color: var(--blue-light);
+  margin-bottom: 40px;
+  backdrop-filter: blur(8px);
+}
+.hero-badge-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--blue-vivid);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.hero-headline {
+  font-size: clamp(48px, 8vw, 96px);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+  margin-bottom: 28px;
+}
+.hero-headline em {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-style: italic;
+  color: var(--blue-vivid);
+}
+.hero-headline .break { display: block; }
+
+.hero-sub {
+  font-size: clamp(17px, 2vw, 20px);
+  color: var(--gray-5);
+  max-width: 580px;
+  margin: 0 auto 48px;
+  line-height: 1.65;
+}
+
+.hero-scroll {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--gray-6);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  animation: fadeUp 1s ease .8s both;
+}
+.scroll-line {
+  width: 40px; height: 1px;
+  background: var(--gray-6);
+}
+
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(16px); }
+  to { opacity:1; transform:translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity:0; } to { opacity:1; }
+}
+
+.hero-inner > * {
+  animation: fadeUp .8s ease both;
+}
+.hero-badge { animation-delay: .1s; }
+.hero-headline { animation-delay: .25s; }
+.hero-sub { animation-delay: .4s; }
+.hero-scroll { animation-delay: .6s; }
+
+/* ── SECTION BASE ── */
+section {
+  padding: 100px 32px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+section.full { max-width: none; padding-left: 0; padding-right: 0; }
+
+.section-header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+.section-title {
+  font-size: clamp(32px, 4vw, 56px);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+  margin-top: 14px;
+}
+.section-title em {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  color: var(--blue-vivid);
+}
+.section-sub {
+  font-size: 17px;
+  color: var(--gray-5);
+  max-width: 540px;
+  margin: 16px auto 0;
+  line-height: 1.65;
+}
+
+/* ── DIVIDER ── */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.08), transparent);
+  margin: 0 32px;
+}
+
+/* ── DIAGNOSIS STRIP ── */
+.diagnosis {
+  background: var(--ink-soft);
+  border-top: 1px solid rgba(255,255,255,.06);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  padding: 80px 32px;
+}
+.diagnosis-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.diagnosis-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2px;
+  margin-top: 48px;
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+
+.diagnosis-card {
+  padding: 32px 28px;
+  background: rgba(255,255,255,.02);
+  border-right: 1px solid rgba(255,255,255,.06);
+  transition: background .2s ease;
+}
+.diagnosis-card:last-child { border-right: none; }
+.diagnosis-card:hover { background: rgba(44,95,255,.05); }
+
+.diagnosis-card .icon {
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+.diagnosis-card h4 {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--gray-4);
+  margin-bottom: 10px;
+}
+.diagnosis-card p {
+  font-size: 15px;
+  color: var(--gray-5);
+  line-height: 1.55;
+}
+.diagnosis-card .stat {
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  color: var(--white);
+  margin-bottom: 6px;
+  font-variant-numeric: tabular-nums;
+}
+.diagnosis-card .stat span {
+  font-size: 16px;
+  color: var(--aurora-coral);
+  font-weight: 500;
+}
+
+/* ── PAIN POINTS ── */
+.pains-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 700px) { .pains-grid { grid-template-columns: 1fr; } }
+
+.pain-card {
+  padding: 28px;
+  border-radius: var(--r-lg);
+  border: 1px solid rgba(255,255,255,.07);
+  background: var(--ink-soft);
+  position: relative;
+  overflow: hidden;
+  transition: border-color .2s, transform .2s;
+}
+.pain-card:hover {
+  border-color: rgba(44,95,255,.3);
+  transform: translateY(-2px);
+}
+.pain-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--blue), var(--aurora-violet));
+  opacity: 0;
+  transition: opacity .2s;
+}
+.pain-card:hover::before { opacity: 1; }
+
+.pain-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--aurora-coral);
+  margin-bottom: 10px;
+}
+.pain-card h3 {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  margin-bottom: 10px;
+}
+.pain-card p {
+  font-size: 14px;
+  color: var(--gray-5);
+  line-height: 1.6;
+}
+
+/* ── SOLUTION ROADMAP ── */
+.roadmap {
+  background: var(--ink-soft);
+  border-top: 1px solid rgba(255,255,255,.06);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  padding: 100px 32px;
+}
+.roadmap-inner { max-width: 1100px; margin: 0 auto; }
+
+.phases {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-top: 56px;
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.06);
+}
+@media (max-width: 800px) { .phases { grid-template-columns: 1fr; } }
+
+.phase {
+  padding: 40px 32px;
+  background: rgba(255,255,255,.02);
+  border-right: 1px solid rgba(255,255,255,.06);
+  position: relative;
+}
+.phase:last-child { border-right: none; }
+
+.phase-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--blue-vivid);
+  letter-spacing: 0.12em;
+  margin-bottom: 20px;
+}
+.phase h3 {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  margin-bottom: 8px;
+}
+.phase .phase-period {
+  font-size: 12px;
+  color: var(--gray-6);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.phase ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.phase ul li {
+  font-size: 14px;
+  color: var(--gray-5);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.5;
+}
+.phase ul li::before {
+  content: '→';
+  color: var(--blue-vivid);
+  font-size: 12px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+.phase-highlight {
+  background: rgba(44,95,255,.07);
+  border-top: 2px solid var(--blue);
+}
+.phase-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 100px;
+  background: rgba(44,95,255,.2);
+  color: var(--blue-light);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+/* ── IMPACT METRICS ── */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 56px;
+}
+.metric-card {
+  padding: 36px 28px;
+  border-radius: var(--r-lg);
+  border: 1px solid rgba(255,255,255,.07);
+  background: var(--ink-soft);
+  text-align: center;
+  transition: transform .2s, border-color .2s;
+}
+.metric-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(44,95,255,.25);
+}
+.metric-value {
+  font-size: 48px;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, var(--white), var(--blue-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.metric-label {
+  font-size: 13px;
+  color: var(--gray-5);
+  line-height: 1.4;
+}
+
+/* ── TIERS ── */
+.tiers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 56px;
+  align-items: start;
+}
+@media (max-width: 800px) { .tiers-grid { grid-template-columns: 1fr; } }
+
+.tier {
+  padding: 36px 28px;
+  border-radius: var(--r-xl);
+  border: 1px solid rgba(255,255,255,.08);
+  background: var(--ink-soft);
+  position: relative;
+  transition: transform .2s, box-shadow .2s;
+}
+.tier:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+.tier.featured {
+  border-color: rgba(44,95,255,.4);
+  background: linear-gradient(160deg, rgba(44,95,255,.08), var(--ink-soft));
+  box-shadow: var(--shadow-glow);
+}
+.tier-badge {
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 100px;
+  background: rgba(44,95,255,.2);
+  color: var(--blue-light);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.tier h3 {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  margin-bottom: 6px;
+}
+.tier .price {
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+.tier .price-note {
+  font-size: 13px;
+  color: var(--gray-5);
+  margin-bottom: 24px;
+}
+.tier-divider {
+  height: 1px;
+  background: rgba(255,255,255,.07);
+  margin: 24px 0;
+}
+.tier ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.tier ul li {
+  font-size: 14px;
+  color: var(--gray-5);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.5;
+}
+.tier ul li::before {
+  content: '✓';
+  color: var(--blue-vivid);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.btn-tier {
+  display: block;
+  width: 100%;
+  padding: 14px 24px;
+  border-radius: 100px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  transition: transform .2s cubic-bezier(.34,1.56,.64,1), opacity .2s;
+  text-decoration: none;
+}
+.btn-tier:hover { transform: scale(1.02); }
+.btn-primary-tier {
+  background: var(--blue);
+  color: var(--white);
+  box-shadow: var(--shadow-blue);
+}
+.btn-primary-tier:hover { background: var(--blue-dark); }
+.btn-ghost-tier {
+  background: transparent;
+  color: var(--white);
+  border: 1px solid rgba(255,255,255,.15);
+}
+.btn-ghost-tier:hover { border-color: rgba(255,255,255,.3); background: rgba(255,255,255,.04); }
+
+/* ── CTA FINAL ── */
+.cta-section {
+  text-align: center;
+  padding: 120px 32px;
+  position: relative;
+  overflow: hidden;
+}
+.cta-section::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(44,95,255,.12) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.cta-title {
+  font-size: clamp(36px, 5vw, 72px);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1.0;
+  margin: 20px auto 24px;
+  max-width: 700px;
+}
+.cta-title em {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  color: var(--blue-vivid);
+}
+.cta-sub {
+  font-size: 17px;
+  color: var(--gray-5);
+  max-width: 480px;
+  margin: 0 auto 48px;
+}
+.cta-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.btn-cta-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 32px;
+  border-radius: 100px;
+  background: var(--blue);
+  color: var(--white);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  box-shadow: var(--shadow-blue);
+  transition: transform .25s cubic-bezier(.34,1.56,.64,1), background .2s;
+}
+.btn-cta-primary:hover { transform: scale(1.04); background: var(--blue-dark); }
+
+.btn-cta-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 32px;
+  border-radius: 100px;
+  background: transparent;
+  color: var(--white);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,.15);
+  transition: border-color .2s, background .2s, transform .25s cubic-bezier(.34,1.56,.64,1);
+}
+.btn-cta-ghost:hover { border-color: rgba(255,255,255,.35); background: rgba(255,255,255,.04); transform: scale(1.02); }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid rgba(255,255,255,.06);
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+footer img { height: 28px; }
+footer p {
+  font-size: 13px;
+  color: var(--gray-6);
+}
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── CONFIDENTIAL BANNER ── */
+.confidential {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 32px;
+  background: rgba(232,74,168,.08);
+  border-bottom: 1px solid rgba(232,74,168,.15);
+  font-size: 12px;
+  color: var(--aurora-magenta);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.confidential::before, .confidential::after {
+  content: '●';
+  font-size: 6px;
+  opacity: .5;
+}
+</style>
+</head>
+<body>
+
+<!-- CONFIDENTIAL BANNER -->
+<div class="confidential">Documento confidencial · Exclusivo para Grupo Eleva · Mayo 2026</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="nav-logo" href="#top">
+    <img src="brand_assets/LOGO-PAGINA-SINFONDO.png" alt="NODO Works" />
+  </a>
+  <div class="nav-tag">
+    <span></span>Propuesta activa · Grupo Eleva
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="hero-grid"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      Diagnóstico completado · Propuesta personalizada
+    </div>
+    <h1 class="hero-headline">
+      Inteligencia que<br>
+      opera <em>Grupo Eleva</em><br>
+      por ti.
+    </h1>
+    <p class="hero-sub">
+      Un sistema de operación inteligente para que el CEO vea su empresa en tiempo real, las obras no se desvíen, y el equipo comercial venda sin depender de él.
+    </p>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      Ver propuesta
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- DIAGNÓSTICO -->
+<div class="diagnosis">
+  <div class="diagnosis-inner">
+    <div class="section-header reveal">
+      <div class="eyebrow">Lo que encontramos</div>
+      <h2 class="section-title">El diagnóstico <em>es claro</em></h2>
+      <p class="section-sub">Grupo Eleva crece rápido. La operación no crece al mismo ritmo. Eso genera riesgos que hoy cuestan dinero real.</p>
+    </div>
+    <div class="diagnosis-grid reveal">
+      <div class="diagnosis-card">
+        <div class="stat">~10% <span>↓</span></div>
+        <h4>Desviación en obra</h4>
+        <p>Ventura Lofts y Torre Romano acumulan ~10 puntos de retraso cada uno. Con crédito puente activo, cada mes adicional tiene costo financiero directo.</p>
+      </div>
+      <div class="diagnosis-card">
+        <div class="stat">0</div>
+        <h4>Visibilidad ejecutiva</h4>
+        <p>El CEO no sabe si está ganando o perdiendo en tiempo real. Los reportes llegan cuando el problema ya escaló a emergencia.</p>
+      </div>
+      <div class="diagnosis-card">
+        <div class="stat">3+</div>
+        <h4>Sistemas paralelos</h4>
+        <p>Odoo, CONTPAQ, ADARA, iVentas. Datos dispersos, sin integración. Las decisiones se toman con información fragmentada.</p>
+      </div>
+      <div class="diagnosis-card">
+        <div class="stat">62%</div>
+        <h4>Avance de gestorías</h4>
+        <p>Las gestorías con SEDUM y dependencias se dan seguimiento de forma manual, con indicadores débiles y sin alertas automáticas.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- DOLORES -->
+<section id="dolores">
+  <div class="section-header reveal">
+    <div class="eyebrow">Puntos críticos</div>
+    <h2 class="section-title">Cuatro áreas con <em>impacto inmediato</em></h2>
+    <p class="section-sub">No atacamos todo. Atacamos lo que hoy genera el mayor costo operativo y reputacional.</p>
+  </div>
+  <div class="pains-grid reveal">
+    <div class="pain-card">
+      <div class="pain-label">Dirección</div>
+      <h3>El CEO opera como bombero</h3>
+      <p>Sin dashboard ejecutivo integrado, el CEO se entera de los problemas cuando ya son emergencias. Tres proyectos nuevos en negociación simultánea sin proceso estándar de evaluación.</p>
+    </div>
+    <div class="pain-card">
+      <div class="pain-label">Obra</div>
+      <h3>Retrasos sin sistema de alerta</h3>
+      <p>Las desviaciones de obra no tienen alertas automáticas. Sin catálogo de rendimientos ni indicador de costo consolidado, los sobrecostos se detectan tarde.</p>
+    </div>
+    <div class="pain-card">
+      <div class="pain-label">Comercial</div>
+      <h3>Ventas sin dirección propia</h3>
+      <p>El despacho comercial externo opera con autonomía paralela. El CEO cubre vacíos de liderazgo comercial que no deberían depender de él para funcionar.</p>
+    </div>
+    <div class="pain-card">
+      <div class="pain-label">Administración</div>
+      <h3>Dos contabilidades, sin cabeza</h3>
+      <p>Eleva y Prisma operan con contabilidades separadas en CONTPAQ. Sin dirección administrativa unificada, cada subdepartamento trabaja de forma aislada.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SOLUCIÓN / FASES -->
+<div class="roadmap" id="solucion">
+  <div class="roadmap-inner">
+    <div class="section-header reveal">
+      <div class="eyebrow">La solución</div>
+      <h2 class="section-title">Tres fases. <em>Resultados desde el mes uno.</em></h2>
+      <p class="section-sub">Implementación progresiva para no interrumpir la operación. Cada fase genera valor antes de iniciar la siguiente.</p>
+    </div>
+    <div class="phases reveal">
+      <div class="phase">
+        <div class="phase-num">FASE 01</div>
+        <h3>Visibilidad total</h3>
+        <div class="phase-period">Meses 1 — 3</div>
+        <ul>
+          <li>Dashboard ejecutivo en tiempo real por proyecto</li>
+          <li>Alertas automáticas de desviación en obra</li>
+          <li>Indicador de costo consolidado (Ventura + Romano)</li>
+          <li>Semáforo de gestorías con SEDUM</li>
+          <li>Reporte semanal automatizado para el CEO</li>
+        </ul>
+      </div>
+      <div class="phase phase-highlight">
+        <div class="phase-badge">Núcleo</div>
+        <div class="phase-num">FASE 02</div>
+        <h3>Operación autónoma</h3>
+        <div class="phase-period">Meses 4 — 9</div>
+        <ul>
+          <li>Agente comercial que califica y da seguimiento a leads</li>
+          <li>CRM unificado en Odoo (eliminar ADARA)</li>
+          <li>Proceso estándar de evaluación de terrenos</li>
+          <li>Automatización de compras y órdenes de obra</li>
+          <li>Integración contable Odoo-CONTPAQ</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="phase-num">FASE 03</div>
+        <h3>Inteligencia de negocio</h3>
+        <div class="phase-period">Meses 10 — 18</div>
+        <ul>
+          <li>CFO digital con proyecciones de flujo</li>
+          <li>Modelo financiero dinámico por proyecto</li>
+          <li>Predicción de desviaciones antes de que ocurran</li>
+          <li>Pipeline de nuevos proyectos con evaluación automática</li>
+          <li>Expansión a San Miguel de Allende y Valle de Guadalupe</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- IMPACTO ESPERADO -->
+<section id="impacto">
+  <div class="section-header reveal">
+    <div class="eyebrow">Impacto proyectado</div>
+    <h2 class="section-title">Lo que cambia <em>en números</em></h2>
+    <p class="section-sub">Estimaciones conservadoras basadas en el diagnóstico. Sin suposiciones optimistas.</p>
+  </div>
+  <div class="metrics-grid reveal">
+    <div class="metric-card">
+      <div class="metric-value">−8h</div>
+      <div class="metric-label">semanales del CEO en operación comercial</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">-30 días</div>
+      <div class="metric-label">en tiempo de detección de desviaciones en obra</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">1 CRM</div>
+      <div class="metric-label">en lugar de tres plataformas paralelas</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">100%</div>
+      <div class="metric-label">visibilidad del portafolio en tiempo real</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- INVERSIÓN -->
+<section id="inversion">
+  <div class="section-header reveal">
+    <div class="eyebrow">Inversión</div>
+    <h2 class="section-title">Tres niveles de <em>compromiso</em></h2>
+    <p class="section-sub">Diseñados para que el inicio sea inmediato y la inversión se justifique desde el primer entregable.</p>
+  </div>
+  <div class="tiers-grid reveal">
+    <div class="tier">
+      <div class="tier-badge">Esencial</div>
+      <h3>Visibilidad</h3>
+      <div class="price">$18,000</div>
+      <div class="price-note">MXN / mes · 12 meses</div>
+      <div class="tier-divider"></div>
+      <ul>
+        <li>Dashboard ejecutivo de portafolio</li>
+        <li>Alertas de desviación en obra</li>
+        <li>Reporte semanal automatizado</li>
+        <li>Semáforo de gestorías</li>
+        <li>8 sesiones de trabajo al mes</li>
+      </ul>
+      <a href="https://wa.me/524439242456" class="btn-tier btn-ghost-tier">Conversemos →</a>
+    </div>
+    <div class="tier featured">
+      <div class="tier-badge">Operativo</div>
+      <h3>Autonomía</h3>
+      <div class="price">$32,000</div>
+      <div class="price-note">MXN / mes · 12 meses</div>
+      <div class="tier-divider"></div>
+      <ul>
+        <li>Todo lo de Esencial</li>
+        <li>Agente comercial activo</li>
+        <li>CRM unificado en Odoo</li>
+        <li>Proceso estándar de terrenos</li>
+        <li>Automatización de compras en obra</li>
+        <li>8 sesiones de trabajo al mes</li>
+      </ul>
+      <a href="https://wa.me/524439242456" class="btn-tier btn-primary-tier">Este es el nivel →</a>
+    </div>
+    <div class="tier">
+      <div class="tier-badge">Transformación</div>
+      <h3>Inteligencia total</h3>
+      <div class="price">$52,000</div>
+      <div class="price-note">MXN / mes · 18 meses</div>
+      <div class="tier-divider"></div>
+      <ul>
+        <li>Todo lo de Operativo</li>
+        <li>CFO digital con proyecciones</li>
+        <li>Modelo financiero dinámico</li>
+        <li>Predicción de desviaciones</li>
+        <li>Soporte para expansión de plazas</li>
+        <li>8 sesiones de trabajo al mes</li>
+      </ul>
+      <a href="https://wa.me/524439242456" class="btn-tier btn-ghost-tier">Conversemos →</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CTA FINAL -->
+<section class="cta-section" id="cta">
+  <div class="eyebrow reveal">Siguiente paso</div>
+  <h2 class="cta-title reveal">¿Arrancamos <em>la semana que entra?</em></h2>
+  <p class="cta-sub reveal">Una llamada de 30 minutos con el CEO para alinear prioridades y definir la fase de inicio.</p>
+  <div class="cta-actions reveal">
+    <a href="https://wa.me/524439242456?text=Hola%20%C3%81lvaro%2C%20vi%20la%20propuesta%20de%20NODO%20y%20quiero%20agendar%20una%20llamada" class="btn-cta-primary">
+      Agendar llamada
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <a href="mailto:alvarosanchezvieyra33@gmail.com" class="btn-cta-ghost">Escribir por email</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <img src="brand_assets/LOGO-PAGINA-SINFONDO.png" alt="NODO Works" />
+  <p>© 2026 NODO Works · Documento confidencial para Grupo Eleva</p>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
