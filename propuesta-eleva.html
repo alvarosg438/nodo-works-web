@@ -135,7 +135,7 @@ a { color: inherit; text-decoration: none; }
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(105deg, rgba(10,10,15,.97) 40%, rgba(10,10,15,.75) 65%, rgba(10,10,15,.2) 100%);
+  background: linear-gradient(105deg, rgba(10,10,15,.82) 35%, rgba(10,10,15,.55) 65%, rgba(10,10,15,.15) 100%);
 }
 .hero-grid {
   position: absolute;
@@ -768,11 +768,12 @@ footer p { font-size: 13px; color: var(--gray-5); }
   </div>
 </nav>
 
-<!-- HERO — fondo oscuro con foto de sus proyectos + CEO -->
+<!-- HERO — shader de fondo con colores NODO -->
 <section class="hero" id="top">
   <!-- Fondos fuera del flujo del grid -->
   <div style="position:absolute;inset:0;z-index:0;pointer-events:none;">
-    <div class="hero-bg-img" id="heroBgImg"></div>
+    <!-- Canvas del shader — se monta por JS -->
+    <div id="shaderContainer" style="position:absolute;inset:0;"></div>
     <div class="hero-overlay"></div>
     <div class="hero-grid"></div>
   </div>
@@ -1133,6 +1134,35 @@ footer p { font-size: 13px; color: var(--gray-5); }
   <img src="brand_assets/LOGO-PAGINA-SINFONDO.png" alt="NODO Works" />
   <p>© 2026 NODO Works · Documento confidencial para Grupo Eleva</p>
 </footer>
+
+<script type="module">
+/* ── MESH GRADIENT SHADER — colores NODO azul eléctrico ── */
+import { ShaderMount, meshGradientFragmentShader, getShaderColorFromString } from './shader-bundle.js';
+
+const container = document.getElementById('shaderContainer');
+if (container) {
+  const colors = [
+    '#2C5FFF',  // azul NODO principal
+    '#0A0A2E',  // negro azulado profundo
+    '#4A7BFF',  // azul eléctrico claro
+    '#0A1E6B',  // azul profundo
+  ];
+
+  const colorUniforms = {};
+  colors.forEach((color, i) => {
+    colorUniforms[`u_colors[${i}]`] = getShaderColorFromString(color);
+  });
+
+  new ShaderMount(container, meshGradientFragmentShader, {
+    ...colorUniforms,
+    u_colorsCount: colors.length,
+    u_distortion: 0.9,
+    u_swirl: 0.3,
+    u_grainMixer: 0.0,
+    u_grainOverlay: 0.0,
+  }, {}, 0.3);
+}
+</script>
 
 <script>
 /* ── CURSOR GLOW ── */
