@@ -418,11 +418,15 @@ section.hero {
   aspect-ratio: 4/3;
   background: var(--gray-2);
   cursor: default;
+  isolation: isolate;          /* crea un contexto de apilamiento propio */
+  transform: translateZ(0);   /* fuerza compositing layer desde el inicio */
 }
 .proyecto-card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: var(--r-lg);  /* coincide con el contenedor para el clip */
+  will-change: transform;      /* el navegador prepara la capa antes del hover */
   transition: transform .6s cubic-bezier(.16,1,.3,1), filter .4s ease;
   filter: grayscale(20%);
 }
