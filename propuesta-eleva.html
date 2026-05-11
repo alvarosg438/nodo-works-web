@@ -119,6 +119,9 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
   padding: 120px 64px 80px;
   background: var(--ink);
+  width: 100%;
+  left: 0;
+  right: 0;
 }
 .hero-bg-img {
   position: absolute;
@@ -157,7 +160,7 @@ a { color: inherit; text-decoration: none; }
   gap: 20px;
   margin-bottom: 48px;
 }
-.hero-logos img { height: 28px; width: auto; opacity: .9; }
+.hero-logos img { height: 28px; width: auto; opacity: .95; filter: brightness(0) invert(1); }
 .hero-logos-sep {
   width: 1px; height: 28px;
   background: rgba(255,255,255,.2);
@@ -249,10 +252,11 @@ a { color: inherit; text-decoration: none; }
 .hero-ceo img {
   position: absolute;
   bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 88vh;
-  width: auto;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
   display: block;
   filter: grayscale(15%) contrast(1.05);
 }
@@ -296,6 +300,11 @@ section {
   padding: 100px 32px;
   max-width: 1100px;
   margin: 0 auto;
+}
+section.hero {
+  max-width: none;
+  margin: 0;
+  padding: 120px 64px 80px;
 }
 .section-header { text-align: center; margin-bottom: 64px; }
 .section-title {
@@ -770,10 +779,9 @@ footer p { font-size: 13px; color: var(--gray-5); }
 
 <!-- HERO — shader de fondo con colores NODO -->
 <section class="hero" id="top">
-  <!-- Fondos fuera del flujo del grid -->
+  <!-- Fondos fuera del flujo -->
   <div style="position:absolute;inset:0;z-index:0;pointer-events:none;">
-    <!-- Canvas del shader — se monta por JS -->
-    <div id="shaderContainer" style="position:absolute;inset:0;"></div>
+    <canvas id="shaderCanvas" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></canvas>
     <div class="hero-overlay"></div>
     <div class="hero-grid"></div>
   </div>
@@ -1135,36 +1143,188 @@ footer p { font-size: 13px; color: var(--gray-5); }
   <p>© 2026 NODO Works · Documento confidencial para Grupo Eleva</p>
 </footer>
 
-<script type="module">
-/* ── MESH GRADIENT SHADER — colores NODO azul eléctrico ── */
-import { ShaderMount, meshGradientFragmentShader, getShaderColorFromString } from './shader-bundle.js';
+<script>
+/* ── MESH GRADIENT SHADER — WebGL inline, sin dependencias ── */
+(function() {
+  const canvas = document.getElementById('shaderCanvas');
+  if (!canvas) return;
 
-const container = document.getElementById('shaderContainer');
-if (container) {
+  const gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
+  if (!gl) return;
+
+  // Colores NODO — azul eléctrico
   const colors = [
-    '#2C5FFF',  // azul NODO principal
-    '#0A0A2E',  // negro azulado profundo
-    '#4A7BFF',  // azul eléctrico claro
-    '#0A1E6B',  // azul profundo
+    [0.173, 0.373, 1.0,   1.0],  // #2C5FFF
+    [0.039, 0.039, 0.180, 1.0],  // #0A0A2E
+    [0.290, 0.482, 1.0,   1.0],  // #4A7BFF
+    [0.039, 0.118, 0.420, 1.0],  // #0A1E6B
   ];
 
-  const colorUniforms = {};
-  colors.forEach((color, i) => {
-    colorUniforms[`u_colors[${i}]`] = getShaderColorFromString(color);
-  });
+  const vert = `
+    attribute vec2 a_pos;
+    void main() { gl_Position = vec4(a_pos, 0., 1.); }
+  `;
 
-  new ShaderMount(container, meshGradientFragmentShader, {
-    ...colorUniforms,
-    u_colorsCount: colors.length,
-    u_distortion: 0.9,
-    u_swirl: 0.3,
-    u_grainMixer: 0.0,
-    u_grainOverlay: 0.0,
-  }, {}, 0.3);
-}
+  const frag = `
+    precision mediump float;
+    uniform float u_time;
+    uniform vec2  u_res;
+    uniform vec4  u_c0, u_c1, u_c2, u_c3;
+
+    float hash(vec2 p) {
+      p = fract(p * vec2(0.3183099, 0.3678794)) + 0.1;
+      p += dot(p, p + 19.19);
+      return fract(p.x * p.y);
+    }
+    float vnoise(vec2 p) {
+      vec2 i = floor(p), f = fract(p);
+      float a = hash(i), b = hash(i+vec2(1,0)), c = hash(i+vec2(0,1)), d = hash(i+vec2(1,1));
+      vec2 u = f*f*(3.-2.*f);
+      return mix(mix(a,b,u.x), mix(c,d,u.x), u.y);
+    }
+    vec2 rotate(vec2 v, float a) {
+      return mat2(cos(a),sin(a),-sin(a),cos(a))*v;
+    }
+    vec2 pos(int i, float t) {
+      float a = float(i)*.37, b = .6+fract(float(i)/3.)*.9, c = .8+fract(float(i+1)/4.);
+      return .5 + .5*vec2(sin(t*b+a), cos(t*c+a*1.5));
+    }
+    void main() {
+      vec2 uv = gl_FragCoord.xy / u_res;
+      uv.y = 1. - uv.y;
+      float t = u_time * 0.25 + 41.5;
+
+      float r = length(uv - .5);
+      float center = 1. - smoothstep(0.,1.,r);
+      vec2 d = uv;
+      for (float i=1.; i<=2.; i++) {
+        d.x += 0.9*center/i*sin(t+i*.4*d.y)*cos(.2*t+i*2.4*d.y);
+        d.y += 0.9*center/i*cos(t+i*2.*d.x);
+      }
+      d = rotate(d-.5, -3.*0.3*r) + .5;
+
+      vec4 cols[4];
+      cols[0]=u_c0; cols[1]=u_c1; cols[2]=u_c2; cols[3]=u_c3;
+
+      vec3 col = vec3(0.); float tw = 0.;
+      for (int i=0;i<4;i++) {
+        vec2 p = pos(i, t);
+        float dist = length(d - p);
+        dist = pow(dist, 3.5);
+        float w = 1./(dist+1e-3);
+        col += cols[i].rgb * cols[i].a * w;
+        tw += w;
+      }
+      col /= max(1e-4, tw);
+      gl_FragColor = vec4(col, 1.0);
+    }
+  `;
+
+  function compile(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
+  }
+  const prog = gl.createProgram();
+  gl.attachShader(prog, compile(gl.VERTEX_SHADER, vert));
+  gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, frag));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(prog, 'a_pos');
+  gl.enableVertexAttribArray(loc);
+  gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+  const uTime = gl.getUniformLocation(prog, 'u_time');
+  const uRes  = gl.getUniformLocation(prog, 'u_res');
+  const uC    = [0,1,2,3].map(i => gl.getUniformLocation(prog, `u_c${i}`));
+
+  colors.forEach((c, i) => gl.uniform4fv(uC[i], c));
+
+  function resize() {
+    canvas.width  = canvas.offsetWidth  * devicePixelRatio;
+    canvas.height = canvas.offsetHeight * devicePixelRatio;
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.uniform2f(uRes, canvas.width, canvas.height);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  let start = null;
+  function frame(ts) {
+    if (!start) start = ts;
+    gl.uniform1f(uTime, (ts - start) * 0.001);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
 </script>
 
 <script>
+/* ── TYPEWRITER HERO — animación de texto impactante ── */
+(function() {
+  const headline = document.querySelector('.hero-headline');
+  if (!headline) return;
+
+  function wrapWords(el) {
+    el.childNodes.forEach(node => {
+      if (node.nodeType === 3) {
+        const words = node.textContent.split(/(\s+)/);
+        const frag = document.createDocumentFragment();
+        words.forEach(w => {
+          if (w.trim()) {
+            const span = document.createElement('span');
+            span.className = 'tw-word';
+            span.textContent = w;
+            frag.appendChild(span);
+          } else if (w) {
+            frag.appendChild(document.createTextNode(w));
+          }
+        });
+        node.parentNode.replaceChild(frag, node);
+      } else if (node.nodeType === 1 && node.tagName !== 'BR') {
+        wrapWords(node);
+      }
+    });
+  }
+  wrapWords(headline);
+
+  const style = document.createElement('style');
+  style.textContent = `
+    .tw-word {
+      display: inline-block;
+      opacity: 0;
+      filter: blur(14px);
+      transform: translateY(18px);
+      transition: opacity 0.55s ease, filter 0.55s ease, transform 0.55s cubic-bezier(.16,1,.3,1);
+    }
+    .tw-word.visible { opacity:1; filter:blur(0); transform:translateY(0); }
+    .hero-sub { opacity:0; transform:translateY(12px); transition: opacity .7s ease .1s, transform .7s cubic-bezier(.16,1,.3,1) .1s; }
+    .hero-sub.visible { opacity:1; transform:translateY(0); }
+    .hero-stats { opacity:0; transform:translateY(12px); transition: opacity .6s ease, transform .6s cubic-bezier(.16,1,.3,1); }
+    .hero-stats.visible { opacity:1; transform:translateY(0); }
+    .hero-badge { opacity:0; transform:translateY(8px); transition: opacity .5s ease, transform .5s ease; }
+    .hero-badge.visible { opacity:1; transform:translateY(0); }
+    .hero-logos { opacity:0; transition: opacity .5s ease; }
+    .hero-logos.visible { opacity:1; }
+  `;
+  document.head.appendChild(style);
+
+  setTimeout(() => document.querySelector('.hero-logos')?.classList.add('visible'), 200);
+  setTimeout(() => document.querySelector('.hero-badge')?.classList.add('visible'), 500);
+
+  const words = headline.querySelectorAll('.tw-word');
+  words.forEach((w, i) => setTimeout(() => w.classList.add('visible'), 750 + i * 85));
+  const done = 750 + words.length * 85;
+  setTimeout(() => document.querySelector('.hero-sub')?.classList.add('visible'), done + 100);
+  setTimeout(() => document.querySelector('.hero-stats')?.classList.add('visible'), done + 380);
+})();
+
 /* ── CURSOR GLOW ── */
 const glow = document.getElementById('cursorGlow');
 let glowX = 0, glowY = 0, currentX = 0, currentY = 0;
