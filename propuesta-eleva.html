@@ -157,17 +157,17 @@ a { color: inherit; text-decoration: none; }
 .hero-logos {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 28px;
   margin-bottom: 48px;
 }
-.hero-logos img { height: 28px; width: auto; opacity: .95; filter: brightness(0) invert(1); }
+.hero-logos img { height: 48px; width: auto; opacity: .95; filter: brightness(0) invert(1); }
 .hero-logos-sep {
   width: 1px; height: 28px;
   background: rgba(255,255,255,.2);
 }
 .hero-x {
-  font-size: 18px;
-  color: rgba(255,255,255,.3);
+  font-size: 24px;
+  color: rgba(255,255,255,.25);
   font-weight: 300;
 }
 .hero-badge {
@@ -233,16 +233,15 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: 0.1em;
 }
 
-/* Imagen del CEO flotante */
+/* Imagen del CEO — estrictamente dentro del hero */
 .hero-ceo {
   position: absolute;
   right: 0;
   top: 0;
-  width: 420px;
-  height: 100vh;
+  bottom: 0;        /* termina donde termina el hero */
+  width: 400px;
   z-index: 10;
-  display: flex;
-  align-items: flex-end;
+  overflow: hidden; /* corta cualquier cosa que salga */
 }
 .hero-ceo-img-wrap {
   position: relative;
@@ -256,34 +255,63 @@ a { color: inherit; text-decoration: none; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: center 15%;
   display: block;
   filter: grayscale(15%) contrast(1.05);
 }
-/* fade sutil en los bordes del CEO — solo lateral izquierdo */
+/* fade lateral izquierdo y bottom */
 .hero-ceo-img-wrap::before {
   content: '';
   position: absolute;
   top: 0; left: 0; bottom: 0;
-  width: 60px;
+  width: 80px;
   background: linear-gradient(to right, var(--ink) 0%, transparent 100%);
+  z-index: 2;
+}
+.hero-ceo-img-wrap::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 120px;
+  background: linear-gradient(to top, var(--ink) 0%, transparent 100%);
   z-index: 2;
 }
 .hero-ceo-label {
   position: absolute;
-  bottom: 48px;
-  left: 16px;
+  bottom: 32px;
+  left: 20px;
   right: 16px;
   z-index: 3;
-  background: rgba(10,10,15,.6);
+  background: rgba(10,10,15,.65);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255,255,255,.1);
   border-radius: var(--r-md);
-  padding: 12px 16px;
+  padding: 10px 14px;
 }
-.hero-ceo-name { font-size: 14px; font-weight: 600; color: var(--white); }
-.hero-ceo-title { font-size: 12px; color: rgba(255,255,255,.5); }
+.hero-ceo-name { font-size: 13px; font-weight: 600; color: var(--white); }
+.hero-ceo-title { font-size: 11px; color: rgba(255,255,255,.5); margin-top: 2px; }
 @media (max-width: 900px) { .hero-ceo { display: none; } .hero { padding: 120px 32px 80px; } }
+
+/* ── HERO TYPEWRITER — estado inicial invisible ── */
+.hero-logos,
+.hero-badge,
+.hero-headline,
+.hero-sub,
+.hero-stats {
+  opacity: 0;
+}
+.tw-word {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(14px);
+  transform: translateY(18px);
+  transition: opacity .55s ease, filter .55s ease, transform .55s cubic-bezier(.16,1,.3,1);
+}
+.tw-word.visible {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0);
+}
 
 /* ── ANIMATIONS ── */
 @keyframes fadeUp {
@@ -401,20 +429,21 @@ section.hero {
 .proyecto-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(10,10,15,.85) 0%, rgba(10,10,15,.1) 55%, transparent 100%);
+  background: linear-gradient(to top, rgba(10,10,15,.92) 0%, rgba(10,10,15,.3) 50%, rgba(10,10,15,.05) 100%);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   padding: 20px;
 }
 .proyecto-logo {
-  height: 22px;
+  height: 28px;
+  max-width: 130px;
   width: auto;
   object-fit: contain;
-  object-position: left;
+  object-position: left center;
   margin-bottom: 8px;
-  filter: brightness(0) invert(1);
-  opacity: .9;
+  filter: brightness(0) invert(1) drop-shadow(0 1px 3px rgba(0,0,0,.6));
+  opacity: 1;
 }
 .proyecto-name {
   font-size: 15px;
@@ -845,7 +874,7 @@ footer p { font-size: 13px; color: var(--gray-5); }
     <div class="proyectos-grid stagger-children">
 
       <div class="proyecto-card">
-        <img src="https://grupo-eleva.mx/wp-content/uploads/2025/02/Ventura-Lofts--1024x593.png" alt="Ventura Lofts" loading="lazy" />
+        <img src="https://grupo-eleva.mx/wp-content/uploads/2024/11/RENDER-1-habitacion-1-1024x948.jpg" alt="Ventura Lofts" loading="lazy" />
         <div class="proyecto-overlay">
           <img class="proyecto-logo" src="https://grupo-eleva.mx/wp-content/uploads/2024/12/logoventura.png" alt="Ventura Lofts" />
           <div class="proyecto-name">Ventura Lofts</div>
@@ -855,7 +884,7 @@ footer p { font-size: 13px; color: var(--gray-5); }
       </div>
 
       <div class="proyecto-card">
-        <img src="https://grupo-eleva.mx/wp-content/uploads/2025/03/compra-en-preventa-1024x592.png" alt="Torre Romano" loading="lazy" />
+        <img src="https://grupo-eleva.mx/wp-content/uploads/2024/11/RENDER-AMENIDADES-TERRAZA-1024x576.jpeg" alt="Torre Romano" loading="lazy" />
         <div class="proyecto-overlay">
           <img class="proyecto-logo" src="https://grupo-eleva.mx/wp-content/uploads/2024/11/torrerom.png" alt="Torre Romano" />
           <div class="proyecto-name">Torre Romano</div>
@@ -865,7 +894,7 @@ footer p { font-size: 13px; color: var(--gray-5); }
       </div>
 
       <div class="proyecto-card">
-        <img src="https://grupo-eleva.mx/wp-content/uploads/2025/03/tuinversion.png" alt="Casa Calina" loading="lazy" />
+        <img src="https://grupo-eleva.mx/wp-content/uploads/2024/11/12_Terraza_Asadores-1-1024x703.jpg" alt="Casa Calina" loading="lazy" />
         <div class="proyecto-overlay">
           <img class="proyecto-logo" src="https://grupo-eleva.mx/wp-content/uploads/2025/04/Logo-Casa-Calina-blanco.png" alt="Casa Calina" />
           <div class="proyecto-name">Casa Calina</div>
@@ -1266,11 +1295,12 @@ footer p { font-size: 13px; color: var(--gray-5); }
 </script>
 
 <script>
-/* ── TYPEWRITER HERO — animación de texto impactante ── */
+/* ── TYPEWRITER HERO ── */
 (function() {
   const headline = document.querySelector('.hero-headline');
   if (!headline) return;
 
+  // Envolver cada palabra en un span animable
   function wrapWords(el) {
     el.childNodes.forEach(node => {
       if (node.nodeType === 3) {
@@ -1294,35 +1324,33 @@ footer p { font-size: 13px; color: var(--gray-5); }
   }
   wrapWords(headline);
 
-  const style = document.createElement('style');
-  style.textContent = `
-    .tw-word {
-      display: inline-block;
-      opacity: 0;
-      filter: blur(14px);
-      transform: translateY(18px);
-      transition: opacity 0.55s ease, filter 0.55s ease, transform 0.55s cubic-bezier(.16,1,.3,1);
-    }
-    .tw-word.visible { opacity:1; filter:blur(0); transform:translateY(0); }
-    .hero-sub { opacity:0; transform:translateY(12px); transition: opacity .7s ease .1s, transform .7s cubic-bezier(.16,1,.3,1) .1s; }
-    .hero-sub.visible { opacity:1; transform:translateY(0); }
-    .hero-stats { opacity:0; transform:translateY(12px); transition: opacity .6s ease, transform .6s cubic-bezier(.16,1,.3,1); }
-    .hero-stats.visible { opacity:1; transform:translateY(0); }
-    .hero-badge { opacity:0; transform:translateY(8px); transition: opacity .5s ease, transform .5s ease; }
-    .hero-badge.visible { opacity:1; transform:translateY(0); }
-    .hero-logos { opacity:0; transition: opacity .5s ease; }
-    .hero-logos.visible { opacity:1; }
+  // Transiciones para los demás elementos del hero
+  const extraStyle = document.createElement('style');
+  extraStyle.textContent = `
+    .hero-logos  { transition: opacity .5s ease; }
+    .hero-logos.visible { opacity: 1; }
+    .hero-badge  { transform: translateY(8px); transition: opacity .5s ease, transform .5s cubic-bezier(.16,1,.3,1); }
+    .hero-badge.visible  { opacity: 1; transform: translateY(0); }
+    .hero-headline { opacity: 1; }
+    .hero-sub    { transform: translateY(12px); transition: opacity .7s ease, transform .7s cubic-bezier(.16,1,.3,1); }
+    .hero-sub.visible    { opacity: 1; transform: translateY(0); }
+    .hero-stats  { transform: translateY(12px); transition: opacity .6s ease, transform .6s cubic-bezier(.16,1,.3,1); }
+    .hero-stats.visible  { opacity: 1; transform: translateY(0); }
   `;
-  document.head.appendChild(style);
+  document.head.appendChild(extraStyle);
 
-  setTimeout(() => document.querySelector('.hero-logos')?.classList.add('visible'), 200);
-  setTimeout(() => document.querySelector('.hero-badge')?.classList.add('visible'), 500);
+  // Secuencia de aparición
+  const show = (sel, delay) => setTimeout(() => document.querySelector(sel)?.classList.add('visible'), delay);
+
+  show('.hero-logos', 150);
+  show('.hero-badge', 450);
 
   const words = headline.querySelectorAll('.tw-word');
-  words.forEach((w, i) => setTimeout(() => w.classList.add('visible'), 750 + i * 85));
-  const done = 750 + words.length * 85;
-  setTimeout(() => document.querySelector('.hero-sub')?.classList.add('visible'), done + 100);
-  setTimeout(() => document.querySelector('.hero-stats')?.classList.add('visible'), done + 380);
+  words.forEach((w, i) => setTimeout(() => w.classList.add('visible'), 700 + i * 80));
+
+  const done = 700 + words.length * 80;
+  show('.hero-sub',   done + 80);
+  show('.hero-stats', done + 340);
 })();
 
 /* ── CURSOR GLOW ── */
