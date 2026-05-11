@@ -440,29 +440,23 @@ section.hero {
   padding: 20px;
 }
 .proyecto-logo {
-  height: auto;
-  width: auto;
-  object-fit: contain;
-  object-position: left center;
+  display: block;
   margin-bottom: 8px;
   filter: brightness(0) invert(1) drop-shadow(0 1px 4px rgba(0,0,0,.8));
   opacity: 1;
-  display: block;
 }
-/* Ventura — logo tipográfico ancho, limitar anchura */
+/* Cada logo con altura fija — ancho fluye según ratio natural */
 .proyecto-logo.logo-ventura {
-  max-height: 28px;
-  max-width: 120px;
+  height: 20px;   /* ratio 3.74 → ~75px ancho */
+  width: auto;
 }
-/* Torre Romano — ya calibrado */
 .proyecto-logo.logo-romano {
-  max-height: 36px;
-  max-width: 160px;
+  height: 20px;   /* ratio 4.96 → ~99px ancho */
+  width: auto;
 }
-/* Casa Calina — logo vertical con ícono, darle más altura */
 .proyecto-logo.logo-calina {
-  max-height: 48px;
-  max-width: 140px;
+  height: 44px;   /* ratio 1.94 → ~85px ancho (incluye icono encima) */
+  width: auto;
 }
 .proyecto-card a {
   position: absolute;
@@ -470,7 +464,7 @@ section.hero {
   z-index: 4;
 }
 .proyecto-name {
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 600;
   color: var(--white);
   letter-spacing: -0.01em;
@@ -903,7 +897,6 @@ footer p { font-size: 13px; color: var(--gray-5); }
         <a href="https://grupo-eleva.mx/ventura-lofts/" target="_blank" rel="noopener"></a>
         <img src="https://grupo-eleva.mx/wp-content/uploads/2024/11/RENDER-1-habitacion-1-1024x948.jpg" alt="Ventura Lofts" loading="lazy" />
         <div class="proyecto-overlay">
-          <img class="proyecto-logo logo-ventura" src="https://grupo-eleva.mx/wp-content/uploads/2024/12/logoventura.png" alt="Ventura Lofts" />
           <div class="proyecto-name">Ventura Lofts</div>
           <div class="proyecto-pct">80% vendido · 33 deptos</div>
           <div class="proyecto-bar"><div class="proyecto-bar-fill" data-target="80"></div></div>
@@ -914,7 +907,6 @@ footer p { font-size: 13px; color: var(--gray-5); }
         <a href="https://grupo-eleva.mx/torre-romano/" target="_blank" rel="noopener"></a>
         <img src="https://grupo-eleva.mx/wp-content/uploads/2024/11/RENDER-AMENIDADES-TERRAZA-1024x576.jpeg" alt="Torre Romano" loading="lazy" />
         <div class="proyecto-overlay">
-          <img class="proyecto-logo logo-romano" src="https://grupo-eleva.mx/wp-content/uploads/2024/11/torrerom.png" alt="Torre Romano" />
           <div class="proyecto-name">Torre Romano</div>
           <div class="proyecto-pct">45% vendido · 15 deptos</div>
           <div class="proyecto-bar"><div class="proyecto-bar-fill" data-target="45"></div></div>
