@@ -114,15 +114,16 @@ a { color: inherit; text-decoration: none; }
 .hero {
   position: relative;
   min-height: 100vh;
+  height: 100vh;
   display: flex;
   align-items: center;
   padding: 120px 64px 80px;
-  overflow: hidden;
   background: var(--ink);
 }
 .hero-bg-img {
   position: absolute;
   inset: 0;
+  grid-column: 1 / -1;
   background-image: url('https://grupo-eleva.mx/wp-content/uploads/2025/03/compra-en-preventa-1024x592.png');
   background-size: cover;
   background-position: center;
@@ -134,7 +135,7 @@ a { color: inherit; text-decoration: none; }
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(105deg, rgba(10,10,15,.95) 45%, rgba(10,10,15,.6) 100%);
+  background: linear-gradient(105deg, rgba(10,10,15,.97) 40%, rgba(10,10,15,.75) 65%, rgba(10,10,15,.2) 100%);
 }
 .hero-grid {
   position: absolute;
@@ -155,7 +156,6 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
   gap: 20px;
   margin-bottom: 48px;
-  animation: fadeUp .8s ease .1s both;
 }
 .hero-logos img { height: 28px; width: auto; opacity: .9; }
 .hero-logos-sep {
@@ -178,7 +178,6 @@ a { color: inherit; text-decoration: none; }
   font-size: 13px;
   color: var(--blue-light);
   margin-bottom: 32px;
-  animation: fadeUp .8s ease .2s both;
 }
 .hero-badge-dot {
   width: 6px; height: 6px;
@@ -193,7 +192,6 @@ a { color: inherit; text-decoration: none; }
   line-height: 1.0;
   margin-bottom: 24px;
   color: var(--white);
-  animation: fadeUp .9s ease .3s both;
 }
 .hero-headline em {
   font-family: 'Instrument Serif', serif;
@@ -206,14 +204,12 @@ a { color: inherit; text-decoration: none; }
   max-width: 520px;
   line-height: 1.65;
   margin-bottom: 48px;
-  animation: fadeUp .9s ease .45s both;
 }
 
 /* Stats en el hero */
 .hero-stats {
   display: flex;
   gap: 40px;
-  animation: fadeUp .9s ease .6s both;
   flex-wrap: wrap;
 }
 .hero-stat {}
@@ -237,39 +233,52 @@ a { color: inherit; text-decoration: none; }
 /* Imagen del CEO flotante */
 .hero-ceo {
   position: absolute;
-  right: 80px;
-  bottom: 0;
-  z-index: 2;
-  animation: fadeUp 1s ease .5s both;
+  right: 0;
+  top: 0;
+  width: 420px;
+  height: 100vh;
+  z-index: 10;
+  display: flex;
+  align-items: flex-end;
+}
+.hero-ceo-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 .hero-ceo img {
-  height: 480px;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 88vh;
   width: auto;
-  object-fit: cover;
+  display: block;
   filter: grayscale(15%) contrast(1.05);
-  mask-image: linear-gradient(to top, transparent 0%, black 25%, black 85%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to top, transparent 0%, black 25%, black 85%, transparent 100%);
+}
+/* fade sutil en los bordes del CEO — solo lateral izquierdo */
+.hero-ceo-img-wrap::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 60px;
+  background: linear-gradient(to right, var(--ink) 0%, transparent 100%);
+  z-index: 2;
 }
 .hero-ceo-label {
   position: absolute;
   bottom: 48px;
-  right: 0;
-  background: rgba(250,248,244,.1);
+  left: 16px;
+  right: 16px;
+  z-index: 3;
+  background: rgba(10,10,15,.6);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.1);
   border-radius: var(--r-md);
   padding: 12px 16px;
-  text-align: right;
 }
-.hero-ceo-name {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--white);
-}
-.hero-ceo-title {
-  font-size: 12px;
-  color: rgba(255,255,255,.5);
-}
+.hero-ceo-name { font-size: 14px; font-weight: 600; color: var(--white); }
+.hero-ceo-title { font-size: 12px; color: rgba(255,255,255,.5); }
 @media (max-width: 900px) { .hero-ceo { display: none; } .hero { padding: 120px 32px 80px; } }
 
 /* ── ANIMATIONS ── */
@@ -761,11 +770,14 @@ footer p { font-size: 13px; color: var(--gray-5); }
 
 <!-- HERO — fondo oscuro con foto de sus proyectos + CEO -->
 <section class="hero" id="top">
-  <div class="hero-bg-img" id="heroBgImg"></div>
-  <div class="hero-overlay"></div>
-  <div class="hero-grid"></div>
+  <!-- Fondos fuera del flujo del grid -->
+  <div style="position:absolute;inset:0;z-index:0;pointer-events:none;">
+    <div class="hero-bg-img" id="heroBgImg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-grid"></div>
+  </div>
 
-  <div class="hero-inner">
+  <div class="hero-inner" style="position:relative;z-index:1;">
     <!-- Logos NODO × Eleva -->
     <div class="hero-logos">
       <img src="brand_assets/LOGO-PAGINA-SINFONDO.png" alt="NODO Works" />
@@ -805,10 +817,12 @@ footer p { font-size: 13px; color: var(--gray-5); }
 
   <!-- Foto CEO -->
   <div class="hero-ceo">
-    <img src="../NODO/wiki/clientes/grupo-eleva/assets/ARQ JOSE ANTONIO.jpg" alt="Arq. José Antonio Reyes Caldelas" />
-    <div class="hero-ceo-label">
-      <div class="hero-ceo-name">Arq. José Antonio Reyes Caldelas</div>
-      <div class="hero-ceo-title">CEO · Grupo Eleva</div>
+    <div class="hero-ceo-img-wrap">
+      <img src="arq-jose-antonio.jpg" alt="Arq. José Antonio Reyes Caldelas" />
+      <div class="hero-ceo-label">
+        <div class="hero-ceo-name">Arq. José Antonio Reyes Caldelas</div>
+        <div class="hero-ceo-title">CEO · Grupo Eleva</div>
+      </div>
     </div>
   </div>
 </section>
@@ -1140,8 +1154,15 @@ const obs = new IntersectionObserver(entries => {
     e.target.classList.add('visible');
     obs.unobserve(e.target);
   });
-}, { threshold: 0.1 });
+}, { threshold: 0.05 });
 document.querySelectorAll('.reveal, .stagger-children').forEach(el => obs.observe(el));
+
+// Fallback: si el observer no dispara (headless/print), revelar todo
+setTimeout(() => {
+  document.querySelectorAll('.reveal:not(.visible), .stagger-children:not(.visible)').forEach(el => {
+    el.classList.add('visible');
+  });
+}, 800);
 
 /* ── PROGRESS BARS ── */
 const progressObs = new IntersectionObserver(entries => {
