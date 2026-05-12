@@ -82,52 +82,264 @@ a { color: inherit; text-decoration: none; }
   border-radius: 0 2px 2px 0;
   box-shadow: 0 0 8px rgba(124,58,237,.5);
 }
-/* Indicador flotante en el lado derecho — inspirado en Dynamic Island */
+/* ══════════════════════════════════════════════
+   DYNAMIC ISLAND TOC
+   ══════════════════════════════════════════════ */
+
+/* Backdrop cuando está expandido */
+.toc-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9996;
+  background: rgba(10,10,15,.35);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .45s cubic-bezier(.22,1,.36,1);
+}
+.toc-backdrop.visible { opacity: 1; pointer-events: auto; }
+
+/* Wrapper posicionado */
 .scroll-island {
   position: fixed;
-  right: 24px;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 9998;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(60px);
+  z-index: 9997;
   opacity: 0;
-  transition: opacity .4s ease;
+  transition: opacity .4s ease, transform .5s cubic-bezier(.22,1,.36,1);
   pointer-events: none;
 }
-.scroll-island.visible { opacity: 1; }
-.scroll-island-track {
-  width: 5px;
-  height: 180px;
-  background: rgba(44,95,255,.15);
-  border-radius: 6px;
+.scroll-island.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+/* La píldora / isla */
+.toc-island {
   position: relative;
   overflow: hidden;
-  box-shadow: 0 0 0 1px rgba(44,95,255,.1);
+  border: 1px solid rgba(44,95,255,.18);
+  background: rgba(10,10,15,.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 8px 40px rgba(10,10,15,.45), 0 0 0 1px rgba(124,58,237,.1);
+  cursor: pointer;
+
+  /* Dimensiones y forma — animadas con JS */
+  width: 280px;
+  height: 52px;
+  border-radius: 26px;
+  transition:
+    width  .5s cubic-bezier(.22,1,.36,1),
+    height .5s cubic-bezier(.22,1,.36,1),
+    border-radius .5s cubic-bezier(.22,1,.36,1),
+    box-shadow .3s ease;
 }
-.scroll-island-thumb {
+.toc-island:hover { box-shadow: 0 12px 48px rgba(10,10,15,.55), 0 0 0 1px rgba(44,95,255,.25); }
+.toc-island.expanded {
+  width: 320px;
+  height: 400px;
+  border-radius: 24px;
+  cursor: default;
+  box-shadow: 0 24px 64px rgba(10,10,15,.55), 0 0 0 1px rgba(124,58,237,.22);
+}
+
+/* ── VISTA CERRADA (píldora) ── */
+.toc-pill {
   position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 0%;
-  background: linear-gradient(180deg, #007AFF 0%, var(--blue-vivid) 100%);
-  border-radius: 6px;
-  transition: height 0.1s linear;
-  box-shadow: 0 0 10px rgba(44,95,255,.6);
+  inset: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  transition: opacity .3s ease, filter .3s ease;
 }
-.scroll-island-pct {
+.toc-island.expanded .toc-pill {
+  opacity: 0;
+  filter: blur(4px);
+  pointer-events: none;
+}
+.toc-pill-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue-vivid), var(--violet-mid));
+  flex-shrink: 0;
+  box-shadow: 0 0 8px rgba(44,95,255,.6);
+}
+.toc-pill-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  position: relative;
+  height: 20px;
+}
+/* Texto que hace slide vertical al cambiar sección */
+.toc-pill-label-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: rgba(255,255,255,.9);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: 'Space Grotesk', sans-serif;
+  transition: opacity .35s ease, transform .35s cubic-bezier(.16,1,.3,1);
+}
+.toc-pill-label-text.exit-up {
+  opacity: 0;
+  transform: translateY(-12px);
+}
+.toc-pill-label-text.enter-down {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+/* Círculo de progreso en la píldora */
+.toc-progress-svg {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  transform: rotate(-90deg);
+}
+.toc-progress-bg {
+  fill: none;
+  stroke: rgba(255,255,255,.1);
+  stroke-width: 2.5;
+}
+.toc-progress-fill {
+  fill: none;
+  stroke: url(#tocRingGrad);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  /* circumference = 2π × 10.75 ≈ 67.5 */
+  stroke-dasharray: 67.5;
+  stroke-dashoffset: 67.5;
+  transition: stroke-dashoffset .15s linear;
+  filter: drop-shadow(0 0 3px rgba(44,95,255,.7));
+}
+
+/* ── VISTA EXPANDIDA (menú) ── */
+.toc-menu {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transform: scale(1.04);
+  pointer-events: none;
+  transition: opacity .3s ease .1s, transform .35s cubic-bezier(.22,1,.36,1) .1s;
+}
+.toc-island.expanded .toc-menu {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.toc-menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px 12px;
+  flex-shrink: 0;
+}
+.toc-menu-title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.35);
   font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--blue-vivid);
-  letter-spacing: 0.06em;
-  background: rgba(44,95,255,.08);
-  padding: 3px 6px;
-  border-radius: 4px;
-  border: 1px solid rgba(44,95,255,.2);
 }
-@media (max-width: 900px) { .scroll-island { display: none; } }
+.toc-close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: rgba(255,255,255,.4);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color .2s, background .2s;
+  padding: 0;
+}
+.toc-close-btn:hover { color: rgba(255,255,255,.9); background: rgba(255,255,255,.08); }
+
+.toc-menu-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(44,95,255,.25) transparent;
+}
+
+.toc-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 9px;
+  padding: 7px 10px;
+  text-align: left;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255,255,255,.38);
+  transition: color .2s, background .2s, transform .2s;
+}
+.toc-menu-item:hover {
+  color: rgba(255,255,255,.85);
+  background: rgba(44,95,255,.12);
+  transform: translateX(2px);
+}
+.toc-menu-item.active {
+  color: var(--blue-light);
+  font-weight: 600;
+  background: rgba(44,95,255,.14);
+}
+.toc-menu-item-text {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.toc-menu-item-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue-vivid), var(--violet-mid));
+  flex-shrink: 0;
+  margin-left: 10px;
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity .25s ease, transform .25s cubic-bezier(.34,1.56,.64,1);
+  box-shadow: 0 0 6px rgba(44,95,255,.7);
+}
+.toc-menu-item.active .toc-menu-item-dot {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Ocultar elementos legacy */
+.scroll-island-track,
+.scroll-island-right,
+.scroll-island-ring-wrap { display: none; }
+
+@media (max-width: 768px) { .scroll-island, .toc-backdrop { display: none; } }
 
 /* ── CONFIDENTIAL ── */
 .confidential {
@@ -1896,21 +2108,431 @@ footer p { font-size: 13px; color: var(--gray-5); }
   mix-blend-mode: multiply;
   transition: opacity .3s;
 }
+
+/* ══════════════════════════════════════════════
+   CHAT WIDGET FLOTANTE
+   ══════════════════════════════════════════════ */
+.chat-widget {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 9997;
+  font-family: 'Space Grotesk', ui-sans-serif, sans-serif;
+}
+/* Anillo de atención que pulsa alrededor del botón */
+@keyframes chatRingPulse {
+  0%   { transform: scale(1);   opacity: .6; }
+  70%  { transform: scale(1.9); opacity: 0; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+@keyframes chatBtnEntrance {
+  0%   { opacity: 0; transform: scale(0) rotate(-30deg); }
+  60%  { transform: scale(1.12) rotate(4deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0); }
+}
+@keyframes chatBtnWiggle {
+  0%,100% { transform: rotate(0deg) scale(1); }
+  20%      { transform: rotate(-8deg) scale(1.05); }
+  40%      { transform: rotate(8deg) scale(1.05); }
+  60%      { transform: rotate(-4deg) scale(1.02); }
+  80%      { transform: rotate(4deg) scale(1.02); }
+}
+
+.chat-bubble-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--blue);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(44,95,255,.45), 0 2px 8px rgba(44,95,255,.25);
+  transition: transform .25s cubic-bezier(.34,1.56,.64,1), box-shadow .2s, background .2s;
+  position: relative;
+  animation: chatBtnEntrance .7s cubic-bezier(.16,1,.3,1) 2s both;
+}
+.chat-bubble-btn:hover {
+  transform: scale(1.1);
+  background: var(--blue-dark);
+  box-shadow: 0 8px 32px rgba(44,95,255,.55);
+}
+/* Para que el wiggle periódico no active cuando está abierto */
+.chat-widget:not(.open) .chat-bubble-btn.wiggle {
+  animation: chatBtnWiggle .6s ease-in-out;
+}
+/* Anillo de pulso — pseudo-elemento */
+.chat-bubble-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--blue);
+  animation: chatRingPulse 2.4s ease-out 2.8s infinite;
+  z-index: -1;
+}
+.chat-widget.open .chat-bubble-btn::before { animation: none; }
+.chat-bubble-btn svg { display: block; }
+.chat-bubble-btn .chat-close-icon { display: none; }
+.chat-widget.open .chat-bubble-btn .chat-open-icon { display: none; }
+.chat-widget.open .chat-bubble-btn .chat-close-icon { display: block; }
+
+/* Etiqueta "Pregúntame" que aparece junto al botón */
+.chat-label-hint {
+  position: absolute;
+  right: calc(100% + 10px);
+  bottom: 12px;
+  background: var(--ink);
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 100px;
+  white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(10,10,15,.2);
+  opacity: 0;
+  transform: translateX(8px);
+  transition: opacity .3s ease, transform .3s cubic-bezier(.16,1,.3,1);
+  pointer-events: none;
+  border: 1px solid rgba(255,255,255,.08);
+}
+.chat-label-hint::after {
+  content: '';
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 6px solid var(--ink);
+}
+.chat-widget:not(.open) .chat-bubble-btn:hover + .chat-label-hint,
+.chat-widget:not(.open) .chat-label-hint.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.chat-unread-dot {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 13px;
+  height: 13px;
+  background: var(--rose-mid);
+  border-radius: 50%;
+  border: 2px solid var(--paper);
+  display: none;
+  animation: chatRingPulse 2s ease-out infinite;
+}
+.chat-unread-dot.show { display: block; }
+
+.chat-panel {
+  position: absolute;
+  bottom: 68px;
+  right: 0;
+  width: 340px;
+  background: var(--white);
+  border: 1px solid rgba(10,10,15,.1);
+  border-radius: var(--r-xl);
+  box-shadow: 0 16px 56px rgba(10,10,15,.14), 0 4px 16px rgba(10,10,15,.08);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(12px) scale(0.96);
+  pointer-events: none;
+  transition: opacity .25s ease, transform .3s cubic-bezier(.16,1,.3,1);
+  transform-origin: bottom right;
+  max-height: 500px;
+}
+.chat-widget.open .chat-panel {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+.chat-header {
+  padding: 16px 18px;
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.chat-header-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue) 0%, var(--violet-mid) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.chat-header-info { flex: 1; min-width: 0; }
+.chat-header-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.2;
+}
+.chat-header-status {
+  font-size: 11px;
+  color: rgba(255,255,255,.5);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 1px;
+}
+.chat-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  animation: pulse 2s ease-in-out infinite;
+}
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(44,95,255,.2) transparent;
+}
+.chat-msg {
+  max-width: 85%;
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+.chat-msg.bot {
+  align-self: flex-start;
+}
+.chat-msg.user {
+  align-self: flex-end;
+}
+.chat-msg-bubble {
+  padding: 10px 14px;
+  border-radius: 16px;
+  display: inline-block;
+  max-width: 100%;
+}
+.chat-msg.bot .chat-msg-bubble {
+  background: var(--cream);
+  color: var(--ink);
+  border-bottom-left-radius: 4px;
+}
+.chat-msg.user .chat-msg-bubble {
+  background: var(--blue);
+  color: var(--white);
+  border-bottom-right-radius: 4px;
+}
+.chat-msg-time {
+  font-size: 10px;
+  color: var(--gray-5);
+  margin-top: 3px;
+  padding: 0 2px;
+}
+.chat-msg.user .chat-msg-time { text-align: right; }
+.chat-typing {
+  align-self: flex-start;
+  padding: 10px 14px;
+  background: var(--cream);
+  border-radius: 16px;
+  border-bottom-left-radius: 4px;
+  display: none;
+}
+.chat-typing.show { display: flex; gap: 4px; align-items: center; }
+.chat-typing-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gray-5);
+  animation: typingBounce 1.2s ease-in-out infinite;
+}
+.chat-typing-dot:nth-child(2) { animation-delay: .2s; }
+.chat-typing-dot:nth-child(3) { animation-delay: .4s; }
+@keyframes typingBounce {
+  0%,60%,100% { transform: translateY(0); opacity: .4; }
+  30% { transform: translateY(-5px); opacity: 1; }
+}
+.chat-input-row {
+  padding: 12px 14px;
+  border-top: 1px solid rgba(10,10,15,.07);
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+  flex-shrink: 0;
+  background: var(--paper);
+}
+.chat-input {
+  flex: 1;
+  border: 1px solid rgba(10,10,15,.12);
+  border-radius: 20px;
+  padding: 9px 14px;
+  font-family: inherit;
+  font-size: 13.5px;
+  color: var(--ink);
+  background: var(--white);
+  outline: none;
+  resize: none;
+  max-height: 100px;
+  line-height: 1.4;
+  transition: border-color .2s;
+}
+.chat-input:focus { border-color: rgba(44,95,255,.4); }
+.chat-input::placeholder { color: var(--gray-5); }
+.chat-send-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--blue);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background .2s, transform .2s;
+}
+.chat-send-btn:hover { background: var(--blue-dark); transform: scale(1.08); }
+.chat-send-btn:disabled { background: var(--gray-4); cursor: not-allowed; transform: none; }
+.chat-suggestions {
+  padding: 0 14px 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.chat-chip {
+  font-size: 11.5px;
+  padding: 5px 11px;
+  border-radius: 100px;
+  border: 1px solid rgba(44,95,255,.2);
+  background: var(--blue-tint);
+  color: var(--blue-vivid);
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 500;
+  transition: background .2s, border-color .2s;
+  white-space: nowrap;
+}
+.chat-chip:hover { background: var(--blue-light); border-color: rgba(44,95,255,.4); }
+
+@media (max-width: 600px) {
+  .chat-widget { bottom: 16px; right: 16px; }
+  .chat-panel { width: calc(100vw - 32px); }
+}
 </style>
 </head>
 <body>
 
 <div class="cursor-glow" id="cursorGlow"></div>
 
+<!-- CHAT WIDGET -->
+<div class="chat-widget" id="chatWidget">
+  <div class="chat-panel" id="chatPanel">
+    <div class="chat-header">
+      <div class="chat-header-avatar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2z" fill="rgba(255,255,255,.15)"/>
+          <path d="M9 9h6M9 12h6M9 15h4" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="chat-header-info">
+        <div class="chat-header-name">Asistente NODO</div>
+        <div class="chat-header-status">
+          <div class="chat-status-dot"></div>
+          Listo para responder
+        </div>
+      </div>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-msg bot">
+        <div class="chat-msg-bubble">Hola. Soy el asistente de NODO Works. Puedo responder preguntas sobre esta propuesta, nuestra metodología o cómo trabajamos con Grupo Eleva.</div>
+        <div class="chat-msg-time">Ahora</div>
+      </div>
+    </div>
+    <div class="chat-typing" id="chatTyping">
+      <div class="chat-typing-dot"></div>
+      <div class="chat-typing-dot"></div>
+      <div class="chat-typing-dot"></div>
+    </div>
+    <div class="chat-suggestions" id="chatSuggestions">
+      <button class="chat-chip" data-q="¿Qué incluye la Fase 1?">¿Qué incluye la Fase 1?</button>
+      <button class="chat-chip" data-q="¿Cuánto tiempo toma ver resultados?">¿Cuánto tiempo para ver resultados?</button>
+      <button class="chat-chip" data-q="¿Por qué NODO y no otra agencia?">¿Por qué NODO?</button>
+    </div>
+    <div class="chat-input-row">
+      <textarea class="chat-input" id="chatInput" placeholder="Escribe tu pregunta..." rows="1"></textarea>
+      <button class="chat-send-btn" id="chatSendBtn" disabled>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+          <path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+  <button class="chat-bubble-btn" id="chatToggle" aria-label="Abrir asistente">
+    <span class="chat-unread-dot" id="chatUnreadDot"></span>
+    <span class="chat-label-hint" id="chatLabelHint">Pregúntame sobre la propuesta</span>
+    <svg class="chat-open-icon" width="22" height="22" viewBox="0 0 24 24" fill="none">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="white" stroke-width="1.8" stroke-linejoin="round"/>
+    </svg>
+    <svg class="chat-close-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <path d="M18 6L6 18M6 6l12 12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </button>
+</div>
+
 <!-- SCROLL PROGRESS -->
 <div class="scroll-progress-wrap">
   <div class="scroll-progress-bar" id="scrollBar"></div>
 </div>
+<!-- TOC BACKDROP -->
+<div class="toc-backdrop" id="tocBackdrop"></div>
+
+<!-- DYNAMIC ISLAND TOC -->
 <div class="scroll-island" id="scrollIsland">
-  <div class="scroll-island-track">
-    <div class="scroll-island-thumb" id="scrollThumb"></div>
+  <div class="toc-island" id="tocIsland">
+
+    <!-- Vista cerrada: píldora -->
+    <div class="toc-pill" id="tocPill">
+      <div class="toc-pill-dot"></div>
+      <div class="toc-pill-label">
+        <span class="toc-pill-label-text" id="tocPillLabel">Índice de contenidos</span>
+      </div>
+      <!-- SVG círculo de progreso -->
+      <svg class="toc-progress-svg" viewBox="0 0 28 28">
+        <defs>
+          <linearGradient id="tocRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%"   stop-color="#2C5FFF"/>
+            <stop offset="50%"  stop-color="#9B6DFF"/>
+            <stop offset="100%" stop-color="#EC4899"/>
+          </linearGradient>
+        </defs>
+        <circle class="toc-progress-bg"   cx="14" cy="14" r="10.75"/>
+        <circle class="toc-progress-fill" cx="14" cy="14" r="10.75" id="tocProgressFill"/>
+      </svg>
+    </div>
+
+    <!-- Vista expandida: menú -->
+    <div class="toc-menu" id="tocMenu">
+      <div class="toc-menu-header">
+        <span class="toc-menu-title">Índice de secciones</span>
+        <button class="toc-close-btn" id="tocCloseBtn" aria-label="Cerrar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="toc-menu-list" id="tocMenuList">
+        <!-- Items generados por JS -->
+      </div>
+    </div>
+
   </div>
-  <div class="scroll-island-pct" id="scrollPct">0%</div>
 </div>
 
 <!-- CONFIDENTIAL -->
@@ -2033,7 +2655,7 @@ footer p { font-size: 13px; color: var(--gray-5); }
 <div class="divider"></div>
 
 <!-- DIAGNÓSTICO -->
-<div class="diagnosis">
+<div class="diagnosis" id="diagnostico">
   <div class="diagnosis-inner">
     <div class="section-header reveal">
       <div class="eyebrow">El diagnóstico</div>
@@ -2344,7 +2966,7 @@ footer p { font-size: 13px; color: var(--gray-5); }
 </section>
 
 <!-- TALLERES DE AI -->
-<section class="talleres-section">
+<section class="talleres-section" id="talleres">
   <div class="talleres-inner">
     <div class="section-header reveal">
       <div class="eyebrow">Programa de adopción</div>
@@ -3093,29 +3715,11 @@ const counterObs = new IntersectionObserver(entries => {
 }, { threshold: 0.4 });
 document.querySelectorAll('.diagnosis-grid').forEach(el => counterObs.observe(el));
 
-/* ── SCROLL PROGRESS + PARALLAX ── */
+/* ── SCROLL PROGRESS BAR + PARALLAX ── */
 (function() {
-  const bar    = document.getElementById('scrollBar');
-  const thumb  = document.getElementById('scrollThumb');
-  const pct    = document.getElementById('scrollPct');
-  const island = document.getElementById('scrollIsland');
   const canvas = document.getElementById('shaderCanvas');
-
   window.addEventListener('scroll', () => {
-    const y      = window.scrollY;
-    const maxY   = document.documentElement.scrollHeight - window.innerHeight;
-    const prog   = maxY > 0 ? Math.min(y / maxY, 1) : 0;
-    const pctVal = Math.round(prog * 100);
-
-    if (bar)   bar.style.width   = pctVal + '%';
-    if (thumb) thumb.style.height = pctVal + '%';
-    if (pct)   pct.textContent   = pctVal + '%';
-
-    // Mostrar island solo cuando se ha scrolleado al menos 5%
-    if (island) island.classList.toggle('visible', pctVal >= 5);
-
-    // Parallax canvas
-    if (canvas) canvas.style.transform = `translateY(${y * 0.08}px)`;
+    if (canvas) canvas.style.transform = `translateY(${window.scrollY * 0.08}px)`;
   }, { passive: true });
 })();
 
@@ -3811,6 +4415,447 @@ document.querySelectorAll('.btn-cta-primary,.btn-cta-ghost,.btn-tier').forEach(b
       obs.observe(el);
     });
   });
+})();
+
+/* ── DYNAMIC ISLAND TOC ── */
+(function() {
+  const island    = document.getElementById('scrollIsland');
+  const tocIsland = document.getElementById('tocIsland');
+  const backdrop  = document.getElementById('tocBackdrop');
+  const pillLabel = document.getElementById('tocPillLabel');
+  const progFill  = document.getElementById('tocProgressFill');
+  const menuList  = document.getElementById('tocMenuList');
+  const closeBtn  = document.getElementById('tocCloseBtn');
+  if (!island || !tocIsland) return;
+
+  // Circunferencia r=10.75 → 2π×10.75 ≈ 67.54
+  const CIRC = 2 * Math.PI * 10.75;
+  if (progFill) { progFill.style.strokeDasharray = CIRC; progFill.style.strokeDashoffset = CIRC; }
+
+  // Definición de secciones — id → eyebrow exacto de esa sección
+  const SECTIONS = [
+    { id: 'top',         label: 'Portada' },
+    { id: 'diagnostico', label: 'El diagnóstico' },
+    { id: 'dolores',     label: 'Puntos críticos' },
+    { id: 'momento',     label: 'El costo de no actuar' },
+    { id: 'logica',    label: 'Lógica de implementación' },
+    { id: 'cerebro',   label: 'Base de conocimiento' },
+    { id: 'talleres',  label: 'Programa de adopción' },
+    { id: 'solucion',  label: 'La solución' },
+    { id: 'quien',     label: 'Quién hace el trabajo' },
+    { id: 'impacto',   label: 'Impacto proyectado' },
+    { id: 'inversion', label: 'Inversión' },
+    { id: 'cta',       label: 'Siguiente paso' },
+  ];
+
+  // Resolver elementos del DOM
+  const sections = SECTIONS.map(s => ({ ...s, el: document.getElementById(s.id) })).filter(s => s.el);
+
+  // Construir items del menú
+  sections.forEach(s => {
+    const btn = document.createElement('button');
+    btn.className = 'toc-menu-item';
+    btn.dataset.id = s.id;
+    btn.innerHTML = `<span class="toc-menu-item-text">${s.label}</span><span class="toc-menu-item-dot"></span>`;
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const y = s.el.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+      collapse();
+    });
+    menuList.appendChild(btn);
+  });
+
+  // Estado
+  let isExpanded = false;
+  let activeId   = sections[0]?.id || '';
+  let prevLabel  = '';
+
+  // Expandir
+  function expand() {
+    isExpanded = true;
+    tocIsland.classList.add('expanded');
+    backdrop.classList.add('visible');
+  }
+
+  // Colapsar
+  function collapse() {
+    isExpanded = false;
+    tocIsland.classList.remove('expanded');
+    backdrop.classList.remove('visible');
+  }
+
+  // Click en la píldora cerrada → expandir
+  tocIsland.addEventListener('click', e => {
+    if (!isExpanded) expand();
+  });
+
+  // Botón cerrar
+  if (closeBtn) closeBtn.addEventListener('click', e => { e.stopPropagation(); collapse(); });
+
+  // Click backdrop → colapsar
+  backdrop.addEventListener('click', collapse);
+
+  // Animación de slide del label en la píldora
+  function animatePillLabel(newText) {
+    if (!pillLabel || newText === prevLabel) return;
+    prevLabel = newText;
+
+    // Salida
+    pillLabel.classList.add('exit-up');
+    setTimeout(() => {
+      pillLabel.textContent = newText;
+      pillLabel.classList.remove('exit-up');
+      pillLabel.classList.add('enter-down');
+      // Forzar reflow
+      pillLabel.offsetHeight;
+      pillLabel.classList.remove('enter-down');
+    }, 175);
+  }
+
+  // Actualizar activo en el menú
+  function updateMenuActive(id) {
+    menuList.querySelectorAll('.toc-menu-item').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.id === id);
+    });
+  }
+
+  // Scroll handler
+  window.addEventListener('scroll', () => {
+    const y    = window.scrollY;
+    const maxY = document.documentElement.scrollHeight - window.innerHeight;
+    const prog = maxY > 0 ? Math.min(y / maxY, 1) : 0;
+
+    // Barra de progreso en cabecera
+    const bar = document.getElementById('scrollBar');
+    if (bar) bar.style.width = Math.round(prog * 100) + '%';
+
+    // Arco SVG
+    if (progFill) progFill.style.strokeDashoffset = CIRC * (1 - prog);
+
+    // Sección activa — usa getBoundingClientRect para detectar lo que está en pantalla
+    let current = sections[0];
+    for (const s of sections) {
+      if (s.el.getBoundingClientRect().top <= window.innerHeight * 0.5) current = s;
+    }
+
+    if (current.id !== activeId) {
+      activeId = current.id;
+      animatePillLabel(current.label);
+      updateMenuActive(activeId);
+    }
+
+    // Mostrar isla siempre
+    island.classList.add('visible');
+  }, { passive: true });
+
+  // Init — mostrar isla inmediatamente al cargar
+  island.classList.add('visible');
+  updateMenuActive(activeId);
+})();
+
+/* ── CHAT WIDGET — Claude API ── */
+(function() {
+  // API key de Google AI Studio — obtener en aistudio.google.com/app/apikey
+  const GEMINI_API_KEY = 'AIzaSyBdnAeCb8v3MQLSvl8fd2sPVlpSSNoPfsY';
+  const GEMINI_MODEL   = 'gemini-2.0-flash';
+
+  const SYSTEM_PROMPT = `Eres el asistente de NODO Works integrado en la propuesta para Grupo Eleva. Conoces la empresa a fondo — sus proyectos, finanzas, personas, dolores y la propuesta completa. Responde como un socio de negocio que ha estudiado el caso, no como un chatbot genérico.
+
+═══════════════════════════════════════════════
+1. LA EMPRESA
+═══════════════════════════════════════════════
+Nombre legal: Grupo Eleva Inversiones Inmobiliarias (RFC: EII210719T57)
+Sede: Bucareli #33, Lomas de Guayangareo, CP 58240, Morelia, Michoacán
+Dos entidades legales: Eleva Inversiones Inteligentes SAPI de CV (principal) + Prisma Studio Diseño y Edificación SA de CV (constructora/diseño). Contabilidades separadas en CONTPAQ.
+Giro: desarrolladora inmobiliaria residencial (departamentos, lofts) y comercial (locales). Incluye remodelaciones.
+Trayectoria: activa desde 2021. Proyectos finalizados 2024: Paseo del Parque, Casa Altozano, Corral de la Comedia, Desamor, Tangerina. Institucionalización activa desde 2024.
+Tamaño: 14 nuevos colaboradores en 2024. Nómina enero 2026: $1,331,455.53/mes (oficina + obra). Satisfacción laboral: 74% en 2024, 89% en enero 2026.
+Plazas: Morelia (principal), Zirahuen (Casa Calina), Ciudad Hidalgo (Torre Centro en cierre).
+Segmentos: C+ ($2-4 MDP/unidad) y B ($4-6 MDP). Configuración ganadora: 109 m², 2 rec., 2 baños, ticket $3.4-$3.7M.
+Facturación: +$120 MDP en ventas 2024. Cartera activa enero 2026: ~$94.5M pendiente de cobro. Cobranza enero: $64.7M. Feb: $67M. Mar: $68.3M.
+Estados financieros cierre 2025: Prisma — Activo $7.08M / Capital $2.89M / Utilidad $6.33M (24.69% margen). Eleva (nov-2025) — Activo $47.89M / Capital $35.73M / Utilidad acumulada $1.77M.
+
+═══════════════════════════════════════════════
+2. PERSONAS CLAVE
+═══════════════════════════════════════════════
+José Antonio Reyes Caldelas (Toño) — CEO. Decisión máxima. Reunión 1:1 semanal con cada líder. Opera negociaciones directamente. Da instrucciones directas. Pendiente: decidir arquitectura de naming por segmento.
+Álvaro Sánchez Vieyra — Director de Desarrollo Inmobiliario desde 15-abr-2026. Reporta al CEO. Sueldo $20K MXN netos/mes. Responsable de adquisición de terrenos, gestorías, viabilidad técnica/legal/financiera, supervisión de obra. Habilitado con poder notarial para tramitar en Torre Campestre, Torre Perú y Casa María (decisión CEO 07-may-2026). Fundador de NODO Works — esta propuesta es suya.
+Despacho comercial externo — maneja ventas con acceso directo al CEO. Aparece en organigrama como interno pero es externo. Genera dinámicas paralelas.
+Gerente de Obra — coordinación de construcción (nombre por confirmar).
+Jefe de Administración — presupuestos, OCs, pagos a proveedores (nombre por confirmar).
+Leo Armería — cliente Ventura con mora $43,533.10 + bloqueante activo: no ha entregado estructural para Torre Romano (12-may-2026).
+Caro — DRO de Casa María. Revisión total vs. cambios parciales pendiente.
+Bertha — gestión de factibilidad OOAPAS en Fracc. Melilla.
+
+═══════════════════════════════════════════════
+3. PROYECTOS — ESTADO ACTUAL
+═══════════════════════════════════════════════
+
+EN CONSTRUCCIÓN ACTIVA:
+Ventura Lofts — 32 lofts. Etapa: superestructura (30% del total). Avance real ene-2026: 37.63% vs. programado 47.12% (desviación -9.49%). Presupuesto total: $56.1M. Costo real acumulado: $19.3M (desviación -$1.7M). Unidades: 27 vendidas, 5 por vender. Cartera: $63.2M. Crédito puente activo. Gestoría: 70%. Pendientes may-2026: colado de losa semana 18-may, bajantes sanitarias, pago $500K niveles adicionales, corresponsable eléctrico/OVIE.
+Torre Romano — 15 departamentos. Etapa: cimentación/estructura (45% del total). Avance real: 11.39% vs. programado 21.40% (desviación -10.01%, mayor del portafolio). 12 vendidos, 3 por vender. Cartera: $31.2M. Sin presupuesto global ni indicador de costo. Gestoría: 50%. Pendientes may-2026: set cerrando, contratista por reactivar, Leo Armería sin entregar estructural.
+Torre Santo Domingo — 20 departamentos. Etapa: acabados y entregas. Avance: 87.60%. VBP obtenido ene-2026. Pendientes: 2 deptos bloqueados por cocinas, baranda terraza, gestiones OOAPAS, depto 9 INFONAVIT en proceso.
+
+EN TRAMITOLOGÍA ACTIVA:
+Torre Campestre — poder notarial recibido 11-may-2026. Gestoría F1 iniciando. Margen estimado: 19.82%. Pendientes: mecánica de suelos, modelo financiero 22-may, CAM.
+Torre Perú — contrato A en P firmado may-2026. Margen actual 3.32% (NO GO en estructura original). Fideicomiso con Andrés Guillén pendiente. Posible Expo 22-may.
+Casa María — poder notarial pendiente. Bloqueante: Leo Armería sin entregar estructural. DRO Caro. Posible Expo 22-may.
+
+EN NEGOCIACIÓN:
+Torre Porfirio — propuesta de asociación emitida ene-2026, firma pendiente al 08-may-2026.
+
+EN COMERCIALIZACIÓN:
+Casa Calina (Zirahuen) — fraccionamiento residencial, 127 unidades potenciales. Pendientes: subdivisión, proforma, landing page, gestores.
+
+EN PREINVERSIÓN/ANÁLISIS:
+Fraccionamiento Tarímbaro — NO GO escenario base (11% margen). Viable a $8K/m²: 22.7% margen, TIR ~19%. Cronograma: arranque 30-may-2026.
+Fracc. Melilla — reuniones semanales jueves. Factibilidad OOAPAS en curso.
+Fracc. Amalia — F0, checklist completo.
+En análisis financiero (ene-2026): Torre Boulevard, Chapultepec, Atecuaro, Batalla de la Angostura, Haendel, Lancaster, Amado Camacho, San Miguel de Allende.
+
+MÉTRICAS CLAVE:
+Promedio gestorías portafolio: 62.08%. Promedio presupuestos: 86.30%. Satisfacción entrega: 86.50%. Cobranza efectividad: 96.62% (meta 98%). Ventas 2024: +$120 MDP.
+
+═══════════════════════════════════════════════
+4. STACK TECNOLÓGICO
+═══════════════════════════════════════════════
+Odoo ERP — operación principal. Host: eleva.grcbit.com. Fase I implementada 2024. Módulos activos: compras, vacaciones, reclutamiento, asistencia, tiempo personal, posventa, proyectos, minutas de obra. Módulos sin usar: CRM y Contabilidad (los más estratégicos).
+CONTPAQ — contabilidad de Eleva y Prisma por separado.
+iVentas — atención de leads con IA. Implementado enero 2026. Se mantiene.
+Google Workspace — correo, Drive (no siempre actualizado).
+Google Sheets — portafolio de proyectos (Sheet ID: 1OsfEDD50w00CustgN5xhBF0NBca3gPOE0WQjwu7YsNA). Dashboard HTML conectado vía gviz API.
+Script Node.js (odoo-sync.js) — genera snapshot local de tareas de Odoo. Solución parcial actual.
+Integraciones que faltan: Odoo no conectado con dashboards en tiempo real. No hay Data Studio con datos de Odoo. No hay integración Odoo-Google Sheets en tiempo real.
+Nivel digital: medio-bajo en transición. ERP Fase I en 2024. Automatizaciones y dashboards en construcción 2026.
+
+═══════════════════════════════════════════════
+5. DOLORES DOCUMENTADOS
+═══════════════════════════════════════════════
+Obra (crítico): Ventura -9.49% y Romano -10.01% sobre programa. Sin indicador de costo para Romano. Leo Armería bloqueando estructural. Sin catálogo de rendimientos. Corresponsables eléctricos pendientes.
+Desarrollo (crítico): indicadores de gestorías débiles (62.08% promedio, sin visualización por fase). Sin poderes notariales de Álvaro hasta mayo 2026. Levantamientos topográficos pendientes para 3 proyectos. Proceso de evaluación de terrenos no formalizado.
+Comercial (crítico): 0 ventas en enero 2026 en los 3 proyectos en comercialización. Flujo interno deficiente (ventas pierde clientes por falta de datos de m²). CEO operativo en ventas cuando debería ser estratégico.
+Posventa: área nueva, indicadores en cero. 0% cumplimiento escrituras a tiempo enero 2026.
+Administración: sin director unificado. Tesorería, Contabilidad, Costos y Compras trabajan aislados. Consolidar estados financieros Eleva+Prisma: 3-5 días de trabajo manual. Duplicidad Odoo-CONTPAQ sin integración.
+Dirección: CEO no tiene dashboard consolidado. Tarda 3-5 días en obtener imagen real del negocio. Tres proyectos nuevos en evaluación simultánea sin proceso estándar.
+Legal: 8% de temas legales sin iniciar en enero 2026. Regularización Casa Calina pendiente.
+
+DOLOR MÁS URGENTE: El CEO no sabe si está ganando o perdiendo hasta que salen los problemas. Meta inmediata: (1) visibilidad en tiempo real de proyectos, (2) despegarlo de operación comercial.
+
+═══════════════════════════════════════════════
+6. LA PROPUESTA DE NODO WORKS
+═══════════════════════════════════════════════
+
+CUATRO COMPONENTES:
+
+1. Base de Conocimiento Institucional — el conocimiento de Grupo Eleva deja de vivir en personas. Procesos, criterios, protocolos y flujos en un sistema consultable por equipos y por los agentes de NODO.
+
+2. Colaborador Digital de Administración — conecta Odoo y CONTPAQ. Consolida estados financieros de Eleva y Prisma automáticamente. Genera indicadores de costo por proyecto (Torre Romano, Ventura, Santo Domingo). Alerta sobre desviaciones. Elimina las 15-25 horas mensuales de integración manual.
+
+3. Equipo Comercial Digital (3 agentes):
+   - Agente de Atención: responde leads en menos de 5 minutos, califica y agenda
+   - Agente de Seguimiento: ningún lead sin contacto más de 48 horas. Reporte de embudo automático
+   - Agente de Campañas: métricas de costo por lead y conversión por canal
+   iVentas se mantiene, los agentes son complementarios.
+
+4. Colaborador Digital de Dirección (CFO Digital) — para el CEO. Consolida KPIs de ambas entidades. Responde: "¿Cómo vamos en Ventura este mes?" "¿Cuál es el margen de Torre Campestre?" Reporte ejecutivo semanal automático.
+
+PLAN DE IMPLEMENTACIÓN (12-18 meses):
+Fase 1 (Meses 1-4): Base de Conocimiento + Colaborador de Administración. Primer reporte consolidado Eleva+Prisma sin intervención manual.
+Fase 2 (Meses 4-8): Equipo Comercial Digital operando. Pipeline con visibilidad en tiempo real.
+Fase 3 (Meses 8-12): Colaborador de Dirección activo. Dashboard ejecutivo y reporte semanal automatizado.
+Fase 4+ (Mes 12+): Operación continua, expansión según prioridad.
+Ritmo: 8 sesiones mensuales (2 por semana), agenda definida con anticipación.
+
+INVERSIÓN:
+Esencial — $12,000 MXN/mes. Base de Conocimiento + Colaborador de Administración. 4 sesiones/mes. ROI estimado año 1: $480,000 MXN.
+★ Operativo (recomendado) — $20,000 MXN/mes. Los 4 componentes. 8 sesiones/mes. Reporte mensual de impacto. ROI estimado año 1: $900,000-$1,200,000 MXN.
+Transformación — $32,000 MXN/mes. Todo Operativo + agentes adicionales incluidos en retainer + revisión estratégica quincenal. ROI año 1: $1,500,000 MXN+.
+Valor de mercado del Operativo: $35,000-$40,000 MXN/mes. Se ofrece a $20,000 MXN porque el contexto de trabajo conjunto reduce diagnóstico e integración.
+Punto de equilibrio: mes 4-6 en escenario conservador. Mantenimiento se define al terminar implementación, con base en uso real de infraestructura AI.
+
+TALLERES DE AI (incluidos en Operativo sin costo adicional):
+AI para equipos operativos (Admin, Obra, Posventa): 3h, valor $12,000 MXN.
+AI para dirección y gerencia: 2h, valor $8,000 MXN.
+Programa completo con seguimiento: 3 sesiones, valor $28,000 MXN.
+
+INDICADORES DE ÉXITO A 90 DÍAS:
+Estado financiero consolidado: de 3-5 días a tiempo real.
+Respuesta a leads: de horas a menos de 5 minutos.
+Horas en recopilación de datos: de 15-25h semanales a menos de 3h.
+Reporte ejecutivo al CEO: de a solicitud a semanal automático.
+
+═══════════════════════════════════════════════
+7. SOBRE NODO WORKS
+═══════════════════════════════════════════════
+NODO Works no es una agencia de software ni consultora tradicional. Es un equipo digital que opera como extensión del equipo directivo — con acceso al contexto real de la operación, no desde afuera. Trabajan con PyMEs en México y EEUU. Fundador: Álvaro Sánchez Vieyra, que además es Director de Desarrollo Inmobiliario en Grupo Eleva — lo que hace única esta propuesta.
+
+CONTEXTO FINANCIERO DE REFERENCIA (proyectos Eleva):
+Estructura de capital típica: 6% propio / 72% crédito bancario / 22% socios y preventa. WACC: 18.66%. Comisión de venta: 3-4%. TIR objetivo: mínimo 15%, bien estructurado 18-30%.
+Tiempos de tramitología en Morelia: MIA hasta 24 meses. Pre-construcción completa: 9-16 meses. Gestorías: $500K-$1.2M MXN.
+Mercado Morelia: 80% horizontal / 20% vertical. Domótica: diferenciador crítico (100% de inversionistas la considera atractiva).
+
+═══════════════════════════════════════════════
+8. REGLAS DE COMPORTAMIENTO
+═══════════════════════════════════════════════
+- Responde siempre en español
+- Tono: directo, claro, como socio de negocio que conoce la empresa. Sin jerga técnica ni frases de relleno
+- Máximo 3 párrafos cortos por respuesta. Si requiere más, usa bullets
+- Puedes mencionar precios — están en la propuesta y son información para Grupo Eleva
+- Si preguntan algo fuera de este contexto, sugiere llamada con Álvaro: alvarosanchezvieyra33@gmail.com / +52 443 924 2456
+- Si preguntan si eres IA: confirma que sí. No finjas ser humano
+- Usa los nombres reales de proyectos (Ventura Lofts, Torre Romano, Torre Campestre, etc.) cuando sean relevantes
+- Recuerda el hilo de la conversación y usa el contexto acumulado`;
+
+  const widget    = document.getElementById('chatWidget');
+  const toggleBtn = document.getElementById('chatToggle');
+  const messages  = document.getElementById('chatMessages');
+  const input     = document.getElementById('chatInput');
+  const sendBtn   = document.getElementById('chatSendBtn');
+  const typing    = document.getElementById('chatTyping');
+  const chips     = document.getElementById('chatSuggestions');
+  const unreadDot = document.getElementById('chatUnreadDot');
+
+  if (!widget) return;
+
+  // Cargar historial desde localStorage (persiste entre recargas de página)
+  const STORAGE_KEY = 'nodo_eleva_chat_history';
+  const MAX_HISTORY = 20; // máximo 20 mensajes (10 intercambios)
+
+  let history = [];
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) history = JSON.parse(saved);
+  } catch(e) { history = []; }
+
+  let isLoading = false;
+
+  // Mostrar hint label y punto de notificación después de 6s si no se ha abierto
+  const labelHint = document.getElementById('chatLabelHint');
+  setTimeout(() => {
+    if (!widget.classList.contains('open')) {
+      unreadDot.classList.add('show');
+      if (labelHint) { labelHint.classList.add('show'); setTimeout(() => labelHint.classList.remove('show'), 4000); }
+    }
+  }, 6000);
+
+  // Wiggle periódico cada 18s para llamar la atención
+  const chatBtn = document.getElementById('chatToggle');
+  setInterval(() => {
+    if (!widget.classList.contains('open') && chatBtn) {
+      chatBtn.classList.add('wiggle');
+      chatBtn.addEventListener('animationend', () => chatBtn.classList.remove('wiggle'), { once: true });
+    }
+  }, 18000);
+
+  toggleBtn.addEventListener('click', () => {
+    widget.classList.toggle('open');
+    unreadDot.classList.remove('show');
+    if (widget.classList.contains('open')) input.focus();
+  });
+
+  // Auto-resize textarea
+  input.addEventListener('input', () => {
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 100) + 'px';
+    sendBtn.disabled = !input.value.trim();
+  });
+
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      if (!sendBtn.disabled) send(input.value.trim());
+    }
+  });
+
+  sendBtn.addEventListener('click', () => {
+    if (!sendBtn.disabled) send(input.value.trim());
+  });
+
+  chips.querySelectorAll('.chat-chip').forEach(chip => {
+    chip.addEventListener('click', () => send(chip.dataset.q));
+  });
+
+  function addMessage(role, text) {
+    const now = new Date().toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' });
+    const div = document.createElement('div');
+    div.className = 'chat-msg ' + role;
+    div.innerHTML = `<div class="chat-msg-bubble">${escHtml(text)}</div><div class="chat-msg-time">${now}</div>`;
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+    return div;
+  }
+
+  function escHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+  }
+
+  // Renderizar historial guardado después de que addMessage esté definida
+  if (history.length > 0) {
+    history.forEach(m => {
+      if (m.role === 'user' || m.role === 'assistant') {
+        addMessage(m.role === 'assistant' ? 'bot' : 'user', m.content);
+      }
+    });
+    if (chips) chips.style.display = 'none';
+  }
+
+  async function send(text) {
+    if (!text || isLoading) return;
+    isLoading = true;
+    input.value = '';
+    input.style.height = 'auto';
+    sendBtn.disabled = true;
+    chips.style.display = 'none';
+
+    addMessage('user', text);
+    history.push({ role: 'user', content: text });
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(history)); } catch(e) {}
+
+    typing.classList.add('show');
+    messages.scrollTop = messages.scrollHeight;
+
+    try {
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
+
+      // Construir historial en formato Gemini
+      const geminiContents = history.map(m => ({
+        role: m.role === 'assistant' ? 'model' : 'user',
+        parts: [{ text: m.content }]
+      }));
+
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
+          contents: geminiContents,
+          generationConfig: { maxOutputTokens: 400, temperature: 0.7 }
+        })
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error?.message || 'Error de API');
+
+      const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No pude generar una respuesta.';
+      history.push({ role: 'assistant', content: reply });
+
+      // Mantener solo los últimos MAX_HISTORY mensajes
+      if (history.length > MAX_HISTORY) history.splice(0, history.length - MAX_HISTORY);
+
+      // Persistir en localStorage
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(history)); } catch(e) {}
+
+      typing.classList.remove('show');
+      addMessage('bot', reply);
+    } catch (err) {
+      typing.classList.remove('show');
+      addMessage('bot', 'Hubo un problema al conectar. Por favor escríbenos directamente a alvarosanchezvieyra33@gmail.com o al +52 443 924 2456.');
+      console.error('[Chat]', err);
+    } finally {
+      isLoading = false;
+    }
+  }
 })();
 
 /* ── CARD TILT — extended to new cards ── */
