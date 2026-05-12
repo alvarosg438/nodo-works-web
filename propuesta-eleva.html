@@ -4743,10 +4743,7 @@ LÍMITES:
   const MAX_HISTORY = 20; // máximo 20 mensajes (10 intercambios)
 
   let history = [];
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) history = JSON.parse(saved);
-  } catch(e) { history = []; }
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
 
   let isLoading = false;
 
