@@ -1727,14 +1727,40 @@ footer p { font-size: 13px; color: var(--gray-5); }
   .matrix-row { grid-template-columns: 2fr 1fr; }
   .matrix-row > span:nth-child(3),
   .matrix-row > span:nth-child(4) { display: none; }
-  /* tabla compare: ocultar columnas "Agencia AI" y "Firma estrategia", dejar solo descripción + NODO */
-  .compare-row { grid-template-columns: 1fr auto; gap: 0; padding: 14px 16px; }
+  /* tabla compare: rediseño completo para mobile — flex, solo descripción + NODO */
+  .nodo-compare-table { overflow: hidden; }
+  .compare-row {
+    display: flex;
+    align-items: stretch;
+    padding: 0;
+    gap: 0;
+  }
+  /* columna descripción */
+  .compare-row > span:first-child {
+    flex: 1;
+    padding: 14px 16px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+  }
+  /* ocultar columnas "Agencia AI" y "Firma estrategia" */
   .compare-row > span:nth-child(2),
   .compare-row > span:nth-child(3) { display: none; }
-  .compare-row .compare-nodo { margin: -14px -16px -14px 12px; padding: 14px 16px; min-width: 72px; text-align: center; border-left: 2px solid var(--blue); }
-  .compare-header .compare-nodo::before { content: 'NODO'; }
-  .compare-header { font-size: 10px; }
-  .nodo-compare-table { overflow: hidden; }
+  /* columna NODO */
+  .compare-row .compare-nodo {
+    width: 72px;
+    flex-shrink: 0;
+    margin: 0;
+    padding: 14px 0;
+    text-align: center;
+    border-left: 2px solid var(--blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  /* header row */
+  .compare-header > span:first-child { padding: 10px 16px; font-size: 10px; }
+  .compare-header .compare-nodo { font-size: 10px; }
 
   /* tiers: uno encima del otro, centrar recommended tag */
   .tiers-grid { gap: 24px; }
@@ -1768,6 +1794,13 @@ footer p { font-size: 13px; color: var(--gray-5); }
 
   /* scroll island ya oculto, cursor glow innecesario en touch */
   .cursor-glow { display: none; }
+
+  /* rendimiento: desactivar efectos GPU pesados en mobile */
+  .orb { display: none; }
+  .nav { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(250,248,244,.97); }
+  .tier.featured { animation: none; }
+  .nav-dot, .hero-badge-dot { animation: none; }
+  .orbital-detail { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(10,10,15,.92); }
 }
 
 /* ── CURSOR GLOW ── */
@@ -1940,7 +1973,7 @@ footer p { font-size: 13px; color: var(--gray-5); }
       <div class="diagnosis-card">
         <div class="stat" data-count="4" data-suffix=" sistemas">4</div>
         <h4>Sistemas paralelos</h4>
-        <p>Odoo, CONTPAQ, ADARA, iVentas. Datos dispersos, sin integración. Las decisiones se toman con información fragmentada.</p>
+        <p>Odoo, CONTPAQ, iVentas y hojas de cálculo. Datos dispersos, sin integración. Sin análisis de datos consolidado, las decisiones se toman con información incompleta o desactualizada.</p>
       </div>
       <div class="diagnosis-card">
         <div class="stat" data-count="62" data-suffix="%">62%</div>
@@ -2003,8 +2036,8 @@ footer p { font-size: 13px; color: var(--gray-5); }
     </div>
     <div class="pain-card">
       <div class="pain-label">Administración</div>
-      <h3>Sin control financiero real</h3>
-      <p>Tesorería, Contabilidad, Costos y Compras operan de forma paralela sin una dirección unificada. El resultado: información dispersa, reportes tardíos y decisiones que esperan datos que deberían estar disponibles en tiempo real.</p>
+      <h3>Decisiones desinformadas</h3>
+      <p>Tesorería, Contabilidad, Costos y Compras operan en paralelo sin integración. La información existe, pero está fragmentada. Sin análisis de datos consolidado, las decisiones se toman sobre supuestos, no sobre hechos — y esa diferencia tiene un costo directo en cada proyecto.</p>
     </div>
   </div>
 </section>
@@ -2034,8 +2067,8 @@ footer p { font-size: 13px; color: var(--gray-5); }
         <div class="urgency-icon">
           <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="1.8"/><path d="M14 8v6l4 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
         </div>
-        <h4>Crecimiento frenado por el CEO</h4>
-        <p>Cuando el Director General cubre vacíos operativos, deja de evaluar nuevas oportunidades. Tres proyectos en evaluación esperan decisiones que dependen de tiempo que hoy está absorbido por la operación diaria.</p>
+        <h4>Decisiones sin respaldo de datos</h4>
+        <p>Las empresas que escalan con control no toman decisiones de inversión basadas en intuición — las toman con dashboards que consolidan finanzas, obra y ventas en tiempo real. Grupo Eleva toma esas mismas decisiones hoy, pero con información que tarda días en armarse y que en el camino pierde precisión. Esa brecha tiene un costo directo en la calidad de cada decisión de negocio.</p>
       </div>
       <div class="urgency-card">
         <div class="urgency-icon">
@@ -2655,7 +2688,7 @@ footer p { font-size: 13px; color: var(--gray-5); }
         <li>CFO digital con proyecciones</li>
         <li>Modelo financiero dinámico</li>
         <li>Predicción de desviaciones</li>
-        <li>Soporte para expansión de plazas</li>
+        <li>Capacidad instalada para proyectos de mayor escala</li>
         <li>8 sesiones de trabajo al mes</li>
       </ul>
       <a href="https://wa.me/524439242456" class="btn-tier btn-ghost-tier">Conversemos →</a>
@@ -3027,7 +3060,7 @@ document.querySelectorAll('.btn-cta-primary,.btn-cta-ghost,.btn-tier').forEach(b
       badge: 'Núcleo',
       items: [
         'Agente comercial que califica y da seguimiento a leads',
-        'CRM unificado en Odoo (eliminar ADARA)',
+        'CRM unificado en Odoo como sistema central de ventas',
         'Proceso estándar de evaluación de terrenos',
         'Automatización de compras y órdenes de obra',
         'Integración contable Odoo-CONTPAQ'
@@ -3041,7 +3074,7 @@ document.querySelectorAll('.btn-cta-primary,.btn-cta-ghost,.btn-tier').forEach(b
         'Modelo financiero dinámico por proyecto',
         'Predicción de desviaciones antes de que ocurran',
         'Pipeline de nuevos proyectos con evaluación automática',
-        'Expansión a San Miguel de Allende y Valle de Guadalupe'
+        'Capacidad instalada para proyectos de mayor escala y complejidad'
       ]
     }
   ];
