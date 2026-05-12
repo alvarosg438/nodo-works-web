@@ -4850,8 +4850,16 @@ Mercado Morelia: 80% horizontal / 20% vertical. Domótica: diferenciador crític
       addMessage('bot', reply);
     } catch (err) {
       typing.classList.remove('show');
-      addMessage('bot', 'Hubo un problema al conectar. Por favor escríbenos directamente a alvarosanchezvieyra33@gmail.com o al +52 443 924 2456.');
-      console.error('[Chat]', err);
+      // Mostrar error real en consola Y en el chat para diagnosticar
+      const errMsg = err?.message || String(err);
+      console.error('[Chat error]', errMsg);
+      if (errMsg.includes('Failed to fetch') || errMsg.includes('NetworkError') || errMsg.includes('CORS')) {
+        addMessage('bot', 'Error de red — abre la página desde un servidor HTTP (no desde file://). Si ya estás en Vercel, revisa la consola del navegador (F12).');
+      } else if (errMsg.includes('API_KEY') || errMsg.includes('403') || errMsg.includes('permission')) {
+        addMessage('bot', 'Error de API Key — la clave de Gemini no tiene permisos o está restringida a ciertos dominios. Revisa Google AI Studio.');
+      } else {
+        addMessage('bot', `Error: ${errMsg}`);
+      }
     } finally {
       isLoading = false;
     }
