@@ -2834,13 +2834,25 @@ footer p { font-size: 13px; color: var(--gray-5); }
   window.addEventListener('resize', resize);
 
   let start = null;
+  let shaderRaf = null;
   function frame(ts) {
     if (!start) start = ts;
     gl.uniform1f(uTime, (ts - start) * 0.001);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-    requestAnimationFrame(frame);
+    shaderRaf = requestAnimationFrame(frame);
   }
-  requestAnimationFrame(frame);
+  // Pausar el shader cuando el hero no es visible — evita consumo GPU mientras se hace scroll
+  const shaderObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        if (!shaderRaf) shaderRaf = requestAnimationFrame(frame);
+      } else {
+        if (shaderRaf) { cancelAnimationFrame(shaderRaf); shaderRaf = null; }
+      }
+    });
+  }, { threshold: 0.01 });
+  shaderObs.observe(canvas);
+  shaderRaf = requestAnimationFrame(frame);
 })();
 </script>
 
@@ -2900,17 +2912,19 @@ footer p { font-size: 13px; color: var(--gray-5); }
   show('.hero-stats', done + 320);
 })();
 
-/* ── CURSOR GLOW ── */
+/* ── CURSOR GLOW — solo en dispositivos con mouse, no en touch ── */
 const glow = document.getElementById('cursorGlow');
-let glowX = 0, glowY = 0, currentX = 0, currentY = 0;
-document.addEventListener('mousemove', e => { glowX = e.clientX; glowY = e.clientY; });
-(function animateGlow() {
-  currentX += (glowX - currentX) * 0.1;
-  currentY += (glowY - currentY) * 0.1;
-  glow.style.left = currentX + 'px';
-  glow.style.top  = currentY + 'px';
-  requestAnimationFrame(animateGlow);
-})();
+if (glow && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  let glowX = 0, glowY = 0, currentX = 0, currentY = 0;
+  document.addEventListener('mousemove', e => { glowX = e.clientX; glowY = e.clientY; });
+  (function animateGlow() {
+    currentX += (glowX - currentX) * 0.1;
+    currentY += (glowY - currentY) * 0.1;
+    glow.style.left = currentX + 'px';
+    glow.style.top  = currentY + 'px';
+    requestAnimationFrame(animateGlow);
+  })();
+}
 
 /* ── SCROLL REVEAL + STAGGER ── */
 const obs = new IntersectionObserver(entries => {
@@ -3505,12 +3519,24 @@ document.querySelectorAll('.btn-cta-primary,.btn-cta-ghost,.btn-tier').forEach(b
       nctx.fill();
     });
 
-    requestAnimationFrame(ncDraw);
+    ncRaf = requestAnimationFrame(ncDraw);
   }
+
+  let ncRaf = null;
+  const ncObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        if (!ncRaf) ncRaf = requestAnimationFrame(ncDraw);
+      } else {
+        if (ncRaf) { cancelAnimationFrame(ncRaf); ncRaf = null; }
+      }
+    });
+  }, { threshold: 0.01 });
 
   ncResize();
   window.addEventListener('resize', ncResize);
-  ncDraw();
+  ncObs.observe(nc);
+  ncRaf = requestAnimationFrame(ncDraw);
 })();
 
 /* ── METRIC CARDS COUNTER — lento, easing suave ── */
