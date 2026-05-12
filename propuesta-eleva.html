@@ -16,6 +16,12 @@
   --blue-vivid: #3A6FFF;
   --blue-tint:  #EEF2FF;
   --blue-light: #D9E3FF;
+  --violet:     #7C3AED;
+  --violet-mid: #9B6DFF;
+  --violet-light: #C4B5FD;
+  --rose:       #DB2777;
+  --rose-mid:   #EC4899;
+  --rose-light: #FBCFE8;
   --ink:        #0A0A0F;
   --ink-soft:   #1B1B23;
   --gray-8:     #2C2C38;
@@ -58,6 +64,70 @@ a { color: inherit; text-decoration: none; }
   text-transform: uppercase;
   color: var(--blue-vivid);
 }
+
+/* ── SCROLL PROGRESS BAR ── */
+.scroll-progress-wrap {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  z-index: 9999;
+  background: transparent;
+  pointer-events: none;
+}
+.scroll-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--blue) 0%, var(--violet-mid) 50%, var(--rose-mid) 100%);
+  transition: width 0.08s linear;
+  border-radius: 0 2px 2px 0;
+  box-shadow: 0 0 8px rgba(124,58,237,.5);
+}
+/* Indicador flotante en el lado derecho — inspirado en Dynamic Island */
+.scroll-island {
+  position: fixed;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 9998;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  opacity: 0;
+  transition: opacity .4s ease;
+  pointer-events: none;
+}
+.scroll-island.visible { opacity: 1; }
+.scroll-island-track {
+  width: 5px;
+  height: 180px;
+  background: rgba(44,95,255,.15);
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(44,95,255,.1);
+}
+.scroll-island-thumb {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 0%;
+  background: linear-gradient(180deg, #007AFF 0%, var(--blue-vivid) 100%);
+  border-radius: 6px;
+  transition: height 0.1s linear;
+  box-shadow: 0 0 10px rgba(44,95,255,.6);
+}
+.scroll-island-pct {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--blue-vivid);
+  letter-spacing: 0.06em;
+  background: rgba(44,95,255,.08);
+  padding: 3px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(44,95,255,.2);
+}
+@media (max-width: 900px) { .scroll-island { display: none; } }
 
 /* ── CONFIDENTIAL ── */
 .confidential {
@@ -293,22 +363,24 @@ a { color: inherit; text-decoration: none; }
 .hero-ceo-title { font-size: 11px; color: rgba(255,255,255,.5); margin-top: 2px; }
 @media (max-width: 900px) { .hero-ceo { display: none; } .hero { padding: 120px 32px 80px; } }
 
-/* ── HERO TYPEWRITER — estado inicial invisible ── */
+/* ── HERO REVEAL — estado inicial invisible ── */
 .hero-logos,
 .hero-badge,
 .hero-sub,
 .hero-stats {
   opacity: 0;
 }
-/* headline: invisible pero ocupa espacio para no colapsar el layout */
-.hero-headline { color: transparent; }
+.hero-headline { color: var(--white); }
+.hero-headline em { color: var(--blue-vivid); }
+
+/* palabras del headline — aparecen con blur + fade */
 .tw-word {
   display: inline-block;
   opacity: 0;
-  filter: blur(14px);
-  transform: translateY(18px);
+  filter: blur(10px);
+  transform: translateY(14px);
   color: var(--white);
-  transition: opacity .55s ease, filter .55s ease, transform .55s cubic-bezier(.16,1,.3,1);
+  transition: opacity .6s ease, filter .6s ease, transform .6s cubic-bezier(.16,1,.3,1);
 }
 .hero-headline em .tw-word { color: var(--blue-vivid); }
 .tw-word.visible {
@@ -591,18 +663,71 @@ section.hero {
 /* ── ROADMAP — fondo oscuro ── */
 .roadmap {
   background: var(--ink);
-  padding: 100px 32px;
+  padding: 100px 64px;
   position: relative;
   overflow: hidden;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  max-width: 100vw !important;
+  box-sizing: border-box;
+}
+
+/* ── ORBITAL TIMELINE ── */
+.orbital-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin: 72px auto 0;
+}
+#orbitalCanvas {
+  display: block;
+  width: 100%;
+  height: 520px;
+}
+.orbital-detail {
+  position: absolute;
+  bottom: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 700px;
+  background: rgba(10,10,20,.92);
+  border: 1px solid rgba(44,95,255,.2);
+  border-radius: 20px;
+  padding: 32px 36px;
+  backdrop-filter: blur(16px);
+  opacity: 0;
+  transition: opacity .4s ease, transform .4s cubic-bezier(.16,1,.3,1);
+  transform: translateX(-50%) translateY(8px);
+  pointer-events: none;
+  z-index: 10;
+}
+.orbital-detail.active {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+.orbital-detail-num  { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--blue-vivid); letter-spacing: 0.15em; margin-bottom: 8px; }
+.orbital-detail h3   { font-size: 22px; font-weight: 600; color: var(--white); margin-bottom: 6px; }
+.orbital-detail-period { font-size: 12px; color: var(--gray-6); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 18px; }
+.orbital-detail ul   { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.orbital-detail li   { font-size: 14px; color: var(--gray-4); display: flex; gap: 10px; align-items: flex-start; line-height: 1.5; }
+.orbital-detail li::before { content: '→'; color: var(--blue-vivid); font-size: 12px; margin-top: 2px; flex-shrink: 0; }
+.orbital-hint {
+  text-align: center;
+  font-size: 12px;
+  color: var(--gray-6);
+  margin-top: 16px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-family: 'JetBrains Mono', monospace;
+}
+@media (max-width: 700px) {
+  #orbitalCanvas { height: 380px; }
+  .orbital-detail { padding: 24px 20px; }
 }
 .roadmap-bg-img {
-  position: absolute;
-  inset: 0;
-  background-image: url('https://grupo-eleva.mx/wp-content/uploads/2025/02/Ventura-Lofts--1024x593.png');
-  background-size: cover;
-  background-position: center;
-  opacity: .06;
-  filter: grayscale(100%);
+  display: none;
 }
 .roadmap::after {
   content: '';
@@ -740,9 +865,13 @@ section.hero {
 .cta-section {
   position: relative;
   overflow: hidden;
-  padding: 120px 32px;
+  padding: 120px 64px;
   text-align: center;
   background: var(--ink);
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  max-width: 100vw !important;
+  box-sizing: border-box;
 }
 .cta-bg-img {
   position: absolute;
@@ -797,6 +926,756 @@ footer {
 footer img { height: 28px; }
 footer p { font-size: 13px; color: var(--gray-5); }
 
+/* ══════════════════════════════════════════════
+   ORBS AURORA — loops infinitos
+   ══════════════════════════════════════════════ */
+.aurora-wrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0;
+  animation: orbFloat var(--dur, 18s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+@keyframes orbFloat {
+  0%   { transform: translate(0, 0) scale(1);    opacity: 0; }
+  15%  { opacity: var(--op, 0.18); }
+  50%  { transform: translate(var(--dx, 40px), var(--dy, -30px)) scale(1.15); opacity: var(--op, 0.18); }
+  85%  { opacity: var(--op, 0.18); }
+  100% { transform: translate(0, 0) scale(1);    opacity: 0; }
+}
+
+/* ══════════════════════════════════════════════
+   DEGRADADO EN TIPOGRAFÍA
+   ══════════════════════════════════════════════ */
+.grad-text {
+  background: linear-gradient(135deg, var(--blue) 0%, var(--violet-mid) 55%, var(--rose-mid) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.grad-text-warm {
+  background: linear-gradient(135deg, #4A7BFF 0%, var(--violet-mid) 50%, var(--violet-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ══════════════════════════════════════════════
+   RED NEURONAL — fondo animado cerebro
+   ══════════════════════════════════════════════ */
+.neural-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.65;
+}
+
+/* ══════════════════════════════════════════════
+   SECCIÓN: BASE DE CONOCIMIENTO INSTITUCIONAL
+   ══════════════════════════════════════════════ */
+.cerebro-section {
+  background: var(--ink);
+  padding: 120px 64px;
+  position: relative;
+  overflow: hidden;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  max-width: 100vw !important;
+  box-sizing: border-box;
+}
+.cerebro-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  z-index: 1;
+}
+.cerebro-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  margin-top: 64px;
+}
+.cerebro-text h3 {
+  font-size: clamp(22px, 2.5vw, 32px);
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.3;
+  margin-bottom: 20px;
+}
+.cerebro-text p {
+  font-size: 16px;
+  color: var(--gray-4);
+  line-height: 1.75;
+  margin-bottom: 16px;
+}
+.cerebro-pillars {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.cerebro-pillar {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 20px 24px;
+  background: rgba(44,95,255,.06);
+  border: 1px solid rgba(44,95,255,.14);
+  border-radius: var(--r-md);
+  transition: border-color .3s, background .3s;
+}
+.cerebro-pillar:hover {
+  border-color: rgba(44,95,255,.3);
+  background: rgba(44,95,255,.1);
+}
+.cerebro-pillar-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--violet-light);
+  background: rgba(124,58,237,.18);
+  border-radius: 6px;
+  padding: 4px 8px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.cerebro-pillar:nth-child(3) .cerebro-pillar-num,
+.cerebro-pillar:nth-child(4) .cerebro-pillar-num {
+  color: var(--rose-light);
+  background: rgba(219,39,119,.15);
+}
+.cerebro-pillar-body h5 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+.cerebro-pillar-body p {
+  font-size: 14px;
+  color: var(--gray-5);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Talleres */
+.talleres-section {
+  background: var(--cream);
+  padding: 80px 32px;
+  position: relative;
+  overflow: hidden;
+}
+.talleres-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+.talleres-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+}
+.taller-card {
+  background: var(--white);
+  border: 1px solid var(--gray-2);
+  border-radius: var(--r-lg);
+  padding: 32px 28px;
+  transition: border-color .3s, transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s;
+}
+.taller-card:hover {
+  border-color: rgba(44,95,255,.25);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+.taller-tag {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 12px;
+}
+.taller-card:nth-child(2) .taller-tag { color: var(--violet); }
+.taller-card:nth-child(3) .taller-tag { color: var(--rose); }
+.taller-card h4 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--gray-8);
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+.taller-card p {
+  font-size: 14px;
+  color: var(--gray-6);
+  line-height: 1.65;
+  margin-bottom: 20px;
+}
+.taller-note {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--blue);
+  background: var(--blue-tint);
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: inline-block;
+}
+
+@media (max-width: 900px) {
+  .cerebro-grid { grid-template-columns: 1fr; gap: 40px; }
+  .talleres-grid { grid-template-columns: 1fr; }
+}
+
+/* ══════════════════════════════════════════════
+   SECCIÓN: POR QUÉ AHORA
+   ══════════════════════════════════════════════ */
+.urgency-section {
+  background: var(--ink) !important;
+  padding: 120px 64px;
+  position: relative;
+  /* Romper el max-width del contenedor section global */
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  max-width: 100vw !important;
+  box-sizing: border-box;
+}
+.urgency-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+.urgency-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 64px;
+}
+.urgency-card {
+  background: transparent;
+  border: none;
+  border-top: 1px solid rgba(44,95,255,.2);
+  border-radius: 0;
+  padding: 36px 32px 36px 0;
+  position: relative;
+  overflow: hidden;
+  transition: border-color .3s;
+}
+.urgency-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--blue), var(--blue-vivid));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .6s cubic-bezier(.16,1,.3,1);
+}
+.urgency-card:hover::before { transform: scaleX(1); }
+.urgency-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(36px, 4vw, 52px);
+  font-weight: 500;
+  color: var(--blue-vivid);
+  line-height: 1;
+  margin-bottom: 16px;
+}
+.urgency-icon {
+  color: var(--blue-vivid);
+  margin-bottom: 16px;
+}
+.urgency-card h4 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+.urgency-card p {
+  font-size: 15px;
+  color: var(--gray-4);
+  line-height: 1.65;
+}
+.urgency-bottom {
+  margin-top: 72px;
+}
+.urgency-stat-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border: 1px solid rgba(44,95,255,.12);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+.urgency-stat-item {
+  flex: 1;
+  padding: 36px 32px;
+  text-align: center;
+}
+.urgency-divider-v {
+  width: 1px;
+  background: rgba(44,95,255,.12);
+  align-self: stretch;
+}
+.urgency-stat-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(28px, 3vw, 42px);
+  font-weight: 500;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 10px;
+}
+.urgency-stat-val span {
+  font-size: 0.55em;
+  color: var(--blue-light);
+  font-weight: 400;
+}
+.urgency-stat-label {
+  font-size: 14px;
+  color: var(--gray-5);
+  line-height: 1.5;
+  max-width: 200px;
+  margin: 0 auto;
+}
+
+/* ══════════════════════════════════════════════
+   SECCIÓN: MATRIZ DE PRIORIZACIÓN
+   ══════════════════════════════════════════════ */
+.matrix-section {
+  padding: 120px 32px;
+  background: var(--paper);
+}
+.matrix-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+.matrix-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+  margin-top: 64px;
+}
+.matrix-chart-wrap {
+  position: relative;
+}
+.matrix-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+/* Puntos de la matriz — animación de entrada */
+.matrix-point {
+  opacity: 0;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+.matrix-point.matrix-visible {
+  animation: matrixDot .6s cubic-bezier(.16,1,.3,1) forwards;
+}
+@keyframes matrixDot {
+  from { opacity: 0; transform: scale(0); }
+  to   { opacity: 1; transform: scale(1); }
+}
+/* Flecha de secuencia */
+#matrixArrow.matrix-arrow-go {
+  animation: drawArrow 1s .8s ease forwards;
+}
+#matrixArrowHead.matrix-arrow-go {
+  animation: fadeArrowHead .3s 1.7s ease forwards;
+}
+@keyframes drawArrow {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes fadeArrowHead {
+  to { opacity: 0.6; }
+}
+/* Tabla de la matriz */
+.matrix-table-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 8px;
+}
+.matrix-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 8px;
+  align-items: center;
+  padding: 14px 16px;
+  border-radius: var(--r-md);
+  font-size: 14px;
+}
+.matrix-row-header {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray-5);
+  padding: 8px 16px;
+  background: transparent;
+}
+.matrix-row:not(.matrix-row-header) {
+  background: var(--white);
+  border: 1px solid var(--gray-2);
+  transition: border-color .2s, transform .3s cubic-bezier(.16,1,.3,1);
+}
+.matrix-row:not(.matrix-row-header):hover {
+  border-color: rgba(44,95,255,.25);
+  transform: translateX(4px);
+}
+.matrix-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.tag-high    { background: rgba(44,95,255,.1); color: var(--blue); }
+.tag-vhigh   { background: rgba(44,95,255,.18); color: var(--blue-dark); }
+.tag-critical { background: rgba(44,95,255,.08); color: var(--blue-vivid); }
+.tag-mid     { background: var(--gray-1); color: var(--gray-6); }
+.matrix-dep  { font-size: 12px; color: var(--gray-5); font-family: 'JetBrains Mono', monospace; }
+
+/* ══════════════════════════════════════════════
+   SECCIÓN: QUIÉN ES NODO
+   ══════════════════════════════════════════════ */
+.nodo-section {
+  padding: 120px 32px;
+  background: var(--white);
+}
+.nodo-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+.nodo-principles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 64px;
+}
+.nodo-principle {
+  padding: 36px 32px;
+  border: 1px solid var(--gray-2);
+  border-radius: var(--r-lg);
+  background: var(--paper);
+  transition: border-color .3s, transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s;
+}
+.nodo-principle:hover {
+  border-color: rgba(44,95,255,.25);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+.nodo-principle-icon {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: var(--blue-tint);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--blue);
+  margin-bottom: 20px;
+}
+.nodo-principle h4 {
+  font-size: 17px; font-weight: 600; color: var(--gray-8);
+  margin-bottom: 10px; line-height: 1.3;
+}
+.nodo-principle p {
+  font-size: 15px; color: var(--gray-6); line-height: 1.65;
+}
+/* Caso de referencia */
+.nodo-case {
+  margin-top: 64px;
+  border: 1px solid rgba(44,95,255,.2);
+  border-radius: var(--r-xl);
+  padding: 44px 48px;
+  background: linear-gradient(135deg, var(--blue-tint) 0%, var(--white) 60%);
+  position: relative;
+  overflow: hidden;
+}
+.nodo-case::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--blue), var(--blue-vivid));
+}
+.nodo-case-eyebrow {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px;
+}
+.nodo-case-tag {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--gray-5);
+  background: var(--gray-1); border-radius: 20px;
+  padding: 4px 12px;
+}
+.nodo-case-body > p {
+  font-size: 16px; color: var(--gray-7); line-height: 1.7;
+  margin-bottom: 32px;
+}
+.nodo-case-results {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+.nodo-case-result {
+  display: flex; flex-direction: column; gap: 4px;
+}
+.nodo-case-result strong {
+  font-size: 15px; font-weight: 600; color: var(--gray-8);
+}
+.nodo-case-result span {
+  font-size: 14px; color: var(--gray-6); line-height: 1.5;
+}
+.nodo-case-footnote {
+  margin-top: 28px; font-size: 13px; color: var(--gray-5);
+  font-style: italic;
+}
+/* Tabla comparativa NODO */
+.nodo-compare {
+  margin-top: 64px;
+}
+.nodo-compare-title {
+  font-size: 20px; font-weight: 600; color: var(--gray-8); margin-bottom: 24px;
+}
+.nodo-compare-table {
+  border: 1px solid var(--gray-2); border-radius: var(--r-lg); overflow: hidden;
+}
+.compare-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  padding: 16px 24px;
+  font-size: 14px;
+  border-bottom: 1px solid var(--gray-2);
+  align-items: center;
+}
+.compare-row:last-child { border-bottom: none; }
+.compare-header {
+  background: var(--cream);
+  font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--gray-5);
+}
+.compare-yes { color: #16a34a; font-weight: 600; }
+.compare-no  { color: var(--coral); font-weight: 600; }
+.compare-nodo {
+  background: var(--blue-tint);
+  font-weight: 600;
+  border-left: 2px solid var(--blue);
+  margin: -16px 0; padding: 16px;
+}
+.compare-header .compare-nodo { margin: -16px 0; padding: 16px; }
+
+/* ══════════════════════════════════════════════
+   SECCIÓN: INVERSIÓN — BLOQUES NUEVOS
+   ══════════════════════════════════════════════ */
+.inv-compare, .inv-includes, .inv-roi {
+  max-width: 900px;
+  margin: 0 auto 80px;
+}
+.inv-sub-title {
+  font-size: clamp(20px, 2.5vw, 28px);
+  font-weight: 600;
+  color: var(--gray-8);
+  margin-bottom: 10px;
+}
+.inv-sub-note {
+  font-size: 15px;
+  color: var(--gray-5);
+  margin-bottom: 28px;
+  line-height: 1.6;
+}
+/* Tabla comparativa alternativas */
+.inv-compare-table {
+  border: 1px solid var(--gray-2);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+.inv-compare-row {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 2fr;
+  padding: 16px 24px;
+  font-size: 14px;
+  border-bottom: 1px solid var(--gray-2);
+  align-items: center;
+  gap: 16px;
+}
+.inv-compare-row:last-child { border-bottom: none; }
+.inv-compare-header {
+  background: var(--cream);
+  font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--gray-5);
+}
+.inv-compare-highlight {
+  background: var(--blue-tint);
+  border-left: 3px solid var(--blue);
+  color: var(--gray-8);
+}
+.inv-compare-highlight strong { color: var(--blue-dark); }
+/* Qué incluye */
+.inv-includes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.inv-include-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  background: var(--paper);
+  border: 1px solid var(--gray-2);
+  border-radius: var(--r-md);
+  font-size: 15px;
+  color: var(--gray-7);
+}
+.inv-include-item svg { flex-shrink: 0; margin-top: 2px; }
+.inv-infra-note {
+  display: flex;
+  gap: 12px;
+  padding: 20px 24px;
+  background: var(--blue-tint);
+  border: 1px solid rgba(44,95,255,.15);
+  border-radius: var(--r-md);
+  font-size: 14px;
+  color: var(--gray-7);
+  line-height: 1.65;
+}
+.inv-infra-icon { color: var(--blue); flex-shrink: 0; margin-top: 2px; }
+.inv-infra-note strong { color: var(--blue-dark); }
+/* Gráfica ROI */
+.roi-chart {
+  display: flex;
+  gap: 12px;
+  height: 240px;
+  margin-bottom: 16px;
+  position: relative;
+}
+.roi-axis-y {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--gray-5);
+  text-align: right;
+  padding-bottom: 24px;
+  font-family: 'JetBrains Mono', monospace;
+  min-width: 44px;
+}
+.roi-bars-wrap {
+  flex: 1;
+  display: flex;
+  gap: 6px;
+  align-items: flex-end;
+  position: relative;
+  border-bottom: 1px solid var(--gray-2);
+  padding-bottom: 0;
+}
+.roi-equilibrium-line {
+  position: absolute;
+  left: 0; right: 0;
+  border-top: 1.5px dashed rgba(44,95,255,.4);
+  pointer-events: none;
+}
+.roi-eq-label {
+  position: absolute;
+  right: 0;
+  top: -18px;
+  font-size: 11px;
+  color: var(--blue);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  font-family: 'JetBrains Mono', monospace;
+}
+.roi-month {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  height: 100%;
+  justify-content: flex-end;
+}
+.roi-bar-wrap {
+  display: flex;
+  gap: 2px;
+  align-items: flex-end;
+  width: 100%;
+  height: calc(100% - 20px);
+}
+.roi-bar {
+  flex: 1;
+  border-radius: 3px 3px 0 0;
+  width: 0;
+  height: 0;
+  transition: height 1s cubic-bezier(.16,1,.3,1), opacity .3s;
+  opacity: 0;
+}
+.roi-bar.roi-animate {
+  opacity: 1;
+}
+.roi-invest {
+  background: rgba(232,74,42,.3);
+  border: 1px solid rgba(232,74,42,.5);
+  align-self: flex-end;
+}
+.roi-return {
+  background: rgba(22,163,74,.25);
+  border: 1px solid rgba(22,163,74,.45);
+  align-self: flex-end;
+}
+.roi-label {
+  font-size: 10px;
+  color: var(--gray-5);
+  font-family: 'JetBrains Mono', monospace;
+}
+.roi-legend {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  font-size: 13px;
+  color: var(--gray-6);
+}
+.roi-legend-item { display: flex; align-items: center; gap: 8px; }
+.roi-legend-dot {
+  width: 12px; height: 12px; border-radius: 2px;
+}
+.roi-legend-invest { background: rgba(232,74,42,.4); }
+.roi-legend-return { background: rgba(22,163,74,.35); }
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE — secciones nuevas
+   ══════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .urgency-grid { grid-template-columns: 1fr; }
+  .urgency-stat-row { flex-direction: column; }
+  .urgency-divider-v { width: 100%; height: 1px; align-self: auto; }
+  .matrix-layout { grid-template-columns: 1fr; gap: 40px; }
+  .nodo-principles { grid-template-columns: 1fr; }
+  .nodo-case-results { grid-template-columns: 1fr; gap: 16px; }
+  .compare-row { grid-template-columns: 2fr 1fr 1fr; }
+  .compare-row .compare-nodo { margin: -16px; padding: 16px; }
+}
+@media (max-width: 700px) {
+  .inv-includes-grid { grid-template-columns: 1fr; }
+  .inv-compare-row { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .inv-compare-row span:last-child { grid-column: 1/-1; font-size: 13px; color: var(--gray-5); }
+  .matrix-row { grid-template-columns: 2fr 1fr; }
+  .matrix-row > span:nth-child(3),
+  .matrix-row > span:nth-child(4) { display: none; }
+  .compare-row { grid-template-columns: 2fr 1fr; }
+  .compare-row > span:nth-child(3) { display: none; }
+}
+
 /* ── CURSOR GLOW ── */
 .cursor-glow {
   position: fixed;
@@ -814,6 +1693,17 @@ footer p { font-size: 13px; color: var(--gray-5); }
 <body>
 
 <div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- SCROLL PROGRESS -->
+<div class="scroll-progress-wrap">
+  <div class="scroll-progress-bar" id="scrollBar"></div>
+</div>
+<div class="scroll-island" id="scrollIsland">
+  <div class="scroll-island-track">
+    <div class="scroll-island-thumb" id="scrollThumb"></div>
+  </div>
+  <div class="scroll-island-pct" id="scrollPct">0%</div>
+</div>
 
 <!-- CONFIDENTIAL -->
 <div class="confidential">Documento confidencial · Exclusivo para Grupo Eleva · Mayo 2026</div>
@@ -938,15 +1828,15 @@ footer p { font-size: 13px; color: var(--gray-5); }
 <div class="diagnosis">
   <div class="diagnosis-inner">
     <div class="section-header reveal">
-      <div class="eyebrow">Lo que encontramos</div>
-      <h2 class="section-title">El diagnóstico <em>es claro</em></h2>
-      <p class="section-sub">Grupo Eleva crece rápido. La operación no crece al mismo ritmo. Eso genera riesgos que hoy cuestan dinero real.</p>
+      <div class="eyebrow">El diagnóstico</div>
+      <h2 class="section-title">Cuatro brechas <em class="grad-text">con costo real</em></h2>
+      <p class="section-sub">Grupo Eleva crece más rápido que sus sistemas de información. Estas son las brechas que NODO identificó — con datos, sin opinión.</p>
     </div>
     <div class="diagnosis-grid stagger-children">
       <div class="diagnosis-card">
-        <div class="stat stat-neg" data-count="10" data-prefix="~" data-suffix="%">~10%</div>
-        <h4>Desviación en obra</h4>
-        <p>Ventura Lofts y Torre Romano acumulan ~10 puntos de retraso. Con crédito puente activo, cada mes adicional tiene costo financiero directo.</p>
+        <div class="stat stat-neg">⚠</div>
+        <h4>Obra con desviaciones activas</h4>
+        <p>Ventura Lofts y Torre Romano presentan retrasos respecto al programa. Sin alertas automáticas ni indicadores de costo por proyecto, cada mes de desviación pasa desapercibido.</p>
       </div>
       <div class="diagnosis-card">
         <div class="stat" data-count="0">0</div>
@@ -1019,8 +1909,259 @@ footer p { font-size: 13px; color: var(--gray-5); }
     </div>
     <div class="pain-card">
       <div class="pain-label">Administración</div>
-      <h3>Dos contabilidades, sin cabeza</h3>
-      <p>Eleva y Prisma operan con contabilidades separadas en CONTPAQ. Sin dirección unificada, cada subdepartamento trabaja de forma aislada.</p>
+      <h3>Sin control financiero real</h3>
+      <p>Tesorería, Contabilidad, Costos y Compras operan de forma paralela sin una dirección unificada. El resultado: información dispersa, reportes tardíos y decisiones que esperan datos que deberían estar disponibles en tiempo real.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- POR QUÉ AHORA -->
+<section class="urgency-section" id="momento">
+  <div class="urgency-inner">
+    <div class="section-header reveal">
+      <div class="eyebrow" style="color:var(--blue-light);">El costo de no actuar</div>
+      <h2 class="section-title" style="color:var(--white);">Cada semana sin visibilidad<br><em class="grad-text-warm">tiene un precio.</em></h2>
+      <p class="section-sub" style="color:var(--gray-4); max-width:620px; margin: 0 auto;">
+        Las brechas del diagnóstico no son problemas abstractos. Cada una genera un costo concreto que se acumula. Esto es lo que está en juego mientras la operación siga fragmentada.
+      </p>
+    </div>
+
+    <div class="urgency-grid stagger-children">
+      <div class="urgency-card">
+        <div class="urgency-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 4L26 24H2L14 4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 11v6M14 20v1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <h4>Obra con riesgo activo</h4>
+        <p>Ventura Lofts y Torre Romano presentan desviaciones respecto al programa, con compradores esperando entrega. Sin visibilidad consolidada, cada semana que pasa agrava el riesgo financiero y reputacional.</p>
+      </div>
+      <div class="urgency-card">
+        <div class="urgency-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="1.8"/><path d="M14 8v6l4 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <h4>Crecimiento frenado por el CEO</h4>
+        <p>Cuando el Director General cubre vacíos operativos, deja de evaluar nuevas oportunidades. Tres proyectos en evaluación esperan decisiones que dependen de tiempo que hoy está absorbido por la operación diaria.</p>
+      </div>
+      <div class="urgency-card">
+        <div class="urgency-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="4" y="8" width="20" height="14" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M9 8V6a5 5 0 0 1 10 0v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <h4>La ventana se cierra</h4>
+        <p>Grupo Eleva está en el momento exacto: estructura definida, procesos en marcha y mandato claro de institucionalización. Con cada proyecto nuevo sin sistemas de control, el costo de ordenar escala.</p>
+      </div>
+    </div>
+
+    <div class="urgency-bottom reveal">
+      <div class="urgency-stat-row">
+        <div class="urgency-stat-item">
+          <div class="urgency-stat-val">3–5 <span>días</span></div>
+          <div class="urgency-stat-label">para que el CEO obtenga el estado financiero real de la empresa</div>
+        </div>
+        <div class="urgency-divider-v"></div>
+        <div class="urgency-stat-item">
+          <div class="urgency-stat-val">0 <span>dashboards</span></div>
+          <div class="urgency-stat-label">que consoliden portafolio, obras y finanzas en un solo punto</div>
+        </div>
+        <div class="urgency-divider-v"></div>
+        <div class="urgency-stat-item">
+          <div class="urgency-stat-val">4 <span>sistemas</span></div>
+          <div class="urgency-stat-label">paralelos sin integración — cada uno con su propia verdad</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- MATRIZ DE PRIORIZACIÓN -->
+<section class="matrix-section" id="logica">
+  <div class="matrix-inner">
+    <div class="section-header reveal">
+      <div class="eyebrow">Lógica de implementación</div>
+      <h2 class="section-title">Por qué <em>en este orden</em></h2>
+      <p class="section-sub">No atacamos todo a la vez. Cada componente habilita el siguiente. El orden no es arbitrario — está determinado por impacto y por dependencias técnicas.</p>
+    </div>
+
+    <div class="matrix-layout">
+      <div class="matrix-chart-wrap reveal">
+        <svg class="matrix-svg" viewBox="0 0 500 420" xmlns="http://www.w3.org/2000/svg" aria-label="Matriz de priorización">
+          <!-- Fondo cuadrantes -->
+          <rect x="60" y="20" width="200" height="180" fill="rgba(44,95,255,.04)" rx="4"/>
+          <rect x="260" y="20" width="200" height="180" fill="rgba(44,95,255,.025)" rx="4"/>
+          <rect x="60" y="200" width="200" height="180" fill="rgba(44,95,255,.015)" rx="4"/>
+          <rect x="260" y="200" width="200" height="180" fill="rgba(44,95,255,.008)" rx="4"/>
+
+          <!-- Labels de cuadrante -->
+          <text x="75" y="42" font-size="10" fill="rgba(44,95,255,.6)" font-family="'Space Grotesk'" font-weight="600" letter-spacing="0.08em" text-transform="uppercase">QUICK WIN</text>
+          <text x="275" y="42" font-size="10" fill="rgba(44,95,255,.4)" font-family="'Space Grotesk'" font-weight="600" letter-spacing="0.08em">GRAN APUESTA</text>
+          <text x="75" y="220" font-size="10" fill="rgba(184,184,194,.7)" font-family="'Space Grotesk'" font-weight="600" letter-spacing="0.08em">BASE</text>
+          <text x="275" y="220" font-size="10" fill="rgba(184,184,194,.5)" font-family="'Space Grotesk'" font-weight="600" letter-spacing="0.08em">CONSTRUIR</text>
+
+          <!-- Ejes -->
+          <line x1="60" y1="200" x2="460" y2="200" stroke="var(--gray-2)" stroke-width="1"/>
+          <line x1="260" y1="20" x2="260" y2="400" stroke="var(--gray-2)" stroke-width="1"/>
+
+          <!-- Eje X label -->
+          <text x="260" y="418" font-size="11" fill="var(--gray-5)" font-family="'Space Grotesk'" text-anchor="middle" font-weight="500">Complejidad de implementación →</text>
+          <!-- Eje Y label -->
+          <text x="14" y="210" font-size="11" fill="var(--gray-5)" font-family="'Space Grotesk'" text-anchor="middle" font-weight="500" transform="rotate(-90, 14, 210)">Impacto en el negocio →</text>
+
+          <!-- Flecha de secuencia: 1→2→3→4, de izq-centro hacia derecha en cuadrante alto -->
+          <path id="matrixArrow" d="M 148,105 C 180,80 220,60 270,48 C 320,36 370,42 415,52" stroke="var(--blue)" stroke-width="1.5" stroke-dasharray="300" stroke-dashoffset="300" fill="none" stroke-linecap="round" opacity="0.5"/>
+          <polygon id="matrixArrowHead" points="408,44 420,50 410,60" fill="var(--blue)" opacity="0"/>
+
+          <!-- Puntos — aparecen con animación scale -->
+          <!-- 1: Base de Conocimiento — alto impacto / baja complejidad (cuadrante sup-izq: Quick Win) -->
+          <g class="matrix-point" data-delay="0">
+            <circle cx="148" cy="105" r="22" fill="var(--blue)" opacity="0.15"/>
+            <circle cx="148" cy="105" r="13" fill="var(--blue)"/>
+            <text x="148" y="109" font-size="12" fill="white" text-anchor="middle" font-family="'JetBrains Mono'" font-weight="500">1</text>
+          </g>
+          <!-- 2: Admin Digital — alto impacto / complejidad media (cuadrante sup, centro-izq) -->
+          <g class="matrix-point" data-delay="1">
+            <circle cx="270" cy="48" r="22" fill="var(--blue)" opacity="0.15"/>
+            <circle cx="270" cy="48" r="13" fill="var(--blue-dark)"/>
+            <text x="270" y="52" font-size="12" fill="white" text-anchor="middle" font-family="'JetBrains Mono'" font-weight="500">2</text>
+          </g>
+          <!-- 3: Comercial Digital — muy alto impacto / complejidad media-alta (cuadrante sup, centro-der) -->
+          <g class="matrix-point" data-delay="2">
+            <circle cx="370" cy="42" r="22" fill="var(--blue)" opacity="0.15"/>
+            <circle cx="370" cy="42" r="13" fill="var(--blue-dark)"/>
+            <text x="370" y="46" font-size="12" fill="white" text-anchor="middle" font-family="'JetBrains Mono'" font-weight="500">3</text>
+          </g>
+          <!-- 4: Dirección / CFO — impacto máximo / alta complejidad (cuadrante sup-der: Gran Apuesta) -->
+          <g class="matrix-point" data-delay="3">
+            <circle cx="430" cy="55" r="22" fill="rgba(44,95,255,.12)"/>
+            <circle cx="430" cy="55" r="13" fill="var(--ink-soft)" stroke="var(--blue)" stroke-width="1.5"/>
+            <text x="430" y="59" font-size="12" fill="var(--blue-light)" text-anchor="middle" font-family="'JetBrains Mono'" font-weight="500">4</text>
+          </g>
+
+          <!-- Labels de puntos -->
+          <text x="148" y="138" font-size="10.5" fill="var(--gray-6)" font-family="'Space Grotesk'" text-anchor="middle" font-weight="500">Base de Conocimiento</text>
+          <text x="270" y="82" font-size="10.5" fill="var(--gray-6)" font-family="'Space Grotesk'" text-anchor="middle" font-weight="500">Administración</text>
+          <text x="370" y="76" font-size="10.5" fill="var(--gray-6)" font-family="'Space Grotesk'" text-anchor="middle" font-weight="500">Comercial Digital</text>
+          <text x="430" y="88" font-size="10.5" fill="var(--gray-6)" font-family="'Space Grotesk'" text-anchor="middle" font-weight="500">Dirección / CFO</text>
+        </svg>
+      </div>
+
+      <div class="matrix-table-wrap">
+        <div class="matrix-row matrix-row-header">
+          <span>Componente</span>
+          <span>Impacto</span>
+          <span>Urgencia</span>
+          <span>Depende de</span>
+        </div>
+        <div class="matrix-row reveal" data-delay-ms="0">
+          <span><strong>① Base de Conocimiento</strong></span>
+          <span class="matrix-tag tag-high">Alto</span>
+          <span class="matrix-tag tag-critical">Inmediata</span>
+          <span class="matrix-dep">Ninguno</span>
+        </div>
+        <div class="matrix-row reveal" data-delay-ms="80">
+          <span><strong>② Admin Digital</strong></span>
+          <span class="matrix-tag tag-high">Alto</span>
+          <span class="matrix-tag tag-critical">Urgente</span>
+          <span class="matrix-dep">① Base</span>
+        </div>
+        <div class="matrix-row reveal" data-delay-ms="160">
+          <span><strong>③ Comercial Digital</strong></span>
+          <span class="matrix-tag tag-vhigh">Muy alto</span>
+          <span class="matrix-tag tag-mid">Fase 2</span>
+          <span class="matrix-dep">① y ②</span>
+        </div>
+        <div class="matrix-row reveal" data-delay-ms="240">
+          <span><strong>④ Dirección / CFO</strong></span>
+          <span class="matrix-tag tag-vhigh">Máximo</span>
+          <span class="matrix-tag tag-mid">Fase 3</span>
+          <span class="matrix-dep">① ② ③</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BASE DE CONOCIMIENTO INSTITUCIONAL -->
+<section class="cerebro-section" id="cerebro">
+  <!-- Red neuronal Canvas animada de fondo -->
+  <canvas id="neuralCanvas" class="neural-bg" aria-hidden="true"></canvas>
+  <div class="cerebro-inner">
+    <div class="section-header reveal">
+      <div class="eyebrow" style="color:var(--blue-light);">Base de conocimiento</div>
+      <h2 class="section-title" style="color:var(--white);">El segundo cerebro <em class="grad-text-warm">de Grupo Eleva</em></h2>
+      <p class="section-sub" style="color:var(--gray-4); max-width:640px; margin:0 auto;">Antes de instalar cualquier agente, construimos la base que los hace inteligentes: un sistema que conoce todo lo que necesita saber sobre la empresa y mejora solo con el tiempo.</p>
+    </div>
+
+    <div class="cerebro-grid">
+      <div class="cerebro-text reveal">
+        <h3>Un cerebro institucional que crece con la empresa</h3>
+        <p>No es un manual ni un repositorio de documentos. Es un sistema vivo que acumula conocimiento operativo de Grupo Eleva — procesos, criterios, históricos, acuerdos — y lo hace accesible para los colaboradores digitales y, eventualmente, para cada persona en la empresa.</p>
+        <p>Cada agente que se instala lo consulta. Cada decisión que se toma lo enriquece. Cuanto más tiempo opera, más preciso, más contextualizado y más valioso se vuelve.</p>
+      </div>
+      <div class="cerebro-pillars stagger-children">
+        <div class="cerebro-pillar">
+          <div class="cerebro-pillar-num">01</div>
+          <div class="cerebro-pillar-body">
+            <h5>Conocimiento que no se pierde</h5>
+            <p>Cuando una persona sale, el conocimiento queda. Procesos, criterios y acuerdos dejan de vivir solo en la memoria de quien los ejecuta.</p>
+          </div>
+        </div>
+        <div class="cerebro-pillar">
+          <div class="cerebro-pillar-num">02</div>
+          <div class="cerebro-pillar-body">
+            <h5>Especializado por área</h5>
+            <p>Versiones del cerebro para Obra, Comercial, Administración y Dirección — cada una con el contexto relevante para el área que la consulta.</p>
+          </div>
+        </div>
+        <div class="cerebro-pillar">
+          <div class="cerebro-pillar-num">03</div>
+          <div class="cerebro-pillar-body">
+            <h5>Mejora con cada interacción</h5>
+            <p>Cada vez que un colaborador o agente lo consulta y recibe retroalimentación, el sistema aprende. No es estático — es una ventaja que se compone con el tiempo.</p>
+          </div>
+        </div>
+        <div class="cerebro-pillar">
+          <div class="cerebro-pillar-num">04</div>
+          <div class="cerebro-pillar-body">
+            <h5>La base de todos los demás agentes</h5>
+            <p>El Colaborador de Administración, el Equipo Comercial y el CFO digital operan sobre esta base. Sin ella, son herramientas genéricas. Con ella, son especialistas de Eleva.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TALLERES DE AI -->
+<section class="talleres-section">
+  <div class="talleres-inner">
+    <div class="section-header reveal">
+      <div class="eyebrow">Programa de adopción</div>
+      <h2 class="section-title">Talleres de AI <em>para el equipo</em></h2>
+      <p class="section-sub">Los sistemas más poderosos fallan cuando las personas no saben usarlos. El programa de talleres garantiza que el equipo de Grupo Eleva adopte cada herramienta desde el primer día.</p>
+    </div>
+    <div class="talleres-grid stagger-children">
+      <div class="taller-card">
+        <div class="taller-tag">Área operativa</div>
+        <h4>AI para equipos de obra y administración</h4>
+        <p>Cómo consultar el segundo cerebro, interpretar alertas automáticas y usar los colaboradores digitales en el trabajo del día a día.</p>
+        <span class="taller-note">Incluido en nivel Operativo</span>
+      </div>
+      <div class="taller-card">
+        <div class="taller-tag">Comercial</div>
+        <h4>AI para el equipo de ventas</h4>
+        <p>Cómo trabajar con el agente comercial, interpretar reportes de pipeline en tiempo real y usar los datos para tomar decisiones de seguimiento.</p>
+        <span class="taller-note">Incluido en nivel Operativo</span>
+      </div>
+      <div class="taller-card">
+        <div class="taller-tag">Dirección</div>
+        <h4>AI para dirección general</h4>
+        <p>Cómo leer el dashboard ejecutivo, interpretar alertas de desviación y usar el CFO digital para evaluar proyectos y escenarios financieros.</p>
+        <span class="taller-note">Incluido en nivel Operativo</span>
+      </div>
     </div>
   </div>
 </section>
@@ -1033,53 +2174,128 @@ footer p { font-size: 13px; color: var(--gray-5); }
   <div class="roadmap-inner">
     <div class="section-header reveal">
       <div class="eyebrow">La solución</div>
-      <h2 class="section-title">Tres fases. <em>Resultados desde el mes uno.</em></h2>
+      <h2 class="section-title">Tres fases. <em class="grad-text-warm">Valor concreto en cada una.</em></h2>
       <p class="section-sub">Implementación progresiva para no interrumpir la operación. Cada fase genera valor antes de iniciar la siguiente.</p>
     </div>
-    <div class="phases stagger-children">
-      <div class="phase">
-        <div class="phase-watermark">01</div>
-        <div class="phase-num">FASE 01</div>
-        <h3>Visibilidad total</h3>
-        <div class="phase-period">Meses 1 — 3</div>
-        <ul>
-          <li>Dashboard ejecutivo en tiempo real por proyecto</li>
-          <li>Alertas automáticas de desviación en obra</li>
-          <li>Indicador de costo consolidado (Ventura + Romano)</li>
-          <li>Semáforo de gestorías con SEDUM</li>
-          <li>Reporte semanal automatizado para el CEO</li>
-        </ul>
-      </div>
-      <div class="phase phase-highlight">
-        <div class="phase-watermark">02</div>
-        <div class="phase-badge">Núcleo</div>
-        <div class="phase-num">FASE 02</div>
-        <h3>Operación autónoma</h3>
-        <div class="phase-period">Meses 4 — 9</div>
-        <ul>
-          <li>Agente comercial que califica y da seguimiento a leads</li>
-          <li>CRM unificado en Odoo (eliminar ADARA)</li>
-          <li>Proceso estándar de evaluación de terrenos</li>
-          <li>Automatización de compras y órdenes de obra</li>
-          <li>Integración contable Odoo-CONTPAQ</li>
-        </ul>
-      </div>
-      <div class="phase">
-        <div class="phase-watermark">03</div>
-        <div class="phase-num">FASE 03</div>
-        <h3>Inteligencia de negocio</h3>
-        <div class="phase-period">Meses 10 — 18</div>
-        <ul>
-          <li>CFO digital con proyecciones de flujo</li>
-          <li>Modelo financiero dinámico por proyecto</li>
-          <li>Predicción de desviaciones antes de que ocurran</li>
-          <li>Pipeline de nuevos proyectos con evaluación automática</li>
-          <li>Expansión a San Miguel de Allende y Valle de Guadalupe</li>
-        </ul>
+
+    <div class="orbital-wrap reveal">
+      <canvas id="orbitalCanvas"></canvas>
+      <p class="orbital-hint">Selecciona una fase para ver el detalle</p>
+
+      <!-- Panel de detalle — se muestra al seleccionar un nodo -->
+      <div class="orbital-detail" id="orbitalDetail">
+        <div class="orbital-detail-num" id="od-num">FASE 01</div>
+        <h3 id="od-title">Visibilidad total</h3>
+        <div class="orbital-detail-period" id="od-period">Meses 1 — 3</div>
+        <ul id="od-list"></ul>
       </div>
     </div>
   </div>
 </div>
+
+<div class="divider"></div>
+
+<!-- QUIÉN ES NODO -->
+<section class="nodo-section" id="quien" style="position:relative;overflow:hidden;">
+  <div class="aurora-wrap">
+    <div class="orb" style="width:450px;height:450px;background:#3A6FFF;top:-80px;left:-80px;--dur:24s;--delay:-6s;--dx:50px;--dy:60px;--op:0.08;"></div>
+    <div class="orb" style="width:300px;height:300px;background:#2C5FFF;bottom:10%;right:-60px;--dur:19s;--delay:-3s;--dx:-40px;--dy:-50px;--op:0.07;"></div>
+  </div>
+  <div class="nodo-inner">
+    <div class="section-header reveal">
+      <div class="eyebrow">Quién hace el trabajo</div>
+      <h2 class="section-title">No una agencia.<br><em class="grad-text">Una firma de implementación.</em></h2>
+      <p class="section-sub">La diferencia entre recibir un reporte y recibir un sistema funcionando.</p>
+    </div>
+
+    <div class="nodo-principles stagger-children">
+      <div class="nodo-principle">
+        <div class="nodo-principle-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M21 21l-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <h4>Diagnosticamos antes de instalar</h4>
+        <p>El orden importa más que la herramienta. Cualquier sistema mal secuenciado genera adopción cero y costos sin retorno.</p>
+      </div>
+      <div class="nodo-principle">
+        <div class="nodo-principle-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <h4>Implementamos, no solo recomendamos</h4>
+        <p>Entregamos sistemas funcionando, no reportes con recomendaciones. El cliente no contrata un plan — contrata el resultado.</p>
+      </div>
+      <div class="nodo-principle">
+        <div class="nodo-principle-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <h4>Medimos retorno, no horas</h4>
+        <p>La métrica del engagement es el resultado del negocio. El reporte mensual de impacto muestra qué cambió, no qué se hizo.</p>
+      </div>
+    </div>
+
+    <!-- Caso de referencia anónimo -->
+    <div class="nodo-case reveal">
+      <div class="nodo-case-eyebrow">
+        <div class="eyebrow">Referencia · Sector Construcción · Morelia</div>
+        <div class="nodo-case-tag">Confidencial</div>
+      </div>
+      <div class="nodo-case-body">
+        <p>Empresa constructora con ~50 colaboradores, base en Morelia, Michoacán. Engagement de 9 meses. Al inicio de la Fase 1: sin control financiero por proyecto, Director General operando en el día a día, procesos sin documentar.</p>
+        <div class="nodo-case-results">
+          <div class="nodo-case-result">
+            <strong>Control financiero real</strong>
+            <span>por primera vez en la historia de la empresa</span>
+          </div>
+          <div class="nodo-case-result">
+            <strong>Director fuera de la operación</strong>
+            <span>tomando decisiones desde visibilidad, no desde intuición</span>
+          </div>
+          <div class="nodo-case-result">
+            <strong>Procesos clave documentados</strong>
+            <span>estructura lista para escalar sin depender de personas específicas</span>
+          </div>
+        </div>
+      </div>
+      <p class="nodo-case-footnote">Nombre disponible previa solicitud.</p>
+    </div>
+
+    <!-- Tabla comparativa -->
+    <div class="nodo-compare reveal">
+      <h4 class="nodo-compare-title">Cómo se compara NODO</h4>
+      <div class="nodo-compare-table">
+        <div class="compare-row compare-header">
+          <span></span>
+          <span>Agencia de AI</span>
+          <span>Firma de estrategia</span>
+          <span class="compare-nodo">NODO</span>
+        </div>
+        <div class="compare-row">
+          <span>Diagnóstico estratégico</span>
+          <span class="compare-no">✕</span>
+          <span class="compare-yes">✓</span>
+          <span class="compare-nodo compare-yes">✓</span>
+        </div>
+        <div class="compare-row">
+          <span>Ejecuta la implementación</span>
+          <span class="compare-yes">✓</span>
+          <span class="compare-no">✕</span>
+          <span class="compare-nodo compare-yes">✓</span>
+        </div>
+        <div class="compare-row">
+          <span>Resultado medible en los primeros meses</span>
+          <span class="compare-no">✕</span>
+          <span class="compare-no">✕</span>
+          <span class="compare-nodo compare-yes">✓</span>
+        </div>
+        <div class="compare-row">
+          <span>Alineado al negocio, no a la tecnología</span>
+          <span class="compare-no">✕</span>
+          <span class="compare-yes">✓</span>
+          <span class="compare-nodo compare-yes">✓</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <div class="divider"></div>
 
@@ -1090,21 +2306,21 @@ footer p { font-size: 13px; color: var(--gray-5); }
     <h2 class="section-title">Lo que cambia <em>en números</em></h2>
     <p class="section-sub">Estimaciones conservadoras basadas en el diagnóstico. Sin suposiciones optimistas.</p>
   </div>
-  <div class="metrics-grid stagger-children">
+  <div class="metrics-grid stagger-children" id="metricsGrid">
     <div class="metric-card">
-      <div class="metric-value">−8h</div>
+      <div class="metric-value" data-metric-prefix="−" data-metric-count="8" data-metric-suffix="h">−8h</div>
       <div class="metric-label">semanales del CEO en operación comercial</div>
     </div>
     <div class="metric-card">
-      <div class="metric-value">−30d</div>
+      <div class="metric-value" data-metric-prefix="−" data-metric-count="30" data-metric-suffix="d">−30d</div>
       <div class="metric-label">en tiempo de detección de desviaciones en obra</div>
     </div>
     <div class="metric-card">
-      <div class="metric-value">1</div>
+      <div class="metric-value" data-metric-count="1">1</div>
       <div class="metric-label">CRM en lugar de tres plataformas paralelas</div>
     </div>
     <div class="metric-card">
-      <div class="metric-value">100%</div>
+      <div class="metric-value" data-metric-count="100" data-metric-suffix="%">100%</div>
       <div class="metric-label">visibilidad del portafolio en tiempo real</div>
     </div>
   </div>
@@ -1116,9 +2332,191 @@ footer p { font-size: 13px; color: var(--gray-5); }
 <section id="inversion">
   <div class="section-header reveal">
     <div class="eyebrow">Inversión</div>
-    <h2 class="section-title">Tres niveles de <em>compromiso</em></h2>
-    <p class="section-sub">Diseñados para que el inicio sea inmediato y la inversión se justifique desde el primer entregable.</p>
+    <h2 class="section-title">Qué se recibe por <em class="grad-text">cada peso</em></h2>
+    <p class="section-sub">La inversión se justifica por lo que genera, no por lo que cuesta. Primero el contexto, luego el número.</p>
   </div>
+
+  <!-- Sub-bloque 1: Comparativo con alternativas -->
+  <div class="inv-compare reveal">
+    <h3 class="inv-sub-title">¿Cuánto cuesta resolver esto por separado?</h3>
+    <p class="inv-sub-note">Alternativas reales que el mercado ofrece para los mismos problemas, contratadas de forma individual.</p>
+    <div class="inv-compare-table">
+      <div class="inv-compare-row inv-compare-header">
+        <span>Alternativa</span>
+        <span>Costo mensual estimado</span>
+        <span>Limitación principal</span>
+      </div>
+      <div class="inv-compare-row">
+        <span>CFO part-time externo</span>
+        <span>$25,000 – $40,000</span>
+        <span>Solo finanzas, sin ejecución de sistemas</span>
+      </div>
+      <div class="inv-compare-row">
+        <span>Gerente Comercial</span>
+        <span>$20,000 – $35,000</span>
+        <span>Solo ventas, sin integración operativa</span>
+      </div>
+      <div class="inv-compare-row">
+        <span>Firma de estrategia</span>
+        <span>$30,000 – $60,000</span>
+        <span>Diagnóstico sin implementación</span>
+      </div>
+      <div class="inv-compare-row inv-compare-highlight">
+        <span><strong>NODO — nivel Operativo</strong></span>
+        <span><strong>$20,000</strong></span>
+        <span>Las cuatro áreas, implementación incluida</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sub-bloque 2: Qué incluye -->
+  <div class="inv-includes reveal">
+    <h3 class="inv-sub-title">Qué incluye el nivel Operativo</h3>
+    <div class="inv-includes-grid">
+      <div class="inv-include-item">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="var(--blue)" stroke-width="1.5"/><path d="M5.5 9l2.5 2.5 4.5-4.5" stroke="var(--blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>8 sesiones de trabajo mensuales — 2 por semana</span>
+      </div>
+      <div class="inv-include-item">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="var(--blue)" stroke-width="1.5"/><path d="M5.5 9l2.5 2.5 4.5-4.5" stroke="var(--blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Construcción e integración de los 4 componentes</span>
+      </div>
+      <div class="inv-include-item">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="var(--blue)" stroke-width="1.5"/><path d="M5.5 9l2.5 2.5 4.5-4.5" stroke="var(--blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Reporte mensual de impacto — qué cambió, en números</span>
+      </div>
+      <div class="inv-include-item">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="var(--blue)" stroke-width="1.5"/><path d="M5.5 9l2.5 2.5 4.5-4.5" stroke="var(--blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Disponibilidad continua entre sesiones</span>
+      </div>
+      <div class="inv-include-item">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="var(--blue)" stroke-width="1.5"/><path d="M5.5 9l2.5 2.5 4.5-4.5" stroke="var(--blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Documentación de cada componente instalado</span>
+      </div>
+      <div class="inv-include-item">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="var(--blue)" stroke-width="1.5"/><path d="M5.5 9l2.5 2.5 4.5-4.5" stroke="var(--blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Talleres de adopción para los equipos de cada área</span>
+      </div>
+    </div>
+    <div class="inv-infra-note">
+      <div class="inv-infra-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.4"/><path d="M8 5v3.5M8 11v.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </div>
+      <div>
+        <strong>Sobre la infraestructura de AI:</strong> el costo de los sistemas en producción se define al completar cada fase, ya que depende del tipo de agente instalado, el volumen de operaciones y la complejidad de la integración. NODO presenta una propuesta de mantenimiento por componente al finalizar su construcción, con niveles de precio según uso real. No hay cargos arbitrarios de infraestructura.
+      </div>
+    </div>
+  </div>
+
+  <!-- Sub-bloque 3: Flujo de retorno -->
+  <div class="inv-roi reveal">
+    <h3 class="inv-sub-title">El punto de equilibrio ocurre entre el mes 4 y 6</h3>
+    <p class="inv-sub-note">Proyección conservadora basada en reducción de horas administrativas y mejora en conversión comercial.</p>
+    <div class="roi-chart" id="roiChart">
+      <div class="roi-axis-y">
+        <span>$1.2M</span>
+        <span>$900K</span>
+        <span>$600K</span>
+        <span>$300K</span>
+        <span>$0</span>
+      </div>
+      <div class="roi-bars-wrap">
+        <div class="roi-equilibrium-line" style="bottom: 16.6%">
+          <span class="roi-eq-label">Punto de equilibrio</span>
+        </div>
+        <!-- Barras: inversión acumulada (roja) y retorno (verde) por mes -->
+        <div class="roi-month">
+          <div class="roi-bar-wrap">
+            <div class="roi-bar roi-invest" data-h="1.67" title="Inversión: $20K"></div>
+            <div class="roi-bar roi-return" data-h="0" title="Retorno: $0"></div>
+          </div>
+          <span class="roi-label">M1</span>
+        </div>
+        <div class="roi-month">
+          <div class="roi-bar-wrap">
+            <div class="roi-bar roi-invest" data-h="3.33" title="Inversión acumulada: $40K"></div>
+            <div class="roi-bar roi-return" data-h="2.08" title="Retorno acumulado: $25K"></div>
+          </div>
+          <span class="roi-label">M2</span>
+        </div>
+        <div class="roi-month">
+          <div class="roi-bar-wrap">
+            <div class="roi-bar roi-invest" data-h="5" title="Inversión acumulada: $60K"></div>
+            <div class="roi-bar roi-return" data-h="5" title="Retorno acumulado: $60K"></div>
+          </div>
+          <span class="roi-label">M3</span>
+        </div>
+        <div class="roi-month">
+          <div class="roi-bar-wrap">
+            <div class="roi-bar roi-invest" data-h="6.67" title="Inversión acumulada: $80K"></div>
+            <div class="roi-bar roi-return" data-h="10" title="Retorno acumulado: $120K"></div>
+          </div>
+          <span class="roi-label">M4</span>
+        </div>
+        <div class="roi-month">
+          <div class="roi-bar-wrap">
+            <div class="roi-bar roi-invest" data-h="8.33" title="Inversión acumulada: $100K"></div>
+            <div class="roi-bar roi-return" data-h="16.67" title="Retorno acumulado: $200K"></div>
+          </div>
+          <span class="roi-label">M5</span>
+        </div>
+        <div class="roi-month">
+          <div class="roi-bar-wrap">
+            <div class="roi-bar roi-invest" data-h="10" title="Inversión acumulada: $120K"></div>
+            <div class="roi-bar roi-return" data-h="25" title="Retorno acumulado: $300K"></div>
+          </div>
+          <span class="roi-label">M6</span>
+        </div>
+        <div class="roi-month">
+          <div class="roi-bar-wrap">
+            <div class="roi-bar roi-invest" data-h="11.67" title="Inversión acumulada: $140K"></div>
+            <div class="roi-bar roi-return" data-h="33.33" title="Retorno acumulado: $400K"></div>
+          </div>
+          <span class="roi-label">M7</span>
+        </div>
+        <div class="roi-month">
+          <div class="roi-bar-wrap">
+            <div class="roi-bar roi-invest" data-h="13.33" title="Inversión acumulada: $160K"></div>
+            <div class="roi-bar roi-return" data-h="45.83" title="Retorno acumulado: $550K"></div>
+          </div>
+          <span class="roi-label">M8</span>
+        </div>
+        <div class="roi-month">
+          <div class="roi-bar-wrap">
+            <div class="roi-bar roi-invest" data-h="15" title="Inversión acumulada: $180K"></div>
+            <div class="roi-bar roi-return" data-h="58.33" title="Retorno acumulado: $700K"></div>
+          </div>
+          <span class="roi-label">M9</span>
+        </div>
+        <div class="roi-month">
+          <div class="roi-bar-wrap">
+            <div class="roi-bar roi-invest" data-h="16.67" title="Inversión acumulada: $200K"></div>
+            <div class="roi-bar roi-return" data-h="70.83" title="Retorno acumulado: $850K"></div>
+          </div>
+          <span class="roi-label">M10</span>
+        </div>
+        <div class="roi-month">
+          <div class="roi-bar-wrap">
+            <div class="roi-bar roi-invest" data-h="18.33" title="Inversión acumulada: $220K"></div>
+            <div class="roi-bar roi-return" data-h="83.33" title="Retorno acumulado: $1,000K"></div>
+          </div>
+          <span class="roi-label">M11</span>
+        </div>
+        <div class="roi-month">
+          <div class="roi-bar-wrap">
+            <div class="roi-bar roi-invest" data-h="20" title="Inversión acumulada: $240K"></div>
+            <div class="roi-bar roi-return" data-h="100" title="Retorno acumulado: $1,200K"></div>
+          </div>
+          <span class="roi-label">M12</span>
+        </div>
+      </div>
+    </div>
+    <div class="roi-legend">
+      <span class="roi-legend-item"><span class="roi-legend-dot roi-legend-invest"></span>Inversión acumulada</span>
+      <span class="roi-legend-item"><span class="roi-legend-dot roi-legend-return"></span>Retorno acumulado (escenario probable)</span>
+    </div>
+  </div>
+
   <div class="tiers-grid stagger-children">
     <div class="tier">
       <div class="tier-badge">Esencial</div>
@@ -1179,7 +2577,7 @@ footer p { font-size: 13px; color: var(--gray-5); }
   <div class="cta-overlay"></div>
   <div class="cta-inner">
     <div class="eyebrow reveal" style="color:var(--blue-vivid);">Siguiente paso</div>
-    <h2 class="cta-title reveal">¿Arrancamos <em>la semana que entra?</em></h2>
+    <h2 class="cta-title reveal">¿Arrancamos <em>ya?</em></h2>
     <p class="cta-sub reveal">Una llamada de 30 minutos con el CEO para alinear prioridades y definir la fase de inicio.</p>
     <div class="cta-actions reveal">
       <a href="https://wa.me/524439242456?text=Hola%20%C3%81lvaro%2C%20vi%20la%20propuesta%20de%20NODO%20y%20quiero%20agendar%20una%20llamada" class="btn-cta-primary">
@@ -1206,12 +2604,12 @@ footer p { font-size: 13px; color: var(--gray-5); }
   const gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
   if (!gl) return;
 
-  // Colores NODO — azul eléctrico
+  // Colores NODO — azul eléctrico saturado + negro puro + cian eléctrico + azul medio
   const colors = [
-    [0.173, 0.373, 1.0,   1.0],  // #2C5FFF
-    [0.039, 0.039, 0.180, 1.0],  // #0A0A2E
-    [0.290, 0.482, 1.0,   1.0],  // #4A7BFF
-    [0.039, 0.118, 0.420, 1.0],  // #0A1E6B
+    [0.173, 0.373, 1.0,   1.0],  // #2C5FFF azul eléctrico puro
+    [0.008, 0.008, 0.055, 1.0],  // #02020E casi negro profundo
+    [0.000, 0.480, 1.0,   1.0],  // #007AFF azul iPhone / eléctrico vivo
+    [0.110, 0.200, 0.700, 1.0],  // #1C33B3 azul cobalto
   ];
 
   const vert = `
@@ -1320,16 +2718,15 @@ footer p { font-size: 13px; color: var(--gray-5); }
 </script>
 
 <script>
-/* ── TYPEWRITER HERO ── */
+/* ── HERO REVEAL — palabras con blur + fade escalonado ── */
 (function() {
   const headline = document.querySelector('.hero-headline');
   if (!headline) return;
 
-  // Envolver cada palabra en un span animable
+  // Envolver cada palabra en .tw-word
   function wrapWords(el) {
-    // Clonar los childNodes porque los vamos a mutar
     Array.from(el.childNodes).forEach(node => {
-      if (node.nodeType === 3) { // texto plano
+      if (node.nodeType === 3) {
         const words = node.textContent.split(/(\s+)/);
         const frag = document.createDocumentFragment();
         words.forEach(w => {
@@ -1344,39 +2741,36 @@ footer p { font-size: 13px; color: var(--gray-5); }
         });
         node.parentNode.replaceChild(frag, node);
       } else if (node.nodeType === 1 && node.tagName !== 'BR') {
-        // Entrar en cualquier elemento hijo (em, strong, etc.)
         wrapWords(node);
       }
     });
   }
   wrapWords(headline);
 
-  // Transiciones para los demás elementos del hero
-  const extraStyle = document.createElement('style');
-  extraStyle.textContent = `
+  // Transiciones para los demás elementos
+  const st = document.createElement('style');
+  st.textContent = `
     .hero-logos  { transition: opacity .5s ease; }
-    .hero-logos.visible { opacity: 1 !important; }
-    .hero-badge  { transform: translateY(8px); transition: opacity .5s ease, transform .5s cubic-bezier(.16,1,.3,1); }
+    .hero-logos.visible  { opacity: 1 !important; }
+    .hero-badge  { transform: translateY(8px); transition: opacity .55s ease, transform .55s cubic-bezier(.16,1,.3,1); }
     .hero-badge.visible  { opacity: 1 !important; transform: translateY(0); }
-    .hero-sub    { transform: translateY(12px); transition: opacity .7s ease, transform .7s cubic-bezier(.16,1,.3,1); }
+    .hero-sub    { transform: translateY(12px); transition: opacity .75s ease, transform .75s cubic-bezier(.16,1,.3,1); }
     .hero-sub.visible    { opacity: 1 !important; transform: translateY(0); }
-    .hero-stats  { transform: translateY(12px); transition: opacity .6s ease, transform .6s cubic-bezier(.16,1,.3,1); }
+    .hero-stats  { transform: translateY(12px); transition: opacity .65s ease, transform .65s cubic-bezier(.16,1,.3,1); }
     .hero-stats.visible  { opacity: 1 !important; transform: translateY(0); }
   `;
-  document.head.appendChild(extraStyle);
+  document.head.appendChild(st);
 
-  // Secuencia de aparición
   const show = (sel, delay) => setTimeout(() => document.querySelector(sel)?.classList.add('visible'), delay);
-
   show('.hero-logos', 150);
-  show('.hero-badge', 450);
+  show('.hero-badge', 420);
 
   const words = headline.querySelectorAll('.tw-word');
-  words.forEach((w, i) => setTimeout(() => w.classList.add('visible'), 700 + i * 80));
+  words.forEach((w, i) => setTimeout(() => w.classList.add('visible'), 680 + i * 75));
 
-  const done = 700 + words.length * 80;
+  const done = 680 + words.length * 75;
   show('.hero-sub',   done + 80);
-  show('.hero-stats', done + 340);
+  show('.hero-stats', done + 320);
 })();
 
 /* ── CURSOR GLOW ── */
@@ -1471,12 +2865,31 @@ const counterObs = new IntersectionObserver(entries => {
 }, { threshold: 0.4 });
 document.querySelectorAll('.diagnosis-grid').forEach(el => counterObs.observe(el));
 
-/* ── PARALLAX HERO — solo el canvas de fondo, no el CEO ── */
-window.addEventListener('scroll', () => {
-  const y = window.scrollY;
+/* ── SCROLL PROGRESS + PARALLAX ── */
+(function() {
+  const bar    = document.getElementById('scrollBar');
+  const thumb  = document.getElementById('scrollThumb');
+  const pct    = document.getElementById('scrollPct');
+  const island = document.getElementById('scrollIsland');
   const canvas = document.getElementById('shaderCanvas');
-  if (canvas) canvas.style.transform = `translateY(${y * 0.08}px)`;
-}, { passive: true });
+
+  window.addEventListener('scroll', () => {
+    const y      = window.scrollY;
+    const maxY   = document.documentElement.scrollHeight - window.innerHeight;
+    const prog   = maxY > 0 ? Math.min(y / maxY, 1) : 0;
+    const pctVal = Math.round(prog * 100);
+
+    if (bar)   bar.style.width   = pctVal + '%';
+    if (thumb) thumb.style.height = pctVal + '%';
+    if (pct)   pct.textContent   = pctVal + '%';
+
+    // Mostrar island solo cuando se ha scrolleado al menos 5%
+    if (island) island.classList.toggle('visible', pctVal >= 5);
+
+    // Parallax canvas
+    if (canvas) canvas.style.transform = `translateY(${y * 0.08}px)`;
+  }, { passive: true });
+})();
 
 /* ── MAGNETIC BUTTONS ── */
 document.querySelectorAll('.btn-cta-primary,.btn-cta-ghost,.btn-tier').forEach(btn => {
@@ -1489,8 +2902,607 @@ document.querySelectorAll('.btn-cta-primary,.btn-cta-ghost,.btn-tier').forEach(b
   btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
 });
 
-/* ── CARD TILT ── */
-document.querySelectorAll('.pain-card,.metric-card,.tier,.proyecto-card').forEach(card => {
+/* ── ORBITAL TIMELINE — vanilla Canvas, sin dependencias ── */
+(function() {
+  const canvas  = document.getElementById('orbitalCanvas');
+  const detail  = document.getElementById('orbitalDetail');
+  if (!canvas || !detail) return;
+
+  const ctx     = canvas.getContext('2d');
+  const odNum   = document.getElementById('od-num');
+  const odTitle = document.getElementById('od-title');
+  const odPer   = document.getElementById('od-period');
+  const odList  = document.getElementById('od-list');
+
+  // Datos de las fases
+  const phases = [
+    {
+      num: 'FASE 01', title: 'Visibilidad total', period: 'Meses 1 — 3',
+      color: '#2C5FFF', glow: 'rgba(44,95,255,',
+      items: [
+        'Dashboard ejecutivo en tiempo real por proyecto',
+        'Alertas automáticas de desviación en obra',
+        'Indicador de costo consolidado por proyecto',
+        'Semáforo de gestorías con SEDUM',
+        'Reporte semanal automatizado para el CEO'
+      ]
+    },
+    {
+      num: 'FASE 02', title: 'Operación autónoma', period: 'Meses 4 — 9',
+      color: '#9B6DFF', glow: 'rgba(155,109,255,',
+      badge: 'Núcleo',
+      items: [
+        'Agente comercial que califica y da seguimiento a leads',
+        'CRM unificado en Odoo (eliminar ADARA)',
+        'Proceso estándar de evaluación de terrenos',
+        'Automatización de compras y órdenes de obra',
+        'Integración contable Odoo-CONTPAQ'
+      ]
+    },
+    {
+      num: 'FASE 03', title: 'Inteligencia de negocio', period: 'Meses 10 — 18',
+      color: '#EC4899', glow: 'rgba(236,72,153,',
+      items: [
+        'CFO digital con proyecciones de flujo',
+        'Modelo financiero dinámico por proyecto',
+        'Predicción de desviaciones antes de que ocurran',
+        'Pipeline de nuevos proyectos con evaluación automática',
+        'Expansión a San Miguel de Allende y Valle de Guadalupe'
+      ]
+    }
+  ];
+
+  let angle = 0;
+  let targetAngle = 0;
+  let activeIdx = -1;
+  let autoRotate = true;
+  let raf;
+
+  // Dimensiones lógicas cacheadas (sin DPR) — actualizadas solo en resize
+  let CW = 0, CH = 0, cx = 0, cy = 0, orbitR = 0;
+
+  function resize() {
+    const dpr = window.devicePixelRatio || 1;
+    CW = canvas.parentElement.clientWidth;
+    CH = parseInt(getComputedStyle(canvas).height) || 520;
+    canvas.width  = CW * dpr;
+    canvas.height = CH * dpr;
+    canvas.style.width  = CW + 'px';
+    canvas.style.height = CH + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cx = CW / 2;
+    cy = CH / 2;
+    orbitR = Math.min(CW, CH) * 0.33;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Posiciones calculadas con variables cacheadas — sin accesos al DOM
+  function nodePositions() {
+    return phases.map((_, i) => {
+      const a = angle + (i / phases.length) * Math.PI * 2 - Math.PI / 2;
+      return { x: cx + Math.cos(a) * orbitR, y: cy + Math.sin(a) * orbitR, a };
+    });
+  }
+
+  function drawOrbitRing() {
+    ctx.beginPath();
+    ctx.arc(cx, cy, orbitR, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(cx, cy, orbitR * 0.18, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(44,95,255,0.2)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+
+  function drawCenter(cx, cy, t) {
+    // Núcleo pulsante
+    const pulse = 0.85 + 0.15 * Math.sin(t * 2.5);
+    const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 22 * pulse);
+    grad.addColorStop(0, 'rgba(155,109,255,0.9)');
+    grad.addColorStop(0.5, 'rgba(44,95,255,0.5)');
+    grad.addColorStop(1, 'rgba(44,95,255,0)');
+    ctx.beginPath();
+    ctx.arc(cx, cy, 22 * pulse, 0, Math.PI * 2);
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    // Punto central sólido
+    ctx.beginPath();
+    ctx.arc(cx, cy, 8, 0, Math.PI * 2);
+    ctx.fillStyle = '#fff';
+    ctx.fill();
+
+    // Anillos ping
+    for (let i = 1; i <= 2; i++) {
+      const pingR = 22 + i * 16 + (t * 20 % 32);
+      const alpha = Math.max(0, 0.15 - i * 0.04 - (t * 20 % 32) / 320);
+      ctx.beginPath();
+      ctx.arc(cx, cy, pingR, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(155,109,255,${alpha})`;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+  }
+
+  // Fonts pre-definidos como constantes — evita reflow por cambio de font en cada frame
+  const FONT_NUM_SM  = '600 10px monospace';
+  const FONT_NUM_LG  = '600 12px monospace';
+  const FONT_LABEL   = '500 11px sans-serif';
+  const FONT_LABEL_A = '600 13px sans-serif';
+  const FONT_PERIOD  = '400 10px monospace';
+  const FONT_BADGE   = '600 9px sans-serif';
+
+  function drawNode(pos, phase, idx) {
+    const { x, y } = pos;
+    const isActive = idx === activeIdx;
+    const R = isActive ? 22 : 16;
+    const depth = (Math.sin(pos.a) + 1) / 2;
+    const alpha = isActive ? 1 : 0.5 + 0.5 * depth;
+
+    // Glow exterior — solo si es necesario
+    if (isActive || depth > 0.6) {
+      const glowR = R * (isActive ? 2.2 : 1.8);
+      const g = ctx.createRadialGradient(x, y, 0, x, y, glowR);
+      g.addColorStop(0, phase.glow + (isActive ? '0.35)' : '0.18)'));
+      g.addColorStop(1, phase.glow + '0)');
+      ctx.beginPath();
+      ctx.arc(x, y, glowR, 0, Math.PI * 2);
+      ctx.fillStyle = g;
+      ctx.fill();
+    }
+
+    // Círculo
+    ctx.beginPath();
+    ctx.arc(x, y, R, 0, Math.PI * 2);
+    ctx.fillStyle = isActive ? phase.color : `rgba(${hexToRgb(phase.color)},${alpha * 0.85})`;
+    ctx.fill();
+    if (isActive) {
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+
+    // Número — font fijo monospace del sistema, sin cambio de familia
+    ctx.font = isActive ? FONT_NUM_LG : FONT_NUM_SM;
+    ctx.fillStyle = isActive ? '#fff' : `rgba(255,255,255,${0.7 + 0.3 * depth})`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(String(idx + 1).padStart(2, '0'), x, y);
+
+    // Etiqueta y período — sans-serif del sistema
+    const labelY = y + R + 18;
+    ctx.font = isActive ? FONT_LABEL_A : FONT_LABEL;
+    ctx.fillStyle = isActive ? phase.color : `rgba(200,200,220,${0.5 + 0.5 * depth})`;
+    ctx.fillText(phase.title, x, labelY);
+    ctx.font = FONT_PERIOD;
+    ctx.fillStyle = `rgba(140,140,160,${0.4 + 0.4 * depth})`;
+    ctx.fillText(phase.period, x, labelY + 16);
+
+    if (phase.badge && isActive) {
+      ctx.font = FONT_BADGE;
+      ctx.fillStyle = phase.color;
+      ctx.fillText('★ ' + phase.badge, x, y - R - 10);
+    }
+  }
+
+  function hexToRgb(hex) {
+    const r = parseInt(hex.slice(1,3),16);
+    const g = parseInt(hex.slice(3,5),16);
+    const b = parseInt(hex.slice(5,7),16);
+    return `${r},${g},${b}`;
+  }
+
+  function drawConnector(cx, cy, pos, phase, idx) {
+    if (idx !== activeIdx) return;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(pos.x, pos.y);
+    const grad = ctx.createLinearGradient(cx, cy, pos.x, pos.y);
+    grad.addColorStop(0, 'rgba(155,109,255,0.4)');
+    grad.addColorStop(1, phase.glow + '0.6)');
+    ctx.strokeStyle = grad;
+    ctx.lineWidth = 1;
+    ctx.setLineDash([4, 6]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  // Índices pre-allocados para evitar crear arrays en cada frame
+  const drawOrder = phases.map((_, i) => i);
+
+  let lastTs = 0;
+  function draw(ts) {
+    // Throttle a ~60fps máximo — deltaTime en ms
+    const dt = ts - lastTs;
+    if (dt < 14) { raf = requestAnimationFrame(draw); return; }
+    lastTs = ts;
+
+    const t = ts / 1000; // tiempo absoluto, sin reset
+
+    if (autoRotate) {
+      angle += 0.004; // velocidad constante por frame, sin cálculo de t
+    } else {
+      const diff = targetAngle - angle;
+      // Solo lerp si la diferencia es significativa
+      if (Math.abs(diff) > 0.001) angle += diff * 0.06;
+    }
+
+    ctx.clearRect(0, 0, CW, CH);
+    drawOrbitRing();
+    drawCenter(cx, cy, t);
+
+    const positions = nodePositions();
+
+    // Ordenar índices sin crear objetos nuevos
+    drawOrder.sort((a, b) => positions[a].y - positions[b].y);
+
+    for (const i of drawOrder) drawConnector(cx, cy, positions[i], phases[i], i);
+    for (const i of drawOrder) drawNode(positions[i], phases[i], i);
+
+    raf = requestAnimationFrame(draw);
+  }
+  // Pausar cuando la sección no está visible — ahorra CPU y evita el lag acumulado
+  const visObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        if (!raf) raf = requestAnimationFrame(draw);
+      } else {
+        if (raf) { cancelAnimationFrame(raf); raf = null; }
+        t0 = null; // reset del tiempo para evitar saltos al re-entrar
+      }
+    });
+  }, { threshold: 0.05 });
+  visObs.observe(canvas);
+
+  raf = requestAnimationFrame(draw);
+
+  // Hit-test al click
+  canvas.addEventListener('click', e => {
+    const rect = canvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    const positions = nodePositions();
+    let hit = -1;
+    positions.forEach((pos, i) => {
+      const dx = mx - pos.x, dy = my - pos.y;
+      if (Math.sqrt(dx*dx + dy*dy) < 30) hit = i;
+    });
+
+    if (hit === activeIdx || hit === -1) {
+      // Deseleccionar
+      activeIdx = -1;
+      autoRotate = true;
+      detail.classList.remove('active');
+    } else {
+      activeIdx = hit;
+      autoRotate = false;
+      // Rotar suavemente para que el nodo quede arriba
+      const a = (hit / phases.length) * Math.PI * 2;
+      const desired = -a - Math.PI / 2;
+      let diff = ((desired - angle) % (Math.PI * 2));
+      if (diff > Math.PI) diff -= Math.PI * 2;
+      if (diff < -Math.PI) diff += Math.PI * 2;
+      targetAngle = angle + diff;
+
+      // Mostrar detalle
+      const ph = phases[hit];
+      odNum.textContent   = ph.num;
+      odTitle.textContent = ph.title;
+      odPer.textContent   = ph.period;
+      odNum.style.color   = ph.color;
+      odList.innerHTML    = ph.items.map(item => `<li>${item}</li>`).join('');
+      detail.classList.add('active');
+    }
+  });
+
+  // Cursor pointer sobre nodos
+  canvas.addEventListener('mousemove', e => {
+    const rect = canvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    const positions = nodePositions();
+    let hit = false;
+    positions.forEach(pos => {
+      const dx = mx - pos.x, dy = my - pos.y;
+      if (Math.sqrt(dx*dx + dy*dy) < 32) hit = true;
+    });
+    canvas.style.cursor = hit ? 'pointer' : 'default';
+  });
+
+  // Reanudar rotación al hacer click fuera
+  document.addEventListener('click', e => {
+    if (!canvas.contains(e.target) && !detail.contains(e.target)) {
+      activeIdx = -1;
+      autoRotate = true;
+      detail.classList.remove('active');
+    }
+  });
+})();
+
+/* ── NEURAL NETWORK BACKGROUND — canvas animado ── */
+(function() {
+  const nc = document.getElementById('neuralCanvas');
+  if (!nc) return;
+  const nctx = nc.getContext('2d');
+
+  const COLORS = ['#2C5FFF','#9B6DFF','#EC4899','#06b6d4','#7C3AED','#3A6FFF','#DB2777','#00E8ED','#a855f7','#14b8a6','#f472b6','#60a5fa'];
+  const NODE_COUNT = 90;
+  const CONNECTION_DIST = 160;
+  const PULSE_SPEED = 0.004;
+
+  let NW = 0, NH = 0;
+  const nodes = [];
+  const pulses = [];
+
+  function ncResize() {
+    const dpr = window.devicePixelRatio || 1;
+    NW = nc.parentElement.clientWidth;
+    NH = nc.parentElement.clientHeight;
+    nc.width  = NW * dpr;
+    nc.height = NH * dpr;
+    nc.style.width  = NW + 'px';
+    nc.style.height = NH + 'px';
+    nctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    // Reiniciar nodos al cambiar tamaño
+    if (nodes.length === 0) initNodes();
+    else nodes.forEach(n => {
+      n.x = Math.random() * NW;
+      n.y = Math.random() * NH;
+    });
+  }
+
+  function initNodes() {
+    for (let i = 0; i < NODE_COUNT; i++) {
+      // Nodos de distintos tamaños — mayoría pequeños, algunos más grandes (hubs)
+      const isHub = Math.random() < 0.12;
+      nodes.push({
+        x: Math.random() * NW,
+        y: Math.random() * NH,
+        vx: (Math.random() - 0.5) * 0.15,
+        vy: (Math.random() - 0.5) * 0.15,
+        r: isHub ? 4 + Math.random() * 3 : 1.5 + Math.random() * 2,
+        color: COLORS[i % COLORS.length],
+        pulse: Math.random() * Math.PI * 2  // fase de pulsación individual
+      });
+    }
+    // Iniciar pulsos
+    for (let i = 0; i < 22; i++) {
+      spawnPulse();
+    }
+  }
+
+  function spawnPulse() {
+    const from = Math.floor(Math.random() * NODE_COUNT);
+    let to = Math.floor(Math.random() * NODE_COUNT);
+    while (to === from) to = Math.floor(Math.random() * NODE_COUNT);
+    pulses.push({
+      from, to,
+      t: Math.random(),      // posición 0..1 en la conexión
+      color: COLORS[Math.floor(Math.random() * COLORS.length)],
+      speed: PULSE_SPEED * (0.6 + Math.random() * 0.8),
+      r: 3 + Math.random() * 2
+    });
+  }
+
+  function ncDraw() {
+    nctx.clearRect(0, 0, NW, NH);
+    const now = performance.now() / 1000;
+
+    // Mover nodos — rebote suave en bordes
+    nodes.forEach(n => {
+      n.x += n.vx;
+      n.y += n.vy;
+      if (n.x < 0 || n.x > NW) n.vx *= -1;
+      if (n.y < 0 || n.y > NH) n.vy *= -1;
+      n.x = Math.max(0, Math.min(NW, n.x));
+      n.y = Math.max(0, Math.min(NH, n.y));
+    });
+
+    // Dibujar conexiones entre nodos cercanos
+    for (let i = 0; i < NODE_COUNT; i++) {
+      for (let j = i + 1; j < NODE_COUNT; j++) {
+        const a = nodes[i], b = nodes[j];
+        const dx = b.x - a.x, dy = b.y - a.y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < CONNECTION_DIST) {
+          const t = 1 - dist / CONNECTION_DIST;
+          const alpha = t * 0.55; // más visible
+          // Degradado del color del nodo A al nodo B
+          const grad = nctx.createLinearGradient(a.x, a.y, b.x, b.y);
+          grad.addColorStop(0, a.color + Math.round(alpha * 255).toString(16).padStart(2,'0'));
+          grad.addColorStop(1, b.color + Math.round(alpha * 255).toString(16).padStart(2,'0'));
+          nctx.beginPath();
+          nctx.moveTo(a.x, a.y);
+          nctx.lineTo(b.x, b.y);
+          nctx.strokeStyle = grad;
+          nctx.lineWidth = 0.8 + t * 0.6; // más gruesas cuando más cercanas
+          nctx.stroke();
+        }
+      }
+    }
+
+    // Dibujar pulsos viajando por conexiones
+    pulses.forEach(p => {
+      p.t += p.speed;
+      if (p.t >= 1) {
+        // Llegó al destino — rebotar a un nuevo nodo
+        p.from = p.to;
+        let next = Math.floor(Math.random() * NODE_COUNT);
+        while (next === p.from) next = Math.floor(Math.random() * NODE_COUNT);
+        p.to = next;
+        p.t = 0;
+        p.color = COLORS[Math.floor(Math.random() * COLORS.length)];
+      }
+      const fa = nodes[p.from], tb = nodes[p.to];
+      const px = fa.x + (tb.x - fa.x) * p.t;
+      const py = fa.y + (tb.y - fa.y) * p.t;
+
+      // Glow radial
+      const g = nctx.createRadialGradient(px, py, 0, px, py, p.r * 4);
+      g.addColorStop(0, p.color + 'cc');
+      g.addColorStop(0.4, p.color + '55');
+      g.addColorStop(1, p.color + '00');
+      nctx.beginPath();
+      nctx.arc(px, py, p.r * 4, 0, Math.PI * 2);
+      nctx.fillStyle = g;
+      nctx.fill();
+
+      // Punto central
+      nctx.beginPath();
+      nctx.arc(px, py, p.r * 0.8, 0, Math.PI * 2);
+      nctx.fillStyle = p.color + 'ff';
+      nctx.fill();
+    });
+
+    // Dibujar nodos
+    nodes.forEach((n, i) => {
+      const pulse = 0.8 + 0.2 * Math.sin(now * 1.2 + n.pulse);
+      const r = n.r * pulse;
+      // Halo
+      const g = nctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, r * 5);
+      g.addColorStop(0, n.color + '40');
+      g.addColorStop(1, n.color + '00');
+      nctx.beginPath();
+      nctx.arc(n.x, n.y, r * 5, 0, Math.PI * 2);
+      nctx.fillStyle = g;
+      nctx.fill();
+      // Punto
+      nctx.beginPath();
+      nctx.arc(n.x, n.y, r, 0, Math.PI * 2);
+      nctx.fillStyle = n.color + 'bb';
+      nctx.fill();
+    });
+
+    requestAnimationFrame(ncDraw);
+  }
+
+  ncResize();
+  window.addEventListener('resize', ncResize);
+  ncDraw();
+})();
+
+/* ── METRIC CARDS COUNTER — lento, easing suave ── */
+(function() {
+  const grid = document.getElementById('metricsGrid');
+  if (!grid) return;
+  const metricObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.querySelectorAll('[data-metric-count]').forEach((el, i) => {
+        const target  = parseInt(el.dataset.metricCount);
+        const prefix  = el.dataset.metricPrefix || '';
+        const suffix  = el.dataset.metricSuffix || '';
+        const DURATION = 2800; // ms — lento y fluido
+        setTimeout(() => {
+          let start = null;
+          const animate = ts => {
+            if (!start) start = ts;
+            const p    = Math.min((ts - start) / DURATION, 1);
+            // easeOutQuart — desacelera suavemente al final
+            const ease = 1 - Math.pow(1 - p, 4);
+            el.textContent = prefix + Math.round(ease * target) + suffix;
+            if (p < 1) requestAnimationFrame(animate);
+          };
+          requestAnimationFrame(animate);
+        }, i * 180);
+      });
+      metricObs.unobserve(e.target);
+    });
+  }, { threshold: 0.3 });
+  metricObs.observe(grid);
+})();
+
+/* ── MATRIX ANIMATION ── */
+(function() {
+  const matrixSection = document.querySelector('.matrix-chart-wrap');
+  if (!matrixSection) return;
+  const matrixObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const points = document.querySelectorAll('.matrix-point');
+      points.forEach((pt, i) => {
+        setTimeout(() => {
+          pt.classList.add('matrix-visible');
+        }, 200 + i * 180);
+      });
+      // Flecha de secuencia
+      setTimeout(() => {
+        const arrow = document.getElementById('matrixArrow');
+        const arrowHead = document.getElementById('matrixArrowHead');
+        if (arrow) arrow.classList.add('matrix-arrow-go');
+        if (arrowHead) arrowHead.classList.add('matrix-arrow-go');
+      }, 300);
+      matrixObs.unobserve(e.target);
+    });
+  }, { threshold: 0.3 });
+  matrixObs.observe(matrixSection);
+})();
+
+/* ── URGENCY COUNTER ── */
+(function() {
+  const urgencySection = document.querySelector('.urgency-grid');
+  if (!urgencySection) return;
+  const urgObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.querySelectorAll('.urgency-num[data-count]').forEach((el, i) => {
+        const target = parseInt(el.dataset.count);
+        const suffix = el.dataset.suffix || '';
+        setTimeout(() => {
+          let start = null;
+          const animate = ts => {
+            if (!start) start = ts;
+            const p = Math.min((ts - start) / 1200, 1);
+            const ease = 1 - Math.pow(1 - p, 3);
+            el.textContent = '~' + Math.round(ease * target) + suffix;
+            if (p < 1) requestAnimationFrame(animate);
+          };
+          requestAnimationFrame(animate);
+        }, i * 120);
+      });
+      urgObs.unobserve(e.target);
+    });
+  }, { threshold: 0.4 });
+  urgObs.observe(urgencySection);
+})();
+
+/* ── ROI BARS ANIMATION ── */
+(function() {
+  const roiChart = document.getElementById('roiChart');
+  if (!roiChart) return;
+  const roiObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const MAX_H = 100; // porcentaje máximo del contenedor
+      e.target.querySelectorAll('.roi-month').forEach((month, mi) => {
+        const investBar = month.querySelector('.roi-invest');
+        const returnBar = month.querySelector('.roi-return');
+        const ih = parseFloat(investBar?.dataset.h || 0);
+        const rh = parseFloat(returnBar?.dataset.h || 0);
+        setTimeout(() => {
+          if (investBar) {
+            investBar.classList.add('roi-animate');
+            investBar.style.height = Math.min(ih, MAX_H) + '%';
+          }
+          if (returnBar) {
+            returnBar.classList.add('roi-animate');
+            returnBar.style.height = Math.min(rh, MAX_H) + '%';
+          }
+        }, mi * 80);
+      });
+      roiObs.unobserve(e.target);
+    });
+  }, { threshold: 0.2 });
+  roiObs.observe(roiChart);
+})();
+
+/* ── CARD TILT — extended to new cards ── */
+document.querySelectorAll('.pain-card,.metric-card,.tier,.proyecto-card,.urgency-card,.nodo-principle').forEach(card => {
   card.addEventListener('mousemove', e => {
     const r = card.getBoundingClientRect();
     const x = (e.clientX - r.left) / r.width - 0.5;
