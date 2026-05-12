@@ -1696,9 +1696,10 @@ footer p { font-size: 13px; color: var(--gray-5); }
 
   /* hero */
   section.hero { padding: 88px 20px 56px; }
-  .hero-logos { gap: 16px; margin-bottom: 32px; }
-  .hero-logos img { height: 36px; }
-  .hero-logos img:last-child { height: 60px; }
+  .hero-logos { gap: 14px; margin-bottom: 32px; }
+  .hero-logos img { height: 30px; max-width: 100px; object-fit: contain; }
+  .hero-logos img:last-child { height: 44px; max-width: 130px; }
+  .hero-x { font-size: 18px; }
   .hero-badge { font-size: 12px; padding: 6px 14px; }
   .hero-sub { font-size: 16px; margin-bottom: 36px; }
   .hero-stats { gap: 24px; }
@@ -1726,8 +1727,14 @@ footer p { font-size: 13px; color: var(--gray-5); }
   .matrix-row { grid-template-columns: 2fr 1fr; }
   .matrix-row > span:nth-child(3),
   .matrix-row > span:nth-child(4) { display: none; }
-  .compare-row { grid-template-columns: 2fr 1fr; }
+  /* tabla compare: ocultar columnas "Agencia AI" y "Firma estrategia", dejar solo descripción + NODO */
+  .compare-row { grid-template-columns: 1fr auto; gap: 0; padding: 14px 16px; }
+  .compare-row > span:nth-child(2),
   .compare-row > span:nth-child(3) { display: none; }
+  .compare-row .compare-nodo { margin: -14px -16px -14px 12px; padding: 14px 16px; min-width: 72px; text-align: center; border-left: 2px solid var(--blue); }
+  .compare-header .compare-nodo::before { content: 'NODO'; }
+  .compare-header { font-size: 10px; }
+  .nodo-compare-table { overflow: hidden; }
 
   /* tiers: uno encima del otro, centrar recommended tag */
   .tiers-grid { gap: 24px; }
