@@ -4557,8 +4557,7 @@ document.querySelectorAll('.btn-cta-primary,.btn-cta-ghost,.btn-tier').forEach(b
 /* ── CHAT WIDGET — Claude API ── */
 (function() {
   // API key de Google AI Studio — obtener en aistudio.google.com/app/apikey
-  const GEMINI_API_KEY = 'AIzaSyD4weXWXIn9zj_Mj5VDLxi5-aMJiXO3cXg';
-  const GEMINI_MODEL   = 'gemini-2.0-flash';
+  const CHAT_ENDPOINT = '/api/chat';
 
   const SYSTEM_PROMPT = `Eres el asistente de NODO Works integrado en la propuesta para Grupo Eleva. Conoces la empresa a fondo — sus proyectos, finanzas, personas, dolores y la propuesta completa. Responde como un socio de negocio que ha estudiado el caso, no como un chatbot genérico.
 
@@ -4816,28 +4815,19 @@ Mercado Morelia: 80% horizontal / 20% vertical. Domótica: diferenciador crític
     messages.scrollTop = messages.scrollHeight;
 
     try {
-      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
-
-      // Construir historial en formato Gemini
-      const geminiContents = history.map(m => ({
-        role: m.role === 'assistant' ? 'model' : 'user',
-        parts: [{ text: m.content }]
-      }));
-
-      const res = await fetch(endpoint, {
+      const res = await fetch(CHAT_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
-          contents: geminiContents,
-          generationConfig: { maxOutputTokens: 400, temperature: 0.7 }
+          messages: history,
+          systemPrompt: SYSTEM_PROMPT
         })
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error?.message || 'Error de API');
+      if (!res.ok) throw new Error(data.error || 'Error de API');
 
-      const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No pude generar una respuesta.';
+      const reply = data.reply || 'No pude generar una respuesta.';
       history.push({ role: 'assistant', content: reply });
 
       // Mantener solo los últimos MAX_HISTORY mensajes
