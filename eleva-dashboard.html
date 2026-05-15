@@ -1656,7 +1656,42 @@ ${DATA.alerts.dueSoon30.slice(0, 10).map(t => `- [${t.projectName}] ${t.name} ·
   });
 
   document.getElementById('chatToggle').addEventListener('click', () => {
-    document.getElementById('chatWidget').classList.toggle('open');
+    const widget = document.getElementById('chatWidget');
+    widget.classList.toggle('open');
+    // Si el usuario abre manualmente, cancelar el auto-close
+    if (widget.classList.contains('open')) clearTimeout(window._chatAutoClose);
+  });
+
+  // Auto-abrir 3s después de cargar, mostrar mensaje de bienvenida animado
+  setTimeout(() => {
+    const widget = document.getElementById('chatWidget');
+    if (widget.classList.contains('open')) return; // ya abierto
+    widget.classList.add('open');
+
+    // Mostrar typing brevemente antes del mensaje de bienvenida
+    showTyping(true);
+    setTimeout(() => {
+      showTyping(false);
+      const msgs = document.getElementById('chatMessages');
+      // Reemplazar el mensaje inicial con uno más invitador
+      msgs.innerHTML = '';
+      appendMsg('bot', '👋 Hola. Soy el asistente de Grupo Eleva. Puedo responder preguntas sobre el estado de los proyectos, tareas vencidas, alertas de obra y más. ¿En qué te puedo ayudar?');
+      document.getElementById('chatSuggestions').style.display = 'flex';
+    }, 1200);
+
+    // Auto-cerrar después de 8s si el usuario no interactúa
+    window._chatAutoClose = setTimeout(() => {
+      if (!window._chatUserInteracted) {
+        widget.classList.remove('open');
+      }
+    }, 8000);
+  }, 3000);
+
+  // Marcar interacción del usuario para no auto-cerrar
+  window._chatUserInteracted = false;
+  document.getElementById('chatInput').addEventListener('focus', () => {
+    window._chatUserInteracted = true;
+    clearTimeout(window._chatAutoClose);
   });
 }
 
