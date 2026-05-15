@@ -1739,24 +1739,23 @@ ${chatContext}`;
     });
     clearTimeout(timeout);
 
-    const data = await res.json();
+    const text = await res.text();
+    let data;
+    try { data = JSON.parse(text); } catch(_) { data = {}; }
 
     if (!res.ok) {
       done();
-      appendMsg('bot', `Error del servidor (${res.status}). Intenta de nuevo.`);
+      appendMsg('bot', `Error ${res.status}: ${data.error || text.slice(0, 120)}`);
       return;
     }
 
-    const reply = data.reply || data.content || data.message || 'Sin respuesta.';
+    const reply = data.reply || data.content || data.message || `Sin campo reply. Keys: ${Object.keys(data).join(', ')} | Raw: ${text.slice(0, 120)}`;
     chatHistory.push({ role: 'assistant', content: reply });
     done();
     appendMsg('bot', reply);
   } catch(e) {
     done();
-    const msg = e.name === 'AbortError'
-      ? 'La respuesta tardó demasiado. Intenta de nuevo.'
-      : 'No se pudo conectar con el asistente. Intenta de nuevo.';
-    appendMsg('bot', msg);
+    appendMsg('bot', `Error: ${e.name} — ${e.message}`);
   }
 }
 
