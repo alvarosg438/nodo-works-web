@@ -1697,17 +1697,23 @@ ${DATA.alerts.dueSoon30.slice(0, 10).map(t => `- [${t.projectName}] ${t.name} ·
 
 async function sendChat() {
   const input = document.getElementById('chatInput');
+  const sendBtn = document.getElementById('chatSendBtn');
   const msg = input.value.trim();
   if (!msg) return;
+
   input.value = '';
   input.style.height = 'auto';
-  document.getElementById('chatSendBtn').disabled = true;
+  sendBtn.disabled = true;
   document.getElementById('chatSuggestions').style.display = 'none';
 
   appendMsg('user', msg);
   showTyping(true);
-
   chatHistory.push({ role: 'user', content: msg });
+
+  const done = () => {
+    showTyping(false);
+    sendBtn.disabled = false;
+  };
 
   try {
     const systemPrompt = `Eres el asistente inteligente de Grupo Eleva, desarrolladora inmobiliaria en Morelia, Michoacán. Ayudas al equipo directivo con información sobre:
@@ -1722,20 +1728,35 @@ Responde en español, con tono profesional y directo. Máximo 2-3 párrafos por 
 CONTEXTO ACTUAL DEL PORTAFOLIO:
 ${chatContext}`;
 
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
+
     const res = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: chatHistory, systemPrompt })
+      body: JSON.stringify({ messages: chatHistory, systemPrompt }),
+      signal: controller.signal
     });
+    clearTimeout(timeout);
 
     const data = await res.json();
-    const reply = data.content || data.message || data.reply || 'Sin respuesta del servidor.';
+
+    if (!res.ok) {
+      done();
+      appendMsg('bot', `Error del servidor (${res.status}). Intenta de nuevo.`);
+      return;
+    }
+
+    const reply = data.reply || data.content || data.message || 'Sin respuesta.';
     chatHistory.push({ role: 'assistant', content: reply });
-    showTyping(false);
+    done();
     appendMsg('bot', reply);
   } catch(e) {
-    showTyping(false);
-    appendMsg('bot', 'Error al conectar con el asistente. Verifica que el servidor esté activo (vercel dev).');
+    done();
+    const msg = e.name === 'AbortError'
+      ? 'La respuesta tardó demasiado. Intenta de nuevo.'
+      : 'No se pudo conectar con el asistente. Intenta de nuevo.';
+    appendMsg('bot', msg);
   }
 }
 
