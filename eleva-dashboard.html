@@ -1711,7 +1711,13 @@ function appendMsg(role, text) {
   el.className = 'chat-msg ' + role;
   el.innerHTML = `<div class="chat-msg-bubble">${text.replace(/\n/g, '<br>')}</div><div class="chat-msg-time">${now}</div>`;
   msgs.appendChild(el);
-  msgs.scrollTop = msgs.scrollHeight;
+  // Para mensajes del bot: scroll al top del mensaje, no al final
+  // Para mensajes del usuario: scroll al final para ver el typing indicator
+  if (role === 'bot') {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    msgs.scrollTop = msgs.scrollHeight;
+  }
 }
 
 function showTyping(show) {

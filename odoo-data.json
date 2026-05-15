@@ -1,10 +1,14 @@
 {
   "meta": {
-    "generatedAt": "2026-05-15T17:30:00.000Z",
+    "generatedAt": "2026-05-15T20:00:00.000Z",
     "generatedBy": "Claude MCP (odoo native)",
     "totalProjects": 18,
     "totalTasks": 5253,
-    "constructionProjectIds": [14, 15, 18],
+    "constructionProjectIds": [
+      14,
+      15,
+      18
+    ],
     "odooHost": "eleva.grcbit.com",
     "note": "Avance = tareas cerradas (Ejecutada/Done/etc) / total tareas. Es un proxy operativo, NO avance fisico de obra."
   },
@@ -13,224 +17,2125 @@
       "id": 11,
       "name": "Torre Peru",
       "isConstruction": false,
-      "tasks": { "total": 215, "closed": 5, "open": 210 },
+      "tasks": {
+        "total": 215,
+        "closed": 5,
+        "open": 210
+      },
       "progress": 2.3,
-      "stageBreakdown": { "Sin iniciar": 206, "En proceso": 4, "Ejecutada": 5 },
-      "alerts": { "overdue": 14, "dueSoon30": 3, "dueSoon60": 2, "noDeadline": 174 }
+      "stageBreakdown": {
+        "Sin iniciar": 206,
+        "En proceso": 4,
+        "Ejecutada": 5
+      },
+      "alerts": {
+        "overdue": 14,
+        "dueSoon30": 3,
+        "dueSoon60": 2,
+        "noDeadline": 174
+      }
     },
     {
       "id": 13,
       "name": "Torre Porfirio",
       "isConstruction": false,
-      "tasks": { "total": 215, "closed": 6, "open": 209 },
+      "tasks": {
+        "total": 215,
+        "closed": 6,
+        "open": 209
+      },
       "progress": 2.8,
-      "stageBreakdown": { "Sin iniciar": 207, "En proceso": 2, "Ejecutada": 6 },
-      "alerts": { "overdue": 9, "dueSoon30": 2, "dueSoon60": 1, "noDeadline": 193 }
+      "stageBreakdown": {
+        "Sin iniciar": 207,
+        "En proceso": 2,
+        "Ejecutada": 6
+      },
+      "alerts": {
+        "overdue": 9,
+        "dueSoon30": 2,
+        "dueSoon60": 1,
+        "noDeadline": 193
+      }
     },
     {
       "id": 14,
       "name": "Torre Ventura Loft",
       "isConstruction": true,
-      "tasks": { "total": 440, "closed": 30, "open": 410 },
+      "tasks": {
+        "total": 440,
+        "closed": 30,
+        "open": 410
+      },
       "progress": 6.8,
-      "stageBreakdown": { "Sin iniciar": 402, "En proceso": 8, "Ejecutada": 30 },
-      "alerts": { "overdue": 12, "dueSoon30": 3, "dueSoon60": 2, "noDeadline": 387 }
+      "stageBreakdown": {
+        "Sin iniciar": 402,
+        "En proceso": 8,
+        "Ejecutada": 30
+      },
+      "alerts": {
+        "overdue": 12,
+        "dueSoon30": 3,
+        "dueSoon60": 2,
+        "noDeadline": 387
+      }
     },
     {
       "id": 15,
       "name": "Torre Romano",
       "isConstruction": true,
-      "tasks": { "total": 423, "closed": 24, "open": 399 },
+      "tasks": {
+        "total": 423,
+        "closed": 24,
+        "open": 399
+      },
       "progress": 5.7,
-      "stageBreakdown": { "Sin iniciar": 393, "En proceso": 6, "Ejecutada": 24 },
-      "alerts": { "overdue": 12, "dueSoon30": 2, "dueSoon60": 1, "noDeadline": 373 }
+      "stageBreakdown": {
+        "Sin iniciar": 393,
+        "En proceso": 6,
+        "Ejecutada": 24
+      },
+      "alerts": {
+        "overdue": 12,
+        "dueSoon30": 2,
+        "dueSoon60": 1,
+        "noDeadline": 373
+      }
     },
     {
       "id": 16,
       "name": "Casa Calina",
       "isConstruction": false,
-      "tasks": { "total": 242, "closed": 13, "open": 229 },
+      "tasks": {
+        "total": 242,
+        "closed": 13,
+        "open": 229
+      },
       "progress": 5.4,
-      "stageBreakdown": { "Sin iniciar": 216, "En proceso": 13, "Ejecutada": 7, "Fuera de alcance": 6 },
-      "alerts": { "overdue": 13, "dueSoon30": 1, "dueSoon60": 1, "noDeadline": 214 }
+      "stageBreakdown": {
+        "Sin iniciar": 216,
+        "En proceso": 13,
+        "Ejecutada": 7,
+        "Fuera de alcance": 6
+      },
+      "alerts": {
+        "overdue": 13,
+        "dueSoon30": 1,
+        "dueSoon60": 1,
+        "noDeadline": 214
+      }
     },
     {
       "id": 18,
       "name": "Torre Hidalgo",
       "isConstruction": true,
-      "tasks": { "total": 438, "closed": 42, "open": 396 },
+      "tasks": {
+        "total": 438,
+        "closed": 42,
+        "open": 396
+      },
       "progress": 9.6,
-      "stageBreakdown": { "Sin iniciar": 394, "En proceso": 2, "Ejecutada": 42 },
-      "alerts": { "overdue": 9, "dueSoon30": 2, "dueSoon60": 0, "noDeadline": 385 }
+      "stageBreakdown": {
+        "Sin iniciar": 394,
+        "En proceso": 2,
+        "Ejecutada": 42
+      },
+      "alerts": {
+        "overdue": 9,
+        "dueSoon30": 2,
+        "dueSoon60": 0,
+        "noDeadline": 385
+      }
     },
     {
       "id": 19,
       "name": "Torre Aria",
       "isConstruction": false,
-      "tasks": { "total": 439, "closed": 39, "open": 400 },
+      "tasks": {
+        "total": 439,
+        "closed": 39,
+        "open": 400
+      },
       "progress": 8.9,
-      "stageBreakdown": { "Sin iniciar": 398, "En proceso": 2, "Ejecutada": 4, "Fuera de alcance": 35 },
-      "alerts": { "overdue": 9, "dueSoon30": 2, "dueSoon60": 0, "noDeadline": 380 }
+      "stageBreakdown": {
+        "Sin iniciar": 398,
+        "En proceso": 2,
+        "Ejecutada": 4,
+        "Fuera de alcance": 35
+      },
+      "alerts": {
+        "overdue": 9,
+        "dueSoon30": 2,
+        "dueSoon60": 0,
+        "noDeadline": 380
+      }
     },
     {
       "id": 21,
       "name": "Torre Maria",
       "isConstruction": false,
-      "tasks": { "total": 442, "closed": 6, "open": 436 },
+      "tasks": {
+        "total": 442,
+        "closed": 6,
+        "open": 436
+      },
       "progress": 1.4,
-      "stageBreakdown": { "Sin iniciar": 429, "En proceso": 7, "Ejecutada": 6 },
-      "alerts": { "overdue": 10, "dueSoon30": 2, "dueSoon60": 0, "noDeadline": 408 }
+      "stageBreakdown": {
+        "Sin iniciar": 429,
+        "En proceso": 7,
+        "Ejecutada": 6
+      },
+      "alerts": {
+        "overdue": 10,
+        "dueSoon30": 2,
+        "dueSoon60": 0,
+        "noDeadline": 408
+      }
     },
     {
       "id": 22,
       "name": "Consultorios Handel",
       "isConstruction": false,
-      "tasks": { "total": 211, "closed": 27, "open": 184 },
+      "tasks": {
+        "total": 211,
+        "closed": 27,
+        "open": 184
+      },
       "progress": 12.8,
-      "stageBreakdown": { "Sin iniciar": 182, "En proceso": 2, "Ejecutada": 4, "Fuera de alcance": 23 },
-      "alerts": { "overdue": 8, "dueSoon30": 1, "dueSoon60": 0, "noDeadline": 172 }
+      "stageBreakdown": {
+        "Sin iniciar": 182,
+        "En proceso": 2,
+        "Ejecutada": 4,
+        "Fuera de alcance": 23
+      },
+      "alerts": {
+        "overdue": 8,
+        "dueSoon30": 1,
+        "dueSoon60": 0,
+        "noDeadline": 172
+      }
     },
     {
       "id": 23,
       "name": "Batalla de Angostura",
       "isConstruction": false,
-      "tasks": { "total": 215, "closed": 4, "open": 211 },
+      "tasks": {
+        "total": 215,
+        "closed": 4,
+        "open": 211
+      },
       "progress": 1.9,
-      "stageBreakdown": { "Sin iniciar": 207, "En proceso": 4, "Ejecutada": 4 },
-      "alerts": { "overdue": 10, "dueSoon30": 2, "dueSoon60": 0, "noDeadline": 193 }
+      "stageBreakdown": {
+        "Sin iniciar": 207,
+        "En proceso": 4,
+        "Ejecutada": 4
+      },
+      "alerts": {
+        "overdue": 10,
+        "dueSoon30": 2,
+        "dueSoon60": 0,
+        "noDeadline": 193
+      }
     },
     {
       "id": 25,
       "name": "Cafeteria Americas",
       "isConstruction": false,
-      "tasks": { "total": 212, "closed": 27, "open": 185 },
+      "tasks": {
+        "total": 212,
+        "closed": 27,
+        "open": 185
+      },
       "progress": 12.7,
-      "stageBreakdown": { "Sin iniciar": 182, "En proceso": 3, "Ejecutada": 3, "Fuera de alcance": 24 },
-      "alerts": { "overdue": 9, "dueSoon30": 2, "dueSoon60": 0, "noDeadline": 174 }
+      "stageBreakdown": {
+        "Sin iniciar": 182,
+        "En proceso": 3,
+        "Ejecutada": 3,
+        "Fuera de alcance": 24
+      },
+      "alerts": {
+        "overdue": 9,
+        "dueSoon30": 2,
+        "dueSoon60": 0,
+        "noDeadline": 174
+      }
     },
     {
       "id": 27,
       "name": "Torre Centro",
       "isConstruction": false,
-      "tasks": { "total": 470, "closed": 43, "open": 427 },
+      "tasks": {
+        "total": 470,
+        "closed": 43,
+        "open": 427
+      },
       "progress": 9.1,
-      "stageBreakdown": { "Sin iniciar": 423, "En proceso": 4, "Ejecutada": 43 },
-      "alerts": { "overdue": 11, "dueSoon30": 2, "dueSoon60": 1, "noDeadline": 394 }
+      "stageBreakdown": {
+        "Sin iniciar": 423,
+        "En proceso": 4,
+        "Ejecutada": 43
+      },
+      "alerts": {
+        "overdue": 11,
+        "dueSoon30": 2,
+        "dueSoon60": 1,
+        "noDeadline": 394
+      }
     },
     {
       "id": 28,
       "name": "Torre Fray Antonio",
       "isConstruction": false,
-      "tasks": { "total": 211, "closed": 27, "open": 184 },
+      "tasks": {
+        "total": 211,
+        "closed": 27,
+        "open": 184
+      },
       "progress": 12.8,
-      "stageBreakdown": { "Sin iniciar": 184, "Ejecutada": 4, "Fuera de alcance": 23 },
-      "alerts": { "overdue": 9, "dueSoon30": 1, "dueSoon60": 0, "noDeadline": 176 }
+      "stageBreakdown": {
+        "Sin iniciar": 184,
+        "Ejecutada": 4,
+        "Fuera de alcance": 23
+      },
+      "alerts": {
+        "overdue": 9,
+        "dueSoon30": 1,
+        "dueSoon60": 0,
+        "noDeadline": 176
+      }
     },
     {
       "id": 29,
       "name": "Casa Altozano",
       "isConstruction": false,
-      "tasks": { "total": 228, "closed": 37, "open": 191 },
+      "tasks": {
+        "total": 228,
+        "closed": 37,
+        "open": 191
+      },
       "progress": 16.2,
-      "stageBreakdown": { "Sin iniciar": 190, "En proceso": 1, "Ejecutada": 8, "Fuera de alcance": 29 },
-      "alerts": { "overdue": 9, "dueSoon30": 2, "dueSoon60": 0, "noDeadline": 172 }
+      "stageBreakdown": {
+        "Sin iniciar": 190,
+        "En proceso": 1,
+        "Ejecutada": 8,
+        "Fuera de alcance": 29
+      },
+      "alerts": {
+        "overdue": 9,
+        "dueSoon30": 2,
+        "dueSoon60": 0,
+        "noDeadline": 172
+      }
     },
     {
       "id": 31,
       "name": "Brasilena",
       "isConstruction": false,
-      "tasks": { "total": 212, "closed": 30, "open": 182 },
+      "tasks": {
+        "total": 212,
+        "closed": 30,
+        "open": 182
+      },
       "progress": 14.2,
-      "stageBreakdown": { "Sin iniciar": 179, "En proceso": 3, "Ejecutada": 3, "Fuera de alcance": 27 },
-      "alerts": { "overdue": 9, "dueSoon30": 2, "dueSoon60": 0, "noDeadline": 172 }
+      "stageBreakdown": {
+        "Sin iniciar": 179,
+        "En proceso": 3,
+        "Ejecutada": 3,
+        "Fuera de alcance": 27
+      },
+      "alerts": {
+        "overdue": 9,
+        "dueSoon30": 2,
+        "dueSoon60": 0,
+        "noDeadline": 172
+      }
     },
     {
       "id": 32,
       "name": "El Capitan",
       "isConstruction": false,
-      "tasks": { "total": 212, "closed": 30, "open": 182 },
+      "tasks": {
+        "total": 212,
+        "closed": 30,
+        "open": 182
+      },
       "progress": 14.2,
-      "stageBreakdown": { "Sin iniciar": 179, "En proceso": 3, "Ejecutada": 3, "Fuera de alcance": 27 },
-      "alerts": { "overdue": 9, "dueSoon30": 2, "dueSoon60": 0, "noDeadline": 172 }
+      "stageBreakdown": {
+        "Sin iniciar": 179,
+        "En proceso": 3,
+        "Ejecutada": 3,
+        "Fuera de alcance": 27
+      },
+      "alerts": {
+        "overdue": 9,
+        "dueSoon30": 2,
+        "dueSoon60": 0,
+        "noDeadline": 172
+      }
     },
     {
       "id": 33,
       "name": "Torre Campestre",
       "isConstruction": false,
-      "tasks": { "total": 216, "closed": 4, "open": 212 },
+      "tasks": {
+        "total": 216,
+        "closed": 4,
+        "open": 212
+      },
       "progress": 1.9,
-      "stageBreakdown": { "Sin iniciar": 211, "En proceso": 1, "Ejecutada": 4 },
-      "alerts": { "overdue": 9, "dueSoon30": 2, "dueSoon60": 0, "noDeadline": 196 }
+      "stageBreakdown": {
+        "Sin iniciar": 211,
+        "En proceso": 1,
+        "Ejecutada": 4
+      },
+      "alerts": {
+        "overdue": 9,
+        "dueSoon30": 2,
+        "dueSoon60": 0,
+        "noDeadline": 196
+      }
     },
     {
       "id": 34,
       "name": "Remodelacion Casa Tres Marias",
       "isConstruction": false,
-      "tasks": { "total": 212, "closed": 30, "open": 182 },
+      "tasks": {
+        "total": 212,
+        "closed": 30,
+        "open": 182
+      },
       "progress": 14.2,
-      "stageBreakdown": { "Sin iniciar": 179, "En proceso": 3, "Ejecutada": 3, "Fuera de alcance": 27 },
-      "alerts": { "overdue": 10, "dueSoon30": 2, "dueSoon60": 0, "noDeadline": 172 }
+      "stageBreakdown": {
+        "Sin iniciar": 179,
+        "En proceso": 3,
+        "Ejecutada": 3,
+        "Fuera de alcance": 27
+      },
+      "alerts": {
+        "overdue": 10,
+        "dueSoon30": 2,
+        "dueSoon60": 0,
+        "noDeadline": 172
+      }
     }
   ],
   "alerts": {
     "overdueTasks": [
-      { "id": 5172, "name": "ANALISIS DE PREDIO", "projectId": 19, "projectName": "Torre Aria", "stage": "Sin iniciar", "deadline": "2025-08-29", "daysOverdue": 259, "hasAssignee": false },
-      { "id": 3266, "name": "ANALISIS DE PREDIO", "projectId": 15, "projectName": "Torre Romano", "stage": "Sin iniciar", "deadline": "2025-08-29", "daysOverdue": 259, "hasAssignee": false },
-      { "id": 5625, "name": "ANALISIS DE PREDIO", "projectId": 22, "projectName": "Consultorios Handel", "stage": "Sin iniciar", "deadline": "2025-08-29", "daysOverdue": 259, "hasAssignee": false },
-      { "id": 3049, "name": "ANALISIS DE PREDIO", "projectId": 14, "projectName": "Torre Ventura Loft", "stage": "Sin iniciar", "deadline": "2025-08-29", "daysOverdue": 259, "hasAssignee": false },
-      { "id": 2799, "name": "ANALISIS DE PREDIO", "projectId": 13, "projectName": "Torre Porfirio", "stage": "Sin iniciar", "deadline": "2025-08-29", "daysOverdue": 259, "hasAssignee": false },
-      { "id": 8514, "name": "ANALISIS DE PREDIO", "projectId": 34, "projectName": "Remodelacion Casa Tres Marias", "stage": "Sin iniciar", "deadline": "2025-08-29", "daysOverdue": 259, "hasAssignee": false },
-      { "id": 7399, "name": "ANALISIS DE PREDIO", "projectId": 29, "projectName": "Casa Altozano", "stage": "Sin iniciar", "deadline": "2025-08-29", "daysOverdue": 259, "hasAssignee": false },
-      { "id": 7959, "name": "ANALISIS DE PREDIO", "projectId": 32, "projectName": "El Capitan", "stage": "Sin iniciar", "deadline": "2025-08-29", "daysOverdue": 259, "hasAssignee": false },
-      { "id": 7151, "name": "ANALISIS DE PREDIO", "projectId": 28, "projectName": "Torre Fray Antonio", "stage": "Sin iniciar", "deadline": "2025-08-29", "daysOverdue": 259, "hasAssignee": false },
-      { "id": 5612, "name": "ANALISIS DE PREDIO", "projectId": 21, "projectName": "Torre Maria", "stage": "Sin iniciar", "deadline": "2025-08-29", "daysOverdue": 259, "hasAssignee": false },
-      { "id": 7747, "name": "ANALISIS DE PREDIO", "projectId": 31, "projectName": "Brasilena", "stage": "Sin iniciar", "deadline": "2025-08-29", "daysOverdue": 259, "hasAssignee": false },
-      { "id": 3481, "name": "ANALISIS DE PREDIO", "projectId": 16, "projectName": "Casa Calina", "stage": "Sin iniciar", "deadline": "2025-08-29", "daysOverdue": 259, "hasAssignee": false },
-      { "id": 8140, "name": "ANALISIS DE PREDIO", "projectId": 33, "projectName": "Torre Campestre", "stage": "Sin iniciar", "deadline": "2025-08-29", "daysOverdue": 259, "hasAssignee": false },
-      { "id": 5840, "name": "ANALISIS DE PREDIO", "projectId": 23, "projectName": "Batalla de Angostura", "stage": "Sin iniciar", "deadline": "2025-08-29", "daysOverdue": 259, "hasAssignee": false },
-      { "id": 6706, "name": "ANALISIS DE PREDIO", "projectId": 27, "projectName": "Torre Centro", "stage": "Sin iniciar", "deadline": "2025-08-29", "daysOverdue": 259, "hasAssignee": false },
-      { "id": 2763, "name": "ANALISIS DE PREDIO", "projectId": 11, "projectName": "Torre Peru", "stage": "Sin iniciar", "deadline": "2025-08-29", "daysOverdue": 259, "hasAssignee": false },
-      { "id": 4732, "name": "ANALISIS DE PREDIO", "projectId": 18, "projectName": "Torre Hidalgo", "stage": "Sin iniciar", "deadline": "2025-08-29", "daysOverdue": 259, "hasAssignee": false },
-      { "id": 2778, "name": "ANALISIS FINANCIERO", "projectId": 11, "projectName": "Torre Peru", "stage": "En proceso", "deadline": "2026-01-09", "daysOverdue": 126, "hasAssignee": false },
-      { "id": 7625, "name": "MUROS COLINDANTES- FACHADA P3", "projectId": 16, "projectName": "Casa Calina", "stage": "En proceso", "deadline": "2026-01-16", "daysOverdue": 119, "hasAssignee": false },
-      { "id": 3421, "name": "CIMENTACION", "projectId": 15, "projectName": "Torre Romano", "stage": "En proceso", "deadline": "2026-01-31", "daysOverdue": 104, "hasAssignee": false },
-      { "id": 7615, "name": "Lanzamiento campana", "projectId": 27, "projectName": "Torre Centro", "stage": "En proceso", "deadline": "2026-02-10", "daysOverdue": 94, "hasAssignee": false },
-      { "id": 3510, "name": "ANTEPROYECTO Y FACTIBILIDAD", "projectId": 16, "projectName": "Casa Calina", "stage": "En proceso", "deadline": "2026-02-20", "daysOverdue": 84, "hasAssignee": false },
-      { "id": 2343, "name": "LICENCIA DE USO DE SUELO", "projectId": 11, "projectName": "Torre Peru", "stage": "Sin iniciar", "deadline": "2026-01-30", "daysOverdue": 105, "hasAssignee": false },
-      { "id": 2828, "name": "ANTEPROYECTO Y FACTIBILIDAD", "projectId": 13, "projectName": "Torre Porfirio", "stage": "En proceso", "deadline": "2026-05-15", "daysOverdue": 0, "hasAssignee": false }
+      {
+        "id": 7959,
+        "name": "ANÁLISIS DE PREDIO",
+        "projectId": 32,
+        "projectName": "El Capitán",
+        "stage": "Sin iniciar",
+        "deadline": "2025-08-29",
+        "daysOverdue": 259
+      },
+      {
+        "id": 7399,
+        "name": "ANÁLISIS DE PREDIO",
+        "projectId": 29,
+        "projectName": "Casa Altozano",
+        "stage": "Sin iniciar",
+        "deadline": "2025-08-29",
+        "daysOverdue": 259
+      },
+      {
+        "id": 6320,
+        "name": "ANÁLISIS DE PREDIO",
+        "projectId": 25,
+        "projectName": "Cafetería Américas",
+        "stage": "Sin iniciar",
+        "deadline": "2025-08-29",
+        "daysOverdue": 259
+      },
+      {
+        "id": 5840,
+        "name": "ANÁLISIS DE PREDIO",
+        "projectId": 23,
+        "projectName": "Batalla de Angostura",
+        "stage": "Sin iniciar",
+        "deadline": "2025-08-29",
+        "daysOverdue": 259
+      },
+      {
+        "id": 3049,
+        "name": "ANÁLISIS DE PREDIO",
+        "projectId": 14,
+        "projectName": "Torre Ventura Loft",
+        "stage": "Sin iniciar",
+        "deadline": "2025-08-29",
+        "daysOverdue": 259
+      },
+      {
+        "id": 2799,
+        "name": "ANÁLISIS DE PREDIO",
+        "projectId": 13,
+        "projectName": "Torre Porfirio",
+        "stage": "Sin iniciar",
+        "deadline": "2025-08-29",
+        "daysOverdue": 259
+      },
+      {
+        "id": 5612,
+        "name": "ANÁLISIS DE PREDIO",
+        "projectId": 21,
+        "projectName": "Torre María",
+        "stage": "Sin iniciar",
+        "deadline": "2025-08-29",
+        "daysOverdue": 259
+      },
+      {
+        "id": 5172,
+        "name": "ANÁLISIS DE PREDIO",
+        "projectId": 19,
+        "projectName": "Torre Aria",
+        "stage": "Sin iniciar",
+        "deadline": "2025-08-29",
+        "daysOverdue": 259
+      },
+      {
+        "id": 3266,
+        "name": "ANÁLISIS DE PREDIO",
+        "projectId": 15,
+        "projectName": "Torre Romano",
+        "stage": "Sin iniciar",
+        "deadline": "2025-08-29",
+        "daysOverdue": 259
+      },
+      {
+        "id": 5625,
+        "name": "ANÁLISIS DE PREDIO",
+        "projectId": 22,
+        "projectName": "Consultorios Handel",
+        "stage": "Sin iniciar",
+        "deadline": "2025-08-29",
+        "daysOverdue": 259
+      },
+      {
+        "id": 8140,
+        "name": "ANÁLISIS DE PREDIO",
+        "projectId": 33,
+        "projectName": "Torre Campestre",
+        "stage": "Sin iniciar",
+        "deadline": "2025-08-29",
+        "daysOverdue": 259
+      },
+      {
+        "id": 3481,
+        "name": "ANÁLISIS DE PREDIO",
+        "projectId": 16,
+        "projectName": "Casa Calina",
+        "stage": "Sin iniciar",
+        "deadline": "2025-08-29",
+        "daysOverdue": 259
+      },
+      {
+        "id": 7747,
+        "name": "ANÁLISIS DE PREDIO",
+        "projectId": 31,
+        "projectName": "Brasileña",
+        "stage": "Sin iniciar",
+        "deadline": "2025-08-29",
+        "daysOverdue": 259
+      },
+      {
+        "id": 2763,
+        "name": "ANÁLISIS DE PREDIO",
+        "projectId": 11,
+        "projectName": "Torre Perú",
+        "stage": "Sin iniciar",
+        "deadline": "2025-08-29",
+        "daysOverdue": 259
+      },
+      {
+        "id": 7151,
+        "name": "ANÁLISIS DE PREDIO",
+        "projectId": 28,
+        "projectName": "Torre Fray Antonio",
+        "stage": "Sin iniciar",
+        "deadline": "2025-08-29",
+        "daysOverdue": 259
+      },
+      {
+        "id": 8514,
+        "name": "ANÁLISIS DE PREDIO",
+        "projectId": 34,
+        "projectName": "Remodelación Casa Tres Marías",
+        "stage": "Sin iniciar",
+        "deadline": "2025-08-29",
+        "daysOverdue": 259
+      },
+      {
+        "id": 6706,
+        "name": "ANÁLISIS DE PREDIO",
+        "projectId": 27,
+        "projectName": "Torre Centro",
+        "stage": "Sin iniciar",
+        "deadline": "2025-08-29",
+        "daysOverdue": 259
+      },
+      {
+        "id": 4732,
+        "name": "ANÁLISIS DE PREDIO",
+        "projectId": 18,
+        "projectName": "Torre Hidalgo",
+        "stage": "Sin iniciar",
+        "deadline": "2025-08-29",
+        "daysOverdue": 259
+      },
+      {
+        "id": 4728,
+        "name": "ANÁLISIS DE LA DEMANDA",
+        "projectId": 18,
+        "projectName": "Torre Hidalgo",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-09",
+        "daysOverdue": 126
+      },
+      {
+        "id": 5848,
+        "name": "ANÁLISIS DE LA DEMANDA",
+        "projectId": 23,
+        "projectName": "Batalla de Angostura",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-09",
+        "daysOverdue": 126
+      },
+      {
+        "id": 8156,
+        "name": "ANÁLISIS DE PRECIOS",
+        "projectId": 33,
+        "projectName": "Torre Campestre",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-09",
+        "daysOverdue": 126
+      },
+      {
+        "id": 3060,
+        "name": "ANÁLISIS DE PRECIOS",
+        "projectId": 14,
+        "projectName": "Torre Ventura Loft",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-09",
+        "daysOverdue": 126
+      },
+      {
+        "id": 3057,
+        "name": "ANÁLISIS DE LA DEMANDA",
+        "projectId": 14,
+        "projectName": "Torre Ventura Loft",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-09",
+        "daysOverdue": 126
+      },
+      {
+        "id": 3492,
+        "name": "ANÁLISIS DE PRECIOS",
+        "projectId": 16,
+        "projectName": "Casa Calina",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-09",
+        "daysOverdue": 126
+      },
+      {
+        "id": 3489,
+        "name": "ANÁLISIS DE LA DEMANDA",
+        "projectId": 16,
+        "projectName": "Casa Calina",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-09",
+        "daysOverdue": 126
+      },
+      {
+        "id": 7743,
+        "name": "ANÁLISIS DE LA DEMANDA",
+        "projectId": 31,
+        "projectName": "Brasileña",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-09",
+        "daysOverdue": 126
+      },
+      {
+        "id": 5851,
+        "name": "ANÁLISIS DE PRECIOS",
+        "projectId": 23,
+        "projectName": "Batalla de Angostura",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-09",
+        "daysOverdue": 126
+      },
+      {
+        "id": 2769,
+        "name": "ANÁLISIS DE PRECIOS",
+        "projectId": 11,
+        "projectName": "Torre Perú",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-09",
+        "daysOverdue": 126
+      },
+      {
+        "id": 5168,
+        "name": "ANÁLISIS DE LA DEMANDA",
+        "projectId": 19,
+        "projectName": "Torre Aria",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-09",
+        "daysOverdue": 126
+      },
+      {
+        "id": 5608,
+        "name": "ANÁLISIS DE LA DEMANDA",
+        "projectId": 21,
+        "projectName": "Torre María",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-09",
+        "daysOverdue": 126
+      },
+      {
+        "id": 7406,
+        "name": "ANÁLISIS DE PRECIOS",
+        "projectId": 29,
+        "projectName": "Casa Altozano",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-09",
+        "daysOverdue": 126
+      },
+      {
+        "id": 2807,
+        "name": "ANÁLISIS DE LA DEMANDA",
+        "projectId": 13,
+        "projectName": "Torre Porfirio",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-09",
+        "daysOverdue": 126
+      },
+      {
+        "id": 2313,
+        "name": "ANÁLISIS DE LA DEMANDA",
+        "projectId": 11,
+        "projectName": "Torre Perú",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-09",
+        "daysOverdue": 126
+      },
+      {
+        "id": 7966,
+        "name": "ANÁLISIS DE PRECIOS",
+        "projectId": 32,
+        "projectName": "El Capitán",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-09",
+        "daysOverdue": 126
+      },
+      {
+        "id": 7395,
+        "name": "ANÁLISIS DE LA DEMANDA",
+        "projectId": 29,
+        "projectName": "Casa Altozano",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-09",
+        "daysOverdue": 126
+      },
+      {
+        "id": 6327,
+        "name": "ANÁLISIS DE PRECIOS",
+        "projectId": 25,
+        "projectName": "Cafetería Américas",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-09",
+        "daysOverdue": 126
+      },
+      {
+        "id": 7754,
+        "name": "ANÁLISIS DE PRECIOS",
+        "projectId": 31,
+        "projectName": "Brasileña",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-09",
+        "daysOverdue": 126
+      },
+      {
+        "id": 3277,
+        "name": "ANÁLISIS DE PRECIOS",
+        "projectId": 15,
+        "projectName": "Torre Romano",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-09",
+        "daysOverdue": 126
+      },
+      {
+        "id": 5160,
+        "name": "ANÁLISIS DE PRECIOS",
+        "projectId": 19,
+        "projectName": "Torre Aria",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-09",
+        "daysOverdue": 126
+      },
+      {
+        "id": 3274,
+        "name": "ANÁLISIS DE LA DEMANDA",
+        "projectId": 15,
+        "projectName": "Torre Romano",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-09",
+        "daysOverdue": 126
+      },
+      {
+        "id": 2810,
+        "name": "ANÁLISIS DE PRECIOS",
+        "projectId": 13,
+        "projectName": "Torre Porfirio",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-09",
+        "daysOverdue": 126
+      },
+      {
+        "id": 6702,
+        "name": "ANÁLISIS DE LA DEMANDA",
+        "projectId": 27,
+        "projectName": "Torre Centro",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-09",
+        "daysOverdue": 126
+      },
+      {
+        "id": 4720,
+        "name": "ANÁLISIS DE PRECIOS",
+        "projectId": 18,
+        "projectName": "Torre Hidalgo",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-09",
+        "daysOverdue": 126
+      },
+      {
+        "id": 5633,
+        "name": "ANÁLISIS DE LA DEMANDA",
+        "projectId": 22,
+        "projectName": "Consultorios Handel",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-09",
+        "daysOverdue": 126
+      },
+      {
+        "id": 8521,
+        "name": "ANÁLISIS DE PRECIOS",
+        "projectId": 34,
+        "projectName": "Remodelación Casa Tres Marías",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-09",
+        "daysOverdue": 126
+      },
+      {
+        "id": 2778,
+        "name": "ANÁLISIS FINANCIERO",
+        "projectId": 11,
+        "projectName": "Torre Perú",
+        "stage": "En proceso",
+        "deadline": "2026-01-09",
+        "daysOverdue": 126
+      },
+      {
+        "id": 7625,
+        "name": "MUROS COLINDANTES- FACHADA P3",
+        "projectId": 16,
+        "projectName": "Casa Calina",
+        "stage": "En proceso",
+        "deadline": "2026-01-16",
+        "daysOverdue": 119
+      },
+      {
+        "id": 6713,
+        "name": "DESARROLLO CONCEPTO",
+        "projectId": 27,
+        "projectName": "Torre Centro",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-23",
+        "daysOverdue": 112
+      },
+      {
+        "id": 4713,
+        "name": "DESARROLLO CONCEPTO",
+        "projectId": 18,
+        "projectName": "Torre Hidalgo",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-23",
+        "daysOverdue": 112
+      },
+      {
+        "id": 7175,
+        "name": "DESARROLLO CONCEPTO",
+        "projectId": 28,
+        "projectName": "Torre Fray Antonio",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-23",
+        "daysOverdue": 112
+      },
+      {
+        "id": 8163,
+        "name": "DESARROLLO CONCEPTO",
+        "projectId": 33,
+        "projectName": "Torre Campestre",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-23",
+        "daysOverdue": 112
+      },
+      {
+        "id": 2822,
+        "name": "DESARROLLO CONCEPTO",
+        "projectId": 13,
+        "projectName": "Torre Porfirio",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-23",
+        "daysOverdue": 112
+      },
+      {
+        "id": 5153,
+        "name": "DESARROLLO CONCEPTO",
+        "projectId": 19,
+        "projectName": "Torre Aria",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-23",
+        "daysOverdue": 112
+      },
+      {
+        "id": 3504,
+        "name": "DESARROLLO CONCEPTO",
+        "projectId": 16,
+        "projectName": "Casa Calina",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-23",
+        "daysOverdue": 112
+      },
+      {
+        "id": 3072,
+        "name": "DESARROLLO CONCEPTO",
+        "projectId": 14,
+        "projectName": "Torre Ventura Loft",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-23",
+        "daysOverdue": 112
+      },
+      {
+        "id": 3289,
+        "name": "DESARROLLO CONCEPTO",
+        "projectId": 15,
+        "projectName": "Torre Romano",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-23",
+        "daysOverdue": 112
+      },
+      {
+        "id": 5593,
+        "name": "DESARROLLO CONCEPTO",
+        "projectId": 21,
+        "projectName": "Torre María",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-23",
+        "daysOverdue": 112
+      },
+      {
+        "id": 2343,
+        "name": "LICENCIA DE USO DE SUELO",
+        "projectId": 11,
+        "projectName": "Torre Perú",
+        "stage": "Sin iniciar",
+        "deadline": "2026-01-30",
+        "daysOverdue": 105
+      },
+      {
+        "id": 3421,
+        "name": "CIMENTACIÓN",
+        "projectId": 15,
+        "projectName": "Torre Romano",
+        "stage": "En proceso",
+        "deadline": "2026-01-31",
+        "daysOverdue": 104
+      },
+      {
+        "id": 8165,
+        "name": "DISEÑO ESQUEMÁTICO",
+        "projectId": 33,
+        "projectName": "Torre Campestre",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-02",
+        "daysOverdue": 102
+      },
+      {
+        "id": 2321,
+        "name": "DISEÑO ESQUEMÁTICO",
+        "projectId": 11,
+        "projectName": "Torre Perú",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-02",
+        "daysOverdue": 102
+      },
+      {
+        "id": 7936,
+        "name": "DISEÑO ESQUEMÁTICO",
+        "projectId": 32,
+        "projectName": "El Capitán",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-02",
+        "daysOverdue": 102
+      },
+      {
+        "id": 2824,
+        "name": "DISEÑO ESQUEMÁTICO",
+        "projectId": 13,
+        "projectName": "Torre Porfirio",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-02",
+        "daysOverdue": 102
+      },
+      {
+        "id": 3074,
+        "name": "DISEÑO ESQUEMÁTICO",
+        "projectId": 14,
+        "projectName": "Torre Ventura Loft",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-02",
+        "daysOverdue": 102
+      },
+      {
+        "id": 3506,
+        "name": "DISEÑO ESQUEMÁTICO",
+        "projectId": 16,
+        "projectName": "Casa Calina",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-02",
+        "daysOverdue": 102
+      },
+      {
+        "id": 3291,
+        "name": "DISEÑO ESQUEMÁTICO",
+        "projectId": 15,
+        "projectName": "Torre Romano",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-02",
+        "daysOverdue": 102
+      },
+      {
+        "id": 4715,
+        "name": "DISEÑO ESQUEMÁTICO",
+        "projectId": 18,
+        "projectName": "Torre Hidalgo",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-02",
+        "daysOverdue": 102
+      },
+      {
+        "id": 5865,
+        "name": "DISEÑO ESQUEMÁTICO",
+        "projectId": 23,
+        "projectName": "Batalla de Angostura",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-02",
+        "daysOverdue": 102
+      },
+      {
+        "id": 6297,
+        "name": "DISEÑO ESQUEMÁTICO",
+        "projectId": 25,
+        "projectName": "Cafetería Américas",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-02",
+        "daysOverdue": 102
+      },
+      {
+        "id": 8475,
+        "name": "DISEÑO ESQUEMÁTICO",
+        "projectId": 34,
+        "projectName": "Remodelación Casa Tres Marías",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-02",
+        "daysOverdue": 102
+      },
+      {
+        "id": 7724,
+        "name": "DISEÑO ESQUEMÁTICO",
+        "projectId": 31,
+        "projectName": "Brasileña",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-02",
+        "daysOverdue": 102
+      },
+      {
+        "id": 5155,
+        "name": "DISEÑO ESQUEMÁTICO",
+        "projectId": 19,
+        "projectName": "Torre Aria",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-02",
+        "daysOverdue": 102
+      },
+      {
+        "id": 5595,
+        "name": "DISEÑO ESQUEMÁTICO",
+        "projectId": 21,
+        "projectName": "Torre María",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-02",
+        "daysOverdue": 102
+      },
+      {
+        "id": 7177,
+        "name": "DISEÑO ESQUEMÁTICO",
+        "projectId": 28,
+        "projectName": "Torre Fray Antonio",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-02",
+        "daysOverdue": 102
+      },
+      {
+        "id": 7376,
+        "name": "DISEÑO ESQUEMÁTICO",
+        "projectId": 29,
+        "projectName": "Casa Altozano",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-02",
+        "daysOverdue": 102
+      },
+      {
+        "id": 6715,
+        "name": "DISEÑO ESQUEMÁTICO",
+        "projectId": 27,
+        "projectName": "Torre Centro",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-02",
+        "daysOverdue": 102
+      },
+      {
+        "id": 7615,
+        "name": "Lanzamiento campaña",
+        "projectId": 27,
+        "projectName": "Torre Centro",
+        "stage": "En proceso",
+        "deadline": "2026-02-10",
+        "daysOverdue": 94
+      },
+      {
+        "id": 3510,
+        "name": "ANTEPROYECTO Y FACTIBILIDAD",
+        "projectId": 16,
+        "projectName": "Casa Calina",
+        "stage": "En proceso",
+        "deadline": "2026-02-20",
+        "daysOverdue": 84
+      },
+      {
+        "id": 3075,
+        "name": "DESARROLLO DE PLANTAS ARQUITECTÓNICAS",
+        "projectId": 14,
+        "projectName": "Torre Ventura Loft",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-23",
+        "daysOverdue": 81
+      },
+      {
+        "id": 3292,
+        "name": "DESARROLLO DE PLANTAS ARQUITECTÓNICAS",
+        "projectId": 15,
+        "projectName": "Torre Romano",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-23",
+        "daysOverdue": 81
+      },
+      {
+        "id": 3507,
+        "name": "DESARROLLO DE PLANTAS ARQUITECTÓNICAS",
+        "projectId": 16,
+        "projectName": "Casa Calina",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-23",
+        "daysOverdue": 81
+      },
+      {
+        "id": 2825,
+        "name": "DESARROLLO DE PLANTAS ARQUITECTÓNICAS",
+        "projectId": 13,
+        "projectName": "Torre Porfirio",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-23",
+        "daysOverdue": 81
+      },
+      {
+        "id": 7377,
+        "name": "DESARROLLO DE PLANTAS ARQUITECTÓNICAS",
+        "projectId": 29,
+        "projectName": "Casa Altozano",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-23",
+        "daysOverdue": 81
+      },
+      {
+        "id": 7178,
+        "name": "DESARROLLO DE PLANTAS ARQUITECTÓNICAS",
+        "projectId": 28,
+        "projectName": "Torre Fray Antonio",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-23",
+        "daysOverdue": 81
+      },
+      {
+        "id": 8476,
+        "name": "DESARROLLO DE PLANTAS ARQUITECTÓNICAS",
+        "projectId": 34,
+        "projectName": "Remodelación Casa Tres Marías",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-23",
+        "daysOverdue": 81
+      },
+      {
+        "id": 7725,
+        "name": "DESARROLLO DE PLANTAS ARQUITECTÓNICAS",
+        "projectId": 31,
+        "projectName": "Brasileña",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-23",
+        "daysOverdue": 81
+      },
+      {
+        "id": 5866,
+        "name": "DESARROLLO DE PLANTAS ARQUITECTÓNICAS",
+        "projectId": 23,
+        "projectName": "Batalla de Angostura",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-23",
+        "daysOverdue": 81
+      },
+      {
+        "id": 4716,
+        "name": "DESARROLLO DE PLANTAS ARQUITECTÓNICAS",
+        "projectId": 18,
+        "projectName": "Torre Hidalgo",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-23",
+        "daysOverdue": 81
+      },
+      {
+        "id": 6298,
+        "name": "DESARROLLO DE PLANTAS ARQUITECTÓNICAS",
+        "projectId": 25,
+        "projectName": "Cafetería Américas",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-23",
+        "daysOverdue": 81
+      },
+      {
+        "id": 5596,
+        "name": "DESARROLLO DE PLANTAS ARQUITECTÓNICAS",
+        "projectId": 21,
+        "projectName": "Torre María",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-23",
+        "daysOverdue": 81
+      },
+      {
+        "id": 6716,
+        "name": "DESARROLLO DE PLANTAS ARQUITECTÓNICAS",
+        "projectId": 27,
+        "projectName": "Torre Centro",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-23",
+        "daysOverdue": 81
+      },
+      {
+        "id": 2783,
+        "name": "DESARROLLO DE PLANTAS ARQUITECTÓNICAS",
+        "projectId": 11,
+        "projectName": "Torre Perú",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-23",
+        "daysOverdue": 81
+      },
+      {
+        "id": 5156,
+        "name": "DESARROLLO DE PLANTAS ARQUITECTÓNICAS",
+        "projectId": 19,
+        "projectName": "Torre Aria",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-23",
+        "daysOverdue": 81
+      },
+      {
+        "id": 7937,
+        "name": "DESARROLLO DE PLANTAS ARQUITECTÓNICAS",
+        "projectId": 32,
+        "projectName": "El Capitán",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-23",
+        "daysOverdue": 81
+      },
+      {
+        "id": 8166,
+        "name": "DESARROLLO DE PLANTAS ARQUITECTÓNICAS",
+        "projectId": 33,
+        "projectName": "Torre Campestre",
+        "stage": "Sin iniciar",
+        "deadline": "2026-02-23",
+        "daysOverdue": 81
+      },
+      {
+        "id": 3498,
+        "name": "ANÁLISIS DE VIABILIDAD DE PROYECTO",
+        "projectId": 16,
+        "projectName": "Casa Calina",
+        "stage": "En proceso",
+        "deadline": "2026-02-27",
+        "daysOverdue": 77
+      },
+      {
+        "id": 6318,
+        "name": "DESARROLLO MATERIAL GRÁFICO",
+        "projectId": 25,
+        "projectName": "Cafetería Américas",
+        "stage": "En proceso",
+        "deadline": "2026-02-28",
+        "daysOverdue": 75
+      },
+      {
+        "id": 6300,
+        "name": "ANTEPROYECTO Y FACTIBILIDAD",
+        "projectId": 25,
+        "projectName": "Cafetería Américas",
+        "stage": "En proceso",
+        "deadline": "2026-02-28",
+        "daysOverdue": 75
+      },
+      {
+        "id": 7939,
+        "name": "ANTEPROYECTO Y FACTIBILIDAD",
+        "projectId": 32,
+        "projectName": "El Capitán",
+        "stage": "En proceso",
+        "deadline": "2026-03-06",
+        "daysOverdue": 70
+      },
+      {
+        "id": 7727,
+        "name": "ANTEPROYECTO Y FACTIBILIDAD",
+        "projectId": 31,
+        "projectName": "Brasileña",
+        "stage": "En proceso",
+        "deadline": "2026-03-12",
+        "daysOverdue": 64
+      },
+      {
+        "id": 7953,
+        "name": "DESARROLLO MATERIAL GRÁFICO",
+        "projectId": 32,
+        "projectName": "El Capitán",
+        "stage": "En proceso",
+        "deadline": "2026-03-13",
+        "daysOverdue": 63
+      },
+      {
+        "id": 7741,
+        "name": "DESARROLLO MATERIAL GRÁFICO",
+        "projectId": 31,
+        "projectName": "Brasileña",
+        "stage": "En proceso",
+        "deadline": "2026-03-13",
+        "daysOverdue": 63
+      },
+      {
+        "id": 3938,
+        "name": "ALBAÑILERÍA, ACABADOS E INSTALACIONES (SÓTANO)",
+        "projectId": 14,
+        "projectName": "Torre Ventura Loft",
+        "stage": "En proceso",
+        "deadline": "2026-03-14",
+        "daysOverdue": 62
+      },
+      {
+        "id": 3780,
+        "name": "ESTRUCTURA NIVEL 4",
+        "projectId": 14,
+        "projectName": "Torre Ventura Loft",
+        "stage": "En proceso",
+        "deadline": "2026-03-14",
+        "daysOverdue": 62
+      },
+      {
+        "id": 3831,
+        "name": "ESTRUCTURA NIVEL PLANTA BAJA",
+        "projectId": 15,
+        "projectName": "Torre Romano",
+        "stage": "En proceso",
+        "deadline": "2026-03-14",
+        "daysOverdue": 62
+      },
+      {
+        "id": 2318,
+        "name": "ANTEPROYECTO Y FACTIBILIDAD",
+        "projectId": 11,
+        "projectName": "Torre Perú",
+        "stage": "En proceso",
+        "deadline": "2026-03-20",
+        "daysOverdue": 56
+      },
+      {
+        "id": 5654,
+        "name": "ANTEPROYECTO Y FACTIBILIDAD",
+        "projectId": 22,
+        "projectName": "Consultorios Handel",
+        "stage": "En proceso",
+        "deadline": "2026-03-20",
+        "daysOverdue": 56
+      },
+      {
+        "id": 7378,
+        "name": "VISTO BUENO ESTRATÉGICO",
+        "projectId": 29,
+        "projectName": "Casa Altozano",
+        "stage": "Sin iniciar",
+        "deadline": "2026-03-20",
+        "daysOverdue": 56
+      },
+      {
+        "id": 4718,
+        "name": "VISTO BUENO ESTRATÉGICO",
+        "projectId": 18,
+        "projectName": "Torre Hidalgo",
+        "stage": "Sin iniciar",
+        "deadline": "2026-03-20",
+        "daysOverdue": 56
+      },
+      {
+        "id": 8168,
+        "name": "VISTO BUENO ESTRATÉGICO",
+        "projectId": 33,
+        "projectName": "Torre Campestre",
+        "stage": "Sin iniciar",
+        "deadline": "2026-03-20",
+        "daysOverdue": 56
+      },
+      {
+        "id": 2322,
+        "name": "VISTO BUENO ESTRATÉGICO",
+        "projectId": 11,
+        "projectName": "Torre Perú",
+        "stage": "Sin iniciar",
+        "deadline": "2026-03-20",
+        "daysOverdue": 56
+      },
+      {
+        "id": 7726,
+        "name": "VISTO BUENO ESTRATÉGICO",
+        "projectId": 31,
+        "projectName": "Brasileña",
+        "stage": "Sin iniciar",
+        "deadline": "2026-03-20",
+        "daysOverdue": 56
+      },
+      {
+        "id": 6299,
+        "name": "VISTO BUENO ESTRATÉGICO",
+        "projectId": 25,
+        "projectName": "Cafetería Américas",
+        "stage": "Sin iniciar",
+        "deadline": "2026-03-20",
+        "daysOverdue": 56
+      },
+      {
+        "id": 5598,
+        "name": "VISTO BUENO ESTRATÉGICO",
+        "projectId": 21,
+        "projectName": "Torre María",
+        "stage": "Sin iniciar",
+        "deadline": "2026-03-20",
+        "daysOverdue": 56
+      },
+      {
+        "id": 5158,
+        "name": "VISTO BUENO ESTRATÉGICO",
+        "projectId": 19,
+        "projectName": "Torre Aria",
+        "stage": "Sin iniciar",
+        "deadline": "2026-03-20",
+        "daysOverdue": 56
+      },
+      {
+        "id": 3294,
+        "name": "VISTO BUENO ESTRATÉGICO",
+        "projectId": 15,
+        "projectName": "Torre Romano",
+        "stage": "Sin iniciar",
+        "deadline": "2026-03-20",
+        "daysOverdue": 56
+      },
+      {
+        "id": 3509,
+        "name": "VISTO BUENO ESTRATÉGICO",
+        "projectId": 16,
+        "projectName": "Casa Calina",
+        "stage": "Sin iniciar",
+        "deadline": "2026-03-20",
+        "daysOverdue": 56
+      },
+      {
+        "id": 7180,
+        "name": "VISTO BUENO ESTRATÉGICO",
+        "projectId": 28,
+        "projectName": "Torre Fray Antonio",
+        "stage": "Sin iniciar",
+        "deadline": "2026-03-20",
+        "daysOverdue": 56
+      },
+      {
+        "id": 3077,
+        "name": "VISTO BUENO ESTRATÉGICO",
+        "projectId": 14,
+        "projectName": "Torre Ventura Loft",
+        "stage": "Sin iniciar",
+        "deadline": "2026-03-20",
+        "daysOverdue": 56
+      },
+      {
+        "id": 2827,
+        "name": "VISTO BUENO ESTRATÉGICO",
+        "projectId": 13,
+        "projectName": "Torre Porfirio",
+        "stage": "Sin iniciar",
+        "deadline": "2026-03-20",
+        "daysOverdue": 56
+      },
+      {
+        "id": 7938,
+        "name": "VISTO BUENO ESTRATÉGICO",
+        "projectId": 32,
+        "projectName": "El Capitán",
+        "stage": "Sin iniciar",
+        "deadline": "2026-03-20",
+        "daysOverdue": 56
+      },
+      {
+        "id": 6718,
+        "name": "VISTO BUENO ESTRATÉGICO",
+        "projectId": 27,
+        "projectName": "Torre Centro",
+        "stage": "Sin iniciar",
+        "deadline": "2026-03-20",
+        "daysOverdue": 56
+      },
+      {
+        "id": 8477,
+        "name": "VISTO BUENO ESTRATÉGICO",
+        "projectId": 34,
+        "projectName": "Remodelación Casa Tres Marías",
+        "stage": "Sin iniciar",
+        "deadline": "2026-03-20",
+        "daysOverdue": 56
+      },
+      {
+        "id": 5868,
+        "name": "VISTO BUENO ESTRATÉGICO",
+        "projectId": 23,
+        "projectName": "Batalla de Angostura",
+        "stage": "Sin iniciar",
+        "deadline": "2026-03-20",
+        "daysOverdue": 56
+      },
+      {
+        "id": 7633,
+        "name": "MUROS COLINDANTES FACHADA P4",
+        "projectId": 16,
+        "projectName": "Casa Calina",
+        "stage": "Sin iniciar",
+        "deadline": "2026-03-28",
+        "daysOverdue": 48
+      },
+      {
+        "id": 3508,
+        "name": "VIABILIDAD URBANÍSTICA",
+        "projectId": 16,
+        "projectName": "Casa Calina",
+        "stage": "Sin iniciar",
+        "deadline": "2026-04-03",
+        "daysOverdue": 42
+      },
+      {
+        "id": 5597,
+        "name": "VIABILIDAD URBANÍSTICA",
+        "projectId": 21,
+        "projectName": "Torre María",
+        "stage": "Sin iniciar",
+        "deadline": "2026-04-03",
+        "daysOverdue": 42
+      },
+      {
+        "id": 7179,
+        "name": "VIABILIDAD URBANÍSTICA",
+        "projectId": 28,
+        "projectName": "Torre Fray Antonio",
+        "stage": "Sin iniciar",
+        "deadline": "2026-04-03",
+        "daysOverdue": 42
+      },
+      {
+        "id": 5867,
+        "name": "VIABILIDAD URBANÍSTICA",
+        "projectId": 23,
+        "projectName": "Batalla de Angostura",
+        "stage": "Sin iniciar",
+        "deadline": "2026-04-03",
+        "daysOverdue": 42
+      },
+      {
+        "id": 4717,
+        "name": "VIABILIDAD URBANÍSTICA",
+        "projectId": 18,
+        "projectName": "Torre Hidalgo",
+        "stage": "Sin iniciar",
+        "deadline": "2026-04-03",
+        "daysOverdue": 42
+      },
+      {
+        "id": 6717,
+        "name": "VIABILIDAD URBANÍSTICA",
+        "projectId": 27,
+        "projectName": "Torre Centro",
+        "stage": "Sin iniciar",
+        "deadline": "2026-04-03",
+        "daysOverdue": 42
+      },
+      {
+        "id": 3293,
+        "name": "VIABILIDAD URBANÍSTICA",
+        "projectId": 15,
+        "projectName": "Torre Romano",
+        "stage": "Sin iniciar",
+        "deadline": "2026-04-03",
+        "daysOverdue": 42
+      },
+      {
+        "id": 2320,
+        "name": "VIABILIDAD URBANÍSTICA",
+        "projectId": 11,
+        "projectName": "Torre Perú",
+        "stage": "Sin iniciar",
+        "deadline": "2026-04-03",
+        "daysOverdue": 42
+      },
+      {
+        "id": 3076,
+        "name": "VIABILIDAD URBANÍSTICA",
+        "projectId": 14,
+        "projectName": "Torre Ventura Loft",
+        "stage": "Sin iniciar",
+        "deadline": "2026-04-03",
+        "daysOverdue": 42
+      },
+      {
+        "id": 8167,
+        "name": "VIABILIDAD URBANÍSTICA",
+        "projectId": 33,
+        "projectName": "Torre Campestre",
+        "stage": "Sin iniciar",
+        "deadline": "2026-04-03",
+        "daysOverdue": 42
+      },
+      {
+        "id": 2826,
+        "name": "VIABILIDAD URBANÍSTICA",
+        "projectId": 13,
+        "projectName": "Torre Porfirio",
+        "stage": "Sin iniciar",
+        "deadline": "2026-04-03",
+        "daysOverdue": 42
+      },
+      {
+        "id": 3797,
+        "name": "ESTRUCTURA NIVEL 5",
+        "projectId": 14,
+        "projectName": "Torre Ventura Loft",
+        "stage": "Sin iniciar",
+        "deadline": "2026-04-04",
+        "daysOverdue": 41
+      },
+      {
+        "id": 8391,
+        "name": "Moodboard",
+        "projectId": 21,
+        "projectName": "Torre María",
+        "stage": "En proceso",
+        "deadline": "2026-04-06",
+        "daysOverdue": 39
+      },
+      {
+        "id": 3079,
+        "name": "PLANOS ARQUITECTÓNICOS FINALES",
+        "projectId": 14,
+        "projectName": "Torre Ventura Loft",
+        "stage": "Sin iniciar",
+        "deadline": "2026-04-10",
+        "daysOverdue": 35
+      },
+      {
+        "id": 3511,
+        "name": "PLANOS ARQUITECTÓNICOS FINALES",
+        "projectId": 16,
+        "projectName": "Casa Calina",
+        "stage": "Sin iniciar",
+        "deadline": "2026-04-10",
+        "daysOverdue": 35
+      },
+      {
+        "id": 3296,
+        "name": "PLANOS ARQUITECTÓNICOS FINALES",
+        "projectId": 15,
+        "projectName": "Torre Romano",
+        "stage": "Sin iniciar",
+        "deadline": "2026-04-10",
+        "daysOverdue": 35
+      },
+      {
+        "id": 2829,
+        "name": "PLANOS ARQUITECTÓNICOS FINALES",
+        "projectId": 13,
+        "projectName": "Torre Porfirio",
+        "stage": "Sin iniciar",
+        "deadline": "2026-04-10",
+        "daysOverdue": 35
+      },
+      {
+        "id": 5148,
+        "name": "PLANOS ARQUITECTÓNICOS FINALES",
+        "projectId": 19,
+        "projectName": "Torre Aria",
+        "stage": "Sin iniciar",
+        "deadline": "2026-04-10",
+        "daysOverdue": 35
+      },
+      {
+        "id": 5870,
+        "name": "PLANOS ARQUITECTÓNICOS FINALES",
+        "projectId": 23,
+        "projectName": "Batalla de Angostura",
+        "stage": "Sin iniciar",
+        "deadline": "2026-04-10",
+        "daysOverdue": 35
+      },
+      {
+        "id": 7413,
+        "name": "PLANOS ARQUITECTÓNICOS FINALES",
+        "projectId": 29,
+        "projectName": "Casa Altozano",
+        "stage": "Sin iniciar",
+        "deadline": "2026-04-10",
+        "daysOverdue": 35
+      },
+      {
+        "id": 5588,
+        "name": "PLANOS ARQUITECTÓNICOS FINALES",
+        "projectId": 21,
+        "projectName": "Torre María",
+        "stage": "Sin iniciar",
+        "deadline": "2026-04-10",
+        "daysOverdue": 35
+      },
+      {
+        "id": 6726,
+        "name": "PLANOS ARQUITECTÓNICOS FINALES",
+        "projectId": 27,
+        "projectName": "Torre Centro",
+        "stage": "Sin iniciar",
+        "deadline": "2026-04-10",
+        "daysOverdue": 35
+      },
+      {
+        "id": 7761,
+        "name": "PLANOS ARQUITECTÓNICOS FINALES",
+        "projectId": 31,
+        "projectName": "Brasileña",
+        "stage": "Sin iniciar",
+        "deadline": "2026-04-10",
+        "daysOverdue": 35
+      },
+      {
+        "id": 7973,
+        "name": "PLANOS ARQUITECTÓNICOS FINALES",
+        "projectId": 32,
+        "projectName": "El Capitán",
+        "stage": "Sin iniciar",
+        "deadline": "2026-04-10",
+        "daysOverdue": 35
+      },
+      {
+        "id": 6334,
+        "name": "PLANOS ARQUITECTÓNICOS FINALES",
+        "projectId": 25,
+        "projectName": "Cafetería Américas",
+        "stage": "Sin iniciar",
+        "deadline": "2026-04-10",
+        "daysOverdue": 35
+      },
+      {
+        "id": 4708,
+        "name": "PLANOS ARQUITECTÓNICOS FINALES",
+        "projectId": 18,
+        "projectName": "Torre Hidalgo",
+        "stage": "Sin iniciar",
+        "deadline": "2026-04-10",
+        "daysOverdue": 35
+      },
+      {
+        "id": 8170,
+        "name": "PLANOS ARQUITECTÓNICOS FINALES",
+        "projectId": 33,
+        "projectName": "Torre Campestre",
+        "stage": "Sin iniciar",
+        "deadline": "2026-04-10",
+        "daysOverdue": 35
+      },
+      {
+        "id": 8528,
+        "name": "PLANOS ARQUITECTÓNICOS FINALES",
+        "projectId": 34,
+        "projectName": "Remodelación Casa Tres Marías",
+        "stage": "Sin iniciar",
+        "deadline": "2026-04-10",
+        "daysOverdue": 35
+      },
+      {
+        "id": 2324,
+        "name": "PLANOS ARQUITECTÓNICOS FINALES",
+        "projectId": 11,
+        "projectName": "Torre Perú",
+        "stage": "Sin iniciar",
+        "deadline": "2026-04-10",
+        "daysOverdue": 35
+      },
+      {
+        "id": 7190,
+        "name": "PLANOS ARQUITECTÓNICOS FINALES",
+        "projectId": 28,
+        "projectName": "Torre Fray Antonio",
+        "stage": "Sin iniciar",
+        "deadline": "2026-04-10",
+        "daysOverdue": 35
+      },
+      {
+        "id": 5655,
+        "name": "PLANOS ARQUITECTÓNICOS FINALES",
+        "projectId": 22,
+        "projectName": "Consultorios Handel",
+        "stage": "Sin iniciar",
+        "deadline": "2026-04-10",
+        "daysOverdue": 35
+      },
+      {
+        "id": 8478,
+        "name": "ANTEPROYECTO Y FACTIBILIDAD",
+        "projectId": 34,
+        "projectName": "Remodelación Casa Tres Marías",
+        "stage": "En proceso",
+        "deadline": "2026-04-17",
+        "daysOverdue": 28
+      },
+      {
+        "id": 8497,
+        "name": "DESARROLLO MATERIAL GRÁFICO",
+        "projectId": 34,
+        "projectName": "Remodelación Casa Tres Marías",
+        "stage": "En proceso",
+        "deadline": "2026-04-17",
+        "daysOverdue": 28
+      },
+      {
+        "id": 5599,
+        "name": "ANTEPROYECTO Y FACTIBILIDAD",
+        "projectId": 21,
+        "projectName": "Torre María",
+        "stage": "En proceso",
+        "deadline": "2026-04-17",
+        "daysOverdue": 28
+      },
+      {
+        "id": 7137,
+        "name": "Terminación Lobby",
+        "projectId": 27,
+        "projectName": "Torre Centro",
+        "stage": "En proceso",
+        "deadline": "2026-04-25",
+        "daysOverdue": 20
+      },
+      {
+        "id": 3848,
+        "name": "ESTRUCTURA NIVEL 1",
+        "projectId": 15,
+        "projectName": "Torre Romano",
+        "stage": "Sin iniciar",
+        "deadline": "2026-04-25",
+        "daysOverdue": 20
+      },
+      {
+        "id": 7136,
+        "name": "Terminación Departamento (Acabados)",
+        "projectId": 27,
+        "projectName": "Torre Centro",
+        "stage": "En proceso",
+        "deadline": "2026-04-30",
+        "daysOverdue": 15
+      },
+      {
+        "id": 5147,
+        "name": "DESARROLLO MATERIAL GRÁFICO",
+        "projectId": 19,
+        "projectName": "Torre Aria",
+        "stage": "En proceso",
+        "deadline": "2026-05-01",
+        "daysOverdue": 14
+      },
+      {
+        "id": 8169,
+        "name": "ANTEPROYECTO Y FACTIBILIDAD",
+        "projectId": 33,
+        "projectName": "Torre Campestre",
+        "stage": "En proceso",
+        "deadline": "2026-05-01",
+        "daysOverdue": 14
+      },
+      {
+        "id": 2790,
+        "name": "DESARROLLO MATERIAL GRÁFICO",
+        "projectId": 11,
+        "projectName": "Torre Perú",
+        "stage": "Sin iniciar",
+        "deadline": "2026-05-08",
+        "daysOverdue": 7
+      },
+      {
+        "id": 2506,
+        "name": "ALINEACIÓN COMERCIAL",
+        "projectId": 11,
+        "projectName": "Torre Perú",
+        "stage": "Sin iniciar",
+        "deadline": "2026-05-08",
+        "daysOverdue": 7
+      },
+      {
+        "id": 2828,
+        "name": "ANTEPROYECTO Y FACTIBILIDAD",
+        "projectId": 13,
+        "projectName": "Torre Porfirio",
+        "stage": "En proceso",
+        "deadline": "2026-05-15",
+        "daysOverdue": 0
+      }
     ],
     "dueSoon30": [
-      { "id": 4644, "name": "ALBANILERIA, ACABADOS E INSTALACIONES (NIVEL 5)", "projectId": 18, "projectName": "Torre Hidalgo", "stage": "En proceso", "deadline": "2026-05-16", "daysUntil": 1, "hasAssignee": false },
-      { "id": 4658, "name": "AREAS COMUNES", "projectId": 18, "projectName": "Torre Hidalgo", "stage": "En proceso", "deadline": "2026-05-16", "daysUntil": 1, "hasAssignee": false },
-      { "id": 7650, "name": "MUROS COLINDANTES- LATERAL IZQUIERDO", "projectId": 16, "projectName": "Casa Calina", "stage": "Sin iniciar", "deadline": "2026-05-16", "daysUntil": 1, "hasAssignee": false },
-      { "id": 4146, "name": "ACABADOS NIVEL PB", "projectId": 15, "projectName": "Torre Romano", "stage": "Sin iniciar", "deadline": "2026-05-16", "daysUntil": 1, "hasAssignee": false },
-      { "id": 3814, "name": "ESTRUCTURA ROOF", "projectId": 14, "projectName": "Torre Ventura Loft", "stage": "Sin iniciar", "deadline": "2026-05-16", "daysUntil": 1, "hasAssignee": false },
-      { "id": 2323, "name": "PROYECTO EJECUTIVO", "projectId": 11, "projectName": "Torre Peru", "stage": "Sin iniciar", "deadline": "2026-05-20", "daysUntil": 5, "hasAssignee": false },
-      { "id": 2514, "name": "ESTRATEGIA DE MARKETING", "projectId": 11, "projectName": "Torre Peru", "stage": "Sin iniciar", "deadline": "2026-05-29", "daysUntil": 14, "hasAssignee": false },
-      { "id": 7106, "name": "AREAS COMUNES", "projectId": 27, "projectName": "Torre Centro", "stage": "En proceso", "deadline": "2026-05-30", "daysUntil": 15, "hasAssignee": false },
-      { "id": 3002, "name": "ALINEACION COMERCIAL", "projectId": 13, "projectName": "Torre Porfirio", "stage": "Sin iniciar", "deadline": "2026-05-30", "daysUntil": 15, "hasAssignee": false },
-      { "id": 8343, "name": "ALINEACION COMERCIAL", "projectId": 33, "projectName": "Torre Campestre", "stage": "Sin iniciar", "deadline": "2026-05-30", "daysUntil": 15, "hasAssignee": false }
+      {
+        "id": 4644,
+        "name": "ALBANILERIA, ACABADOS E INSTALACIONES (NIVEL 5)",
+        "projectId": 18,
+        "projectName": "Torre Hidalgo",
+        "stage": "En proceso",
+        "deadline": "2026-05-16",
+        "daysUntil": 1,
+        "hasAssignee": false
+      },
+      {
+        "id": 4658,
+        "name": "AREAS COMUNES",
+        "projectId": 18,
+        "projectName": "Torre Hidalgo",
+        "stage": "En proceso",
+        "deadline": "2026-05-16",
+        "daysUntil": 1,
+        "hasAssignee": false
+      },
+      {
+        "id": 7650,
+        "name": "MUROS COLINDANTES- LATERAL IZQUIERDO",
+        "projectId": 16,
+        "projectName": "Casa Calina",
+        "stage": "Sin iniciar",
+        "deadline": "2026-05-16",
+        "daysUntil": 1,
+        "hasAssignee": false
+      },
+      {
+        "id": 4146,
+        "name": "ACABADOS NIVEL PB",
+        "projectId": 15,
+        "projectName": "Torre Romano",
+        "stage": "Sin iniciar",
+        "deadline": "2026-05-16",
+        "daysUntil": 1,
+        "hasAssignee": false
+      },
+      {
+        "id": 3814,
+        "name": "ESTRUCTURA ROOF",
+        "projectId": 14,
+        "projectName": "Torre Ventura Loft",
+        "stage": "Sin iniciar",
+        "deadline": "2026-05-16",
+        "daysUntil": 1,
+        "hasAssignee": false
+      },
+      {
+        "id": 2323,
+        "name": "PROYECTO EJECUTIVO",
+        "projectId": 11,
+        "projectName": "Torre Peru",
+        "stage": "Sin iniciar",
+        "deadline": "2026-05-20",
+        "daysUntil": 5,
+        "hasAssignee": false
+      },
+      {
+        "id": 2514,
+        "name": "ESTRATEGIA DE MARKETING",
+        "projectId": 11,
+        "projectName": "Torre Peru",
+        "stage": "Sin iniciar",
+        "deadline": "2026-05-29",
+        "daysUntil": 14,
+        "hasAssignee": false
+      },
+      {
+        "id": 7106,
+        "name": "AREAS COMUNES",
+        "projectId": 27,
+        "projectName": "Torre Centro",
+        "stage": "En proceso",
+        "deadline": "2026-05-30",
+        "daysUntil": 15,
+        "hasAssignee": false
+      },
+      {
+        "id": 3002,
+        "name": "ALINEACION COMERCIAL",
+        "projectId": 13,
+        "projectName": "Torre Porfirio",
+        "stage": "Sin iniciar",
+        "deadline": "2026-05-30",
+        "daysUntil": 15,
+        "hasAssignee": false
+      },
+      {
+        "id": 8343,
+        "name": "ALINEACION COMERCIAL",
+        "projectId": 33,
+        "projectName": "Torre Campestre",
+        "stage": "Sin iniciar",
+        "deadline": "2026-05-30",
+        "daysUntil": 15,
+        "hasAssignee": false
+      }
     ],
     "dueSoon60": [
-      { "id": 3243, "name": "ALBANILERIA, ACABADOS E INSTALACIONES (NIVEL 1)", "projectId": 14, "projectName": "Torre Ventura Loft", "stage": "En proceso", "deadline": "2026-06-06", "daysUntil": 22, "hasAssignee": false },
-      { "id": 3865, "name": "ESTRUCTURA NIVEL 2", "projectId": 15, "projectName": "Torre Romano", "stage": "Sin iniciar", "deadline": "2026-06-06", "daysUntil": 22, "hasAssignee": false },
-      { "id": 2329, "name": "INGENIERIA ESTRUCTURAL", "projectId": 11, "projectName": "Torre Peru", "stage": "Sin iniciar", "deadline": "2026-06-12", "daysUntil": 28, "hasAssignee": false },
-      { "id": 3094, "name": "INGENIERIA ESTRUCTURAL", "projectId": 14, "projectName": "Torre Ventura Loft", "stage": "En proceso", "deadline": "2026-06-12", "daysUntil": 28, "hasAssignee": false },
-      { "id": 3008, "name": "ESTRATEGIA DE MARKETING", "projectId": 13, "projectName": "Torre Porfirio", "stage": "Sin iniciar", "deadline": "2026-06-30", "daysUntil": 46, "hasAssignee": false },
-      { "id": 8349, "name": "ESTRATEGIA DE MARKETING", "projectId": 33, "projectName": "Torre Campestre", "stage": "Sin iniciar", "deadline": "2026-06-30", "daysUntil": 46, "hasAssignee": false },
-      { "id": 2382, "name": "CUANTIFICACION", "projectId": 11, "projectName": "Torre Peru", "stage": "Sin iniciar", "deadline": "2026-07-03", "daysUntil": 49, "hasAssignee": false },
-      { "id": 7644, "name": "MUROS COLINDANTES- LATERAL DERECHO", "projectId": 16, "projectName": "Casa Calina", "stage": "Sin iniciar", "deadline": "2026-07-04", "daysUntil": 50, "hasAssignee": false }
+      {
+        "id": 3243,
+        "name": "ALBANILERIA, ACABADOS E INSTALACIONES (NIVEL 1)",
+        "projectId": 14,
+        "projectName": "Torre Ventura Loft",
+        "stage": "En proceso",
+        "deadline": "2026-06-06",
+        "daysUntil": 22,
+        "hasAssignee": false
+      },
+      {
+        "id": 3865,
+        "name": "ESTRUCTURA NIVEL 2",
+        "projectId": 15,
+        "projectName": "Torre Romano",
+        "stage": "Sin iniciar",
+        "deadline": "2026-06-06",
+        "daysUntil": 22,
+        "hasAssignee": false
+      },
+      {
+        "id": 2329,
+        "name": "INGENIERIA ESTRUCTURAL",
+        "projectId": 11,
+        "projectName": "Torre Peru",
+        "stage": "Sin iniciar",
+        "deadline": "2026-06-12",
+        "daysUntil": 28,
+        "hasAssignee": false
+      },
+      {
+        "id": 3094,
+        "name": "INGENIERIA ESTRUCTURAL",
+        "projectId": 14,
+        "projectName": "Torre Ventura Loft",
+        "stage": "En proceso",
+        "deadline": "2026-06-12",
+        "daysUntil": 28,
+        "hasAssignee": false
+      },
+      {
+        "id": 3008,
+        "name": "ESTRATEGIA DE MARKETING",
+        "projectId": 13,
+        "projectName": "Torre Porfirio",
+        "stage": "Sin iniciar",
+        "deadline": "2026-06-30",
+        "daysUntil": 46,
+        "hasAssignee": false
+      },
+      {
+        "id": 8349,
+        "name": "ESTRATEGIA DE MARKETING",
+        "projectId": 33,
+        "projectName": "Torre Campestre",
+        "stage": "Sin iniciar",
+        "deadline": "2026-06-30",
+        "daysUntil": 46,
+        "hasAssignee": false
+      },
+      {
+        "id": 2382,
+        "name": "CUANTIFICACION",
+        "projectId": 11,
+        "projectName": "Torre Peru",
+        "stage": "Sin iniciar",
+        "deadline": "2026-07-03",
+        "daysUntil": 49,
+        "hasAssignee": false
+      },
+      {
+        "id": 7644,
+        "name": "MUROS COLINDANTES- LATERAL DERECHO",
+        "projectId": 16,
+        "projectName": "Casa Calina",
+        "stage": "Sin iniciar",
+        "deadline": "2026-07-04",
+        "daysUntil": 50,
+        "hasAssignee": false
+      }
     ]
   },
   "summary": {
-    "totalOverdue": 180,
+    "totalOverdue": 163,
     "totalDueSoon30": 10,
     "totalDueSoon60": 8,
     "openTasksNoDeadline": 4424,
     "constructionProjects": [
-      { "id": 14, "name": "Torre Ventura Loft", "progress": 6.8, "overdueCount": 12, "dueSoon30Count": 3 },
-      { "id": 15, "name": "Torre Romano", "progress": 5.7, "overdueCount": 12, "dueSoon30Count": 2 },
-      { "id": 18, "name": "Torre Hidalgo", "progress": 9.6, "overdueCount": 9, "dueSoon30Count": 2 }
+      {
+        "id": 14,
+        "name": "Torre Ventura Loft",
+        "progress": 6.8,
+        "overdueCount": 12,
+        "dueSoon30Count": 3
+      },
+      {
+        "id": 15,
+        "name": "Torre Romano",
+        "progress": 5.7,
+        "overdueCount": 12,
+        "dueSoon30Count": 2
+      },
+      {
+        "id": 18,
+        "name": "Torre Hidalgo",
+        "progress": 9.6,
+        "overdueCount": 9,
+        "dueSoon30Count": 2
+      }
     ]
   }
 }
